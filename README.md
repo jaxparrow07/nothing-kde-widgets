@@ -17,6 +17,8 @@
 </p>
 
 ---
+<img width="1303" height="907" alt="OC Image" src="https://github.com/user-attachments/assets/e75a11cc-51af-48ce-a6a6-9967782c59b0" />
+
 ## Available Widgets
 
 | Widget Name | Package Name | Variants | Preview |
