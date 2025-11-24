@@ -13,7 +13,7 @@
         "Icon": "/icon.png",
         "Id": "com.jaxparrow07.nothingkdewidgets.weather",
         "License": "GPL-2.0+",
-        "Name": "Nothing Weather Widget",
+        "Name": "Nothing Weather",
         "Version": "1.0",
         "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
     },
