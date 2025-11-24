@@ -243,11 +243,3 @@ After setup, test your widget:
 2. **Let battery drain to < 20%** - Circle should turn red
 3. **Connect Bluetooth devices** - Should see mouse, earbuds with battery levels
 4. **Icons should be custom SVGs** from the `device-icons` folder
-
----
-
-**Note**: Your connected devices are:
-- **Arcticfox-BTM** (Mouse) - MAC: E3:8B:5B:51:CB:26
-- **CMF Buds 2** (Earbuds) - MAC: 3C:B0:ED:E4:4E:88
-
-Once setup is complete, these should appear in the widget with their battery percentages!
