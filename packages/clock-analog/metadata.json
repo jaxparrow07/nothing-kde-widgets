@@ -14,7 +14,7 @@
         "Id": "com.jaxparrow07.nothingkdewidgets.analogclock",
         "License": "GPL-2.0+",
         "Name": "Nothing Analog Clock",
-        "Version": "2.0",
+        "Version": "1.0",
         "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
     },
     "X-Plasma-API-Minimum-Version": "6.0"
