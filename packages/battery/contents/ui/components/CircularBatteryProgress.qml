@@ -47,7 +47,7 @@ Item {
                 ctx.arc(root.centerX, root.centerY, root.radius, startAngle, endAngle)
                 ctx.closePath()
                 // Use red color for critical battery level, otherwise white
-                ctx.fillStyle = root.percentage <= root.criticalThreshold ? '#ff2222' : '#1bffffff'
+                ctx.fillStyle = root.percentage <= root.criticalThreshold ? '#ff4444' : '#1bffffff'
                 ctx.fill()
             }
         }

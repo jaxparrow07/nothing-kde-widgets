@@ -19,6 +19,8 @@ PlasmoidItem {
     property bool isBatterySaver: false
     property bool hasBattery: false
     property string batteryState: ""
+    property int batteryCheckAttempts: 0
+    property int maxBatteryCheckAttempts: 6  // Check for 30 seconds (6 * 5s intervals)
 
     // Bluetooth device properties
     readonly property BluezQt.Manager btManager: BluezQt.Manager
@@ -111,7 +113,20 @@ PlasmoidItem {
 
         onNewData: function(source, data) {
             if (source === "Battery") {
-                root.hasBattery = data["Has Battery"] || false
+                var hasBat = data["Has Battery"] || false
+
+                // If battery is found, reset the check attempts counter
+                if (hasBat) {
+                    root.batteryCheckAttempts = 0
+                    root.hasBattery = true
+                } else {
+                    // Increment check attempts
+                    if (root.batteryCheckAttempts < root.maxBatteryCheckAttempts) {
+                        root.batteryCheckAttempts++
+                    }
+                    root.hasBattery = false
+                }
+
                 root.batteryPercent = data["Percent"] || 0
                 root.batteryState = data["State"] || ""
 
@@ -142,6 +157,9 @@ PlasmoidItem {
         Layout.preferredHeight: 200
         Layout.minimumWidth: 200
         Layout.minimumHeight: 200
+
+        // Hide the widget completely if no battery is found after several checks
+        visible: root.hasBattery || root.batteryCheckAttempts < root.maxBatteryCheckAttempts
 
         // Main background
         Rectangle {
