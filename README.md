@@ -17,8 +17,9 @@
 </p>
 
 ---
-<img width="1303" height="907" alt="OC Image" src="https://github.com/user-attachments/assets/e75a11cc-51af-48ce-a6a6-9967782c59b0" />
-
+<a href="https://youtu.be/P5kT3ayd2SE">
+    <img width="1303" height="907" alt="oc_play_image" src="https://github.com/user-attachments/assets/f9f55ebd-5e80-4854-b66c-b8abdfcaf831" />
+</a>
 ## Available Widgets
 
 | Widget Name | Package Name | Variants | Preview |
@@ -159,40 +160,10 @@ sudo systemctl restart bluetooth.service
 ```
 
 ### 4. Pair Your Bluetooth Devices
+Connect to your bluetooth devices via GUI or terminal. 
+For detailed steps and manual connecting, see [BLUETOOTH_SETUP.md](BLUETOOTH_SETUP.md).
 
-Using bluetoothctl:
-
-```bash
-bluetoothctl
-```
-
-Inside bluetoothctl:
-
-```
-power on
-agent on
-default-agent
-scan on
-```
-
-Wait for your device to appear, then pair it:
-
-```
-pair XX:XX:XX:XX:XX:XX
-trust XX:XX:XX:XX:XX:XX
-connect XX:XX:XX:XX:XX:XX
-exit
-```
-
-### 5. Verify Battery Support
-
-Check if your device reports battery information:
-
-```bash
-bluetoothctl info XX:XX:XX:XX:XX:XX | grep -i battery
-```
-
-### 6. Reload the Battery Widget
+### 5. Reload the Battery Widget
 
 After setup:
 1. Right-click the battery widget → Remove
@@ -216,9 +187,9 @@ This project includes fonts from Nothing Technology Limited's design system:
 All Nothing fonts are trademarks of Nothing Technology Limited. These fonts are included for personal and non-commercial use only. For commercial use, please contact Nothing Technology Limited.
 
 ### Icons
-Weather and battery icons are custom-designed in the Nothing style or sourced from open-source icon sets. Icon attribution:
+Weather icons are scraped or drawn over Nothing related projects.
 - Weather icons: Custom Nothing-style icons
-- Battery icons: Custom Nothing-style icons
+- Battery icons: Iconify
 
 ### License
 This project is licensed under GPL-2.0+ and GPL-3.0+ (varies by widget). See individual widget metadata for specific license information.
