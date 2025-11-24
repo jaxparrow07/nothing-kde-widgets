@@ -71,7 +71,7 @@ PlasmoidItem {
                     // Draw dark background circle
                     ctx.beginPath()
                     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#1a1a1a"
+                    ctx.fillStyle = "#f21a1a1a"
                     ctx.fill()
 
                     // Only draw markers for Swiss Railway style (clockStyle === 0)
