@@ -8,8 +8,8 @@
     <a href="https://github.com/jaxparrow07/nothing-kde-widgets/releases/latest">
         <img src="https://img.shields.io/github/downloads/jaxparrow07/nothing-kde-widgets/latest/total?style=for-the-badge" alt="Download Latest Release">
     </a>
-    <a href="https://store.kde.org/u/jaxparrow07">
-        <img src="https://img.shields.io/badge/KDE_Store-Download-blue?style=for-the-badge&logo=kde" alt="KDE Store">
+    <a href="https://www.pling.com/c/2330403/">
+        <img src="https://img.shields.io/badge/KDE_Store-Download-blue?style=for-the-badge&logo=kde" alt="KDE Store Collection">
     </a>
     <a href="https://ko-fi.com/devrinth">
         <img src="https://img.shields.io/badge/Buy_me_a_Kofi-donate-blue?style=for-the-badge&logo=kofi&color=%23FF6433" alt="Support on Ko-fi">
@@ -35,13 +35,21 @@
 
 ## Installation
 
-### Prerequisites
+### Method 1: Using Install Script (Recommended)
+
+**Prerequisites:**
 - KDE Plasma 6.0 or higher
 - `kpackagetool6` (usually included with KDE Plasma)
 - `jq` command-line JSON processor
 
-### Install All Widgets
-To install all widgets at once:
+Clone the repository and run the install script:
+
+```bash
+git clone https://github.com/jaxparrow07/nothing-kde-widgets.git
+cd nothing-kde-widgets
+```
+
+**Install all widgets at once:**
 
 ```bash
 ./install.sh --all
@@ -53,8 +61,7 @@ or
 ./install.sh -a
 ```
 
-### Install Individual Widget
-To install a specific widget:
+**Install individual widget:**
 
 ```bash
 ./install.sh <package_name>
@@ -77,8 +84,18 @@ Example:
 ./install.sh clock-analog
 ```
 
-### Manual Installation
-You can also manually install widgets using:
+### Method 2: Install From File
+
+Download the packaged widgets from the [releases page](https://github.com/jaxparrow07/nothing-kde-widgets/releases/latest) and install them by "Loading from a file":
+
+1. **Desktop** → Right Click → **Enter Edit Mode**
+2. **Add Widget** → **Get Widgets**
+3. **Install Widget From Local File**
+4. Select the downloaded `.plasmoid` file
+
+### Method 3: Manual Installation
+
+You can also manually install widgets using `kpackagetool6`:
 
 ```bash
 kpackagetool6 --type=Plasma/Applet -i packages/<package_name>
