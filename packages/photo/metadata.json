@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zinczorphin@email.com",
+                "Name": "Jack Faith"
+            }
+        ],
+        "Category": "Graphics",
+        "Description": "Photo display widget with configurable borders and pill shape",
+        "EnabledByDefault": true,
+        "Icon": "/icon.png",
+        "Id": "com.jaxparrow07.nothingkdewidgets.photo",
+        "License": "GPL-2.0+",
+        "Name": "Nothing Photo Widget",
+        "Version": "1.0",
+        "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

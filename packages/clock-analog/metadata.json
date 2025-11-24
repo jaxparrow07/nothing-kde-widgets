@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zinczorphin@email.com",
+                "Name": "Jack Faith"
+            }
+        ],
+        "Category": "Date and Time",
+        "Description": "Analog clock widget with minimalist design and customizable appearance",
+        "EnabledByDefault": true,
+        "Icon": "/icon.png",
+        "Id": "com.jaxparrow07.nothingkdewidgets.analogclock",
+        "License": "GPL-2.0+",
+        "Name": "Nothing Analog Clock",
+        "Version": "2.0",
+        "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

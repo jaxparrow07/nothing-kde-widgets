@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zinczorphin@email.com",
+                "Name": "Jack Faith"
+            }
+        ],
+        "Category": "Environment and Weather",
+        "Description": "Comprehensive weather widget with multiple layouts and detailed information, in Nothing style :)",
+        "EnabledByDefault": true,
+        "Icon": "/icon.png",
+        "Id": "com.jaxparrow07.nothingkdewidgets.weather",
+        "License": "GPL-2.0+",
+        "Name": "Nothing Weather Widget",
+        "Version": "1.0",
+        "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

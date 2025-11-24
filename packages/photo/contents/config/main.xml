@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="Image">
+    <entry name="imagePath" type="String">
+      <default>default/sample.jpeg</default>
+    </entry>
+    <entry name="borderEnabled" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="borderSize" type="Int">
+      <default>10</default>
+    </entry>
+    <entry name="pillShapeEnabled" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="imageFillMode" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="grayscaleEnabled" type="Bool">
+      <default>false</default>
+    </entry>
+  </group>
+</kcfg>
