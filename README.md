@@ -3,8 +3,7 @@
 <img width="1280" height="400" alt="Nothing KDE Widgets Banner" src="0-images/banner.png" />
 
 <p align="center">
-    <img src="0-images/icon.png" alt="Nothing KDE Widgets Icon" width="96" height="96"><br>
-    <i>v2.0</i><br>
+    <i>v1.0</i><br>
     A collection of minimalist KDE Plasma 6 widgets inspired by Nothing's design language<br><br>
     <a href="https://github.com/jaxparrow07/nothing-kde-widgets/releases/latest">
         <img src="https://img.shields.io/github/downloads/jaxparrow07/nothing-kde-widgets/latest/total?style=for-the-badge" alt="Download Latest Release">
@@ -18,98 +17,21 @@
 </p>
 
 ---
-
 ## Available Widgets
 
-### Analog Clock
-Minimalist analog clock with customizable appearance and multiple design styles.
+| Widget Name | Package Name | Variants | Preview |
+|-------------|--------------|----------|---------|
+| **Analog Clock** | `clock-analog` | Modern, Swiss | <img src="0-images/analog-clock/analog-clock-modern.png" width="150"> <img src="0-images/analog-clock/analog-clock-swiss.png" width="150"> |
+| **Digital Clock** | `clock-digital` | Pill, Square | <img src="0-images/digital-clock/digital-clock-pill.png" width="150"> <img src="0-images/digital-clock/digital-clock-square.png" width="150"> |
+| **Digital Clock Large** | `clock-digital-large` | Serif, Sharp | <img src="0-images/digital-clock-large/serif.png" width="150"> <img src="0-images/digital-clock-large/sharp.png" width="150"> |
+| **World Clock** | `clock-digital-world` | Page 1, Page 2 | <img src="0-images/world-clock/world-clock-1.png" width="150"> <img src="0-images/world-clock/world-clock-2.png" width="150"> |
+| **Date Widget** | `date` | Page 1 | <img src="0-images/date/date-1.png" width="150"> |
+| **Battery** | `battery` | Page 1 | <img src="0-images/battery/battery-1.png" width="150"> |
+| **Weather** | `weather` | Rect Page 1, Rect Page 2, Square Page 1, Square Page 2 | <img src="0-images/weather-default/weather-rect-1.png" width="150"> <img src="0-images/weather-default/weather-rect-2.png" width="150"> <img src="0-images/weather-default/weather-square-1.png" width="150"> <img src="0-images/weather-default/weather-square-2.png" width="150"> |
+| **Weather Circular** | `weather-circular` | Circle Page 1, Circle Page 2, Circle Page 3, Grid | <img src="0-images/weather-circle/weather-circle-1.png" width="150"> <img src="0-images/weather-circle/weather-circle-2.png" width="150"> <img src="0-images/weather-circle/weather-circle-3.png" width="150"> <img src="0-images/weather-circle/weather-grid.png" width="150"> |
+| **Media Player** | `media` | Page 1, Page 2 | <img src="0-images/media/media-1.png" width="150"> <img src="0-images/media/media-2.png" width="150"> |
+| **Photo Frame** | `photo` | Pill, Square | <img src="0-images/photo/photo-pill.png" width="150"> <img src="0-images/photo/photo-square.png" width="150"> |
 
-<p align="center">
-    <img src="0-images/analog-clock/analog-clock-modern.png" alt="Modern Style" width="45%">
-    <img src="0-images/analog-clock/analog-clock-swiss.png" alt="Swiss Style" width="45%">
-</p>
-
-### Digital Clock
-Clean digital clock widget with pill and square variants.
-
-<p align="center">
-    <img src="0-images/digital-clock/digital-clock-pill.png" alt="Pill Style" width="45%">
-    <img src="0-images/digital-clock/digital-clock-square.png" alt="Square Style" width="45%">
-</p>
-
-### Digital Clock Large
-Large format digital clock with serif and sharp typography options.
-
-<p align="center">
-    <img src="0-images/digital-clock-large/serif.png" alt="Serif Style" width="45%">
-    <img src="0-images/digital-clock-large/sharp.png" alt="Sharp Style" width="45%">
-</p>
-
-### World Clock
-Display time across multiple time zones with elegant design.
-
-<p align="center">
-    <img src="0-images/world-clock/world-clock-1.png" alt="World Clock Style 1" width="45%">
-    <img src="0-images/world-clock/world-clock-2.png" alt="World Clock Style 2" width="45%">
-</p>
-
-### Date Widget
-Simple and elegant date display widget.
-
-<p align="center">
-    <img src="0-images/date/date-1.png" alt="Date Widget" width="45%">
-</p>
-
-### Battery
-Monitor your battery status with a clean, minimal interface.
-
-<p align="center">
-    <img src="0-images/battery/battery-1.png" alt="Battery Widget" width="45%">
-</p>
-
-### Weather
-Comprehensive weather widget with multiple layouts showing detailed weather information.
-
-<p align="center">
-    <img src="0-images/weather-default/weather-rect-1.png" alt="Weather Rect 1" width="45%">
-    <img src="0-images/weather-default/weather-rect-2.png" alt="Weather Rect 2" width="45%">
-</p>
-
-<p align="center">
-    <img src="0-images/weather-default/weather-square-1.png" alt="Weather Square 1" width="45%">
-    <img src="0-images/weather-default/weather-square-2.png" alt="Weather Square 2" width="45%">
-</p>
-
-### Weather Circular
-Circular weather widget with grid layout option.
-
-<p align="center">
-    <img src="0-images/weather-circle/weather-circle-1.png" alt="Weather Circle 1" width="45%">
-    <img src="0-images/weather-circle/weather-circle-2.png" alt="Weather Circle 2" width="45%">
-</p>
-
-<p align="center">
-    <img src="0-images/weather-circle/weather-circle-3.png" alt="Weather Circle 3" width="45%">
-    <img src="0-images/weather-circle/weather-grid.png" alt="Weather Grid" width="45%">
-</p>
-
-### Media Player
-Control your media playback with album art, track info, and interactive controls.
-
-<p align="center">
-    <img src="0-images/media/media-1.png" alt="Media Player 1" width="45%">
-    <img src="0-images/media/media-2.png" alt="Media Player 2" width="45%">
-</p>
-
-### Photo Frame
-Display your favorite photos with pill and square frame styles.
-
-<p align="center">
-    <img src="0-images/photo/photo-pill.png" alt="Photo Pill" width="45%">
-    <img src="0-images/photo/photo-square.png" alt="Photo Square" width="45%">
-</p>
-
----
 
 ## Installation
 
