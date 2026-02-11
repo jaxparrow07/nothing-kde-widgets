@@ -5,7 +5,10 @@ import org.kde.kirigami as Kirigami
 
 // Square layout Page 1: Current temperature with icon
 Item {
+    id: root
+
     // Required properties
+    required property QtObject colors
     required property string currentTemp
     required property string weatherIconPath
     required property bool isLoading
@@ -24,7 +27,7 @@ Item {
             text: currentTemp + "°"
             font.pixelSize: parent.width * 0.20
             font.weight: Font.Normal
-            color: "#ffffff"
+            color: root.colors.textPrimary
             opacity: isLoading ? 0.5 : 1.0
         }
 
@@ -39,7 +42,8 @@ Item {
                 width: parent.width * 0.9
                 height: parent.height * 0.9
                 source: weatherIconPath
-                color: "#ffffff"
+                color: root.colors.iconColor
+                isMask: true
                 visible: !isLoading && errorMessage === ""
             }
 
@@ -60,7 +64,7 @@ Item {
             Layout.topMargin: 10
             text: errorMessage !== "" ? errorMessage : location
             font.pixelSize: parent.width * 0.11
-            color: errorMessage !== "" ? "#ff4444" : "#ffffff"
+            color: errorMessage !== "" ? root.colors.accent : root.colors.textPrimary
             opacity: 0.9
             elide: Text.ElideRight
             maximumLineCount: 1

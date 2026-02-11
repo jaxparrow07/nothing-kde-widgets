@@ -12,6 +12,7 @@ Item {
     property string deviceIcon: ""  // Optional: override icon with specific icon name
     property bool isSystemDevice: true  // If false, don't show charging/battery saver indicators
     property int criticalThreshold: 20  // Battery percentage threshold for critical warning
+    required property QtObject colors
 
     // Visual properties
     property color progressColor: '#43ffffff'
@@ -35,7 +36,7 @@ Item {
             // Draw background circle (full circle, filled)
             ctx.beginPath()
             ctx.arc(root.centerX, root.centerY, root.radius, 0, 2 * Math.PI)
-            ctx.fillStyle = '#04ffffff'
+            ctx.fillStyle = root.colors.batteryBgFill
             ctx.fill()
 
             // Draw progress pie (from top, clockwise, filled)
@@ -47,7 +48,7 @@ Item {
                 ctx.arc(root.centerX, root.centerY, root.radius, startAngle, endAngle)
                 ctx.closePath()
                 // Use red color for critical battery level, otherwise white
-                ctx.fillStyle = root.percentage <= root.criticalThreshold ? '#ff4444' : '#1bffffff'
+                ctx.fillStyle = root.percentage <= root.criticalThreshold ? root.colors.accent : root.colors.batteryProgressFill
                 ctx.fill()
             }
         }
@@ -56,6 +57,13 @@ Item {
         Connections {
             target: root
             function onPercentageChanged() { progressCanvas.requestPaint() }
+        }
+
+        Connections {
+            target: root.colors
+            function onBatteryBgFillChanged() { progressCanvas.requestPaint() }
+            function onBatteryProgressFillChanged() { progressCanvas.requestPaint() }
+            function onAccentChanged() { progressCanvas.requestPaint() }
         }
     }
 
@@ -76,9 +84,9 @@ Item {
             readonly property bool hasStatusIndicator: root.isSystemDevice && (root.isCharging || root.isBatterySaver)
             y: hasStatusIndicator ? 0 : (parent.height - height) / 2
 
-            // Custom SVG Image
-            Image {
-                id: customIcon
+            // Device icon
+            Kirigami.Icon {
+                id: deviceIconImage
                 anchors.fill: parent
                 source: {
                     // Use custom icon if provided (for Bluetooth devices)
@@ -100,49 +108,12 @@ Item {
                         case "keyboard":
                             return Qt.resolvedUrl("../../device-icons/keyboard.svg")
                         default:
-                            return ""  // Will use fallback icon
-                    }
-                }
-                visible: source !== ""
-                sourceSize.width: width
-                sourceSize.height: height
-                smooth: true
-                fillMode: Image.PreserveAspectFit
-            }
-
-            // Fallback Kirigami icon if custom icon doesn't exist
-            Kirigami.Icon {
-                id: fallbackIcon
-                anchors.fill: parent
-                visible: !customIcon.visible || customIcon.status === Image.Error
-                source: {
-                    // Fallback to Kirigami icons
-                    if (root.deviceIcon !== "") {
-                        // Try to map custom icon names to Kirigami icons
-                        return "network-bluetooth"
-                    }
-
-                    switch (root.deviceType) {
-                        case "laptop":
-                            return "computer-laptop-symbolic"
-                        case "computer":
-                            return "computer-symbolic"
-                        case "mouse":
-                            return "input-mouse"
-                        case "headphones":
-                        case "audio-headset":
-                            return "audio-headset"
-                        case "keyboard":
-                            return "input-keyboard"
-                        case "phone":
-                            return "phone"
-                        default:
                             return "network-bluetooth"
                     }
                 }
-                color: "#ffffff"
-                opacity: 0.9
+                color: root.colors.iconColor
                 isMask: true
+                opacity: 0.9
             }
         }
 
@@ -161,7 +132,7 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 radius: width / 2
-                color: root.isCharging ? "#ff4444" : "#ffc107"
+                color: root.isCharging ? root.colors.accent : root.colors.warning
                 opacity: 0.95
             }
 
@@ -172,17 +143,18 @@ Item {
                 height: parent.height * 0.75
 
                 // Custom SVG for charging, Kirigami icon for battery saver
-                Image {
+                Kirigami.Icon {
                     anchors.fill: parent
                     source: root.isCharging ? Qt.resolvedUrl("../../icons/charging_mode.svg") : ""
+                    color: root.colors.background
+                    isMask: true
                     visible: root.isCharging
-                    smooth: true
                 }
 
                 Kirigami.Icon {
                     anchors.fill: parent
                     source: "list-add"
-                    color: "#1a1a1a"
+                    color: root.colors.background
                     visible: root.isBatterySaver && !root.isCharging
                     isMask: true
                 }

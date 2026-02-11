@@ -7,6 +7,7 @@ RowLayout {
     id: hourlyForecast
 
     // Required properties - passed from parent
+    required property QtObject colors
     required property var hourlyForecastTimes
     required property var hourlyForecastIcons
     required property var hourlyForecastTemps
@@ -37,7 +38,7 @@ RowLayout {
                     text: hourlyForecast.hourlyForecastTimes[index] || "--"
                     font.pixelSize: parent.parent.height * 0.125
                     font.weight: Font.Light
-                    color: "#aaaaaa"
+                    color: hourlyForecast.colors.textSecondary
                 }
 
                 // Weather icon
@@ -48,7 +49,8 @@ RowLayout {
                     Layout.preferredWidth: parent.parent.height * 0.4
                     Layout.preferredHeight: parent.parent.height * 0.4
                     source: hourlyForecast.getWeatherIcon(hourlyForecast.hourlyForecastIcons[index] || 0)
-                    color: "#ffffff"
+                    color: hourlyForecast.colors.iconColor
+                    isMask: true
                 }
 
                 // Temperature
@@ -57,7 +59,7 @@ RowLayout {
                     text: (hourlyForecast.hourlyForecastTemps[index] || "--") + "°"
                     font.pixelSize: parent.parent.height * 0.125
                     font.weight: Font.Normal
-                    color: "#ffffff"
+                    color: hourlyForecast.colors.textPrimary
                 }
             }
         }

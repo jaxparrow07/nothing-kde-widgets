@@ -3,7 +3,10 @@ import QtQuick.Layouts
 
 // Page 2: Day of week + Hour difference
 Item {
+    id: root
+
     // Required properties
+    required property QtObject colors
     required property string dayOfWeek
     required property string hourDifference
     required property string ndot55FontFamily
@@ -20,7 +23,7 @@ Item {
             text: dayOfWeek
             font.family: ndot55FontFamily
             font.pixelSize: Math.min(parent.width * 0.13, parent.height * 0.13)
-            color: "#ffffff"
+            color: root.colors.textPrimary
             opacity: 0.9
         }
 
@@ -43,7 +46,7 @@ Item {
                 text: hourDifference
                 font.family: ndotFontFamily
                 font.pixelSize: Math.min(root.width * 0.18, root.height * 0.18)
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 1.0
             }
 
@@ -53,7 +56,7 @@ Item {
                 text: "H"
                 font.family: ndot55FontFamily
                 font.pixelSize: Math.min(root.width * 0.075, root.height * 0.075)
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.85
                 Layout.bottomMargin: 5
             }

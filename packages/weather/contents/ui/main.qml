@@ -10,7 +10,11 @@ PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
-    preferredRepresentation: fullRepresentation
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
 
     // Configuration properties
     property string location: plasmoid.configuration.location
@@ -354,20 +358,88 @@ PlasmoidItem {
         geocodeLocation()
     }
 
+    compactRepresentation: Item {
+        id: compactItem
+
+        states: [
+            State {
+                name: "horizontalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Horizontal
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: true
+                    compactItem.Layout.fillWidth: false
+                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + compactItem.height * 0.4
+                    compactItem.Layout.maximumWidth: compactItem.Layout.minimumWidth
+                }
+            },
+            State {
+                name: "verticalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: false
+                    compactItem.Layout.fillWidth: true
+                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + compactItem.width * 0.4
+                    compactItem.Layout.maximumHeight: compactItem.Layout.minimumHeight
+                }
+            },
+            State {
+                name: "desktop"
+                when: Plasmoid.formFactor !== PlasmaCore.Types.Horizontal && Plasmoid.formFactor !== PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + 8
+                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + 8
+                }
+            }
+        ]
+
+        Row {
+            id: compactRow
+            anchors.centerIn: parent
+            spacing: compactItem.height * 0.15
+
+            Kirigami.Icon {
+                anchors.verticalCenter: parent.verticalCenter
+                width: compactItem.height * 0.75
+                height: compactItem.height * 0.75
+                source: root.weatherIconPath
+                color: nColors.iconColor
+                isMask: true
+                visible: !root.isLoading && root.errorMessage === ""
+            }
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.currentTemp + "\u00B0"
+                font.pixelSize: compactItem.height * 0.45
+                font.weight: Font.Normal
+                color: nColors.textPrimary
+                visible: !root.isLoading
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.expanded = !root.expanded
+        }
+    }
+
     fullRepresentation: Item {
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
         Layout.minimumWidth: 200
         Layout.minimumHeight: 200
 
-        // Detect wide layout (width >= 2× height)
+        // Detect wide layout (width >= 2x height)
         readonly property bool isWideLayout: width >= height * 2
 
         // SQUARE/VERTICAL LAYOUT - Rectangle with SwipeView inside (content swipes, not rectangle)
         Rectangle {
             anchors.fill: parent
             anchors.margins: 10
-            color: "#1a1a1a"
+            color: nColors.background
             radius: 20
             opacity: 0.95
             visible: !parent.isWideLayout
@@ -382,6 +454,7 @@ PlasmoidItem {
 
                 // PAGE 1: Current temperature with icon
                 SquarePageOne {
+                    colors: nColors
                     currentTemp: root.currentTemp
                     weatherIconPath: root.weatherIconPath
                     isLoading: root.isLoading
@@ -391,6 +464,7 @@ PlasmoidItem {
 
                 // PAGE 2: High/low temps with condition
                 SquarePageTwo {
+                    colors: nColors
                     highTemp: root.highTemp
                     lowTemp: root.lowTemp
                     condition: root.condition
@@ -403,7 +477,7 @@ PlasmoidItem {
         Rectangle {
             anchors.fill: parent
             anchors.margins: 10
-            color: "#1a1a1a"
+            color: nColors.background
             radius: 20
             opacity: 0.95
             visible: parent.isWideLayout
@@ -415,6 +489,7 @@ PlasmoidItem {
 
                 // Shared header (common, not swipeable)
                 WidePageHeader {
+                    colors: nColors
                     weatherIconPath: root.weatherIconPath
                     isLoading: root.isLoading
                     errorMessage: root.errorMessage
@@ -438,6 +513,7 @@ PlasmoidItem {
                     Item {
                         WideDailyForecast {
                             anchors.fill: parent
+                            colors: nColors
                             dailyForecastDays: root.dailyForecastDays
                             dailyForecastIcons: root.dailyForecastIcons
                             dailyForecastHighs: root.dailyForecastHighs
@@ -450,6 +526,7 @@ PlasmoidItem {
                     Item {
                         WideHourlyForecast {
                             anchors.fill: parent
+                            colors: nColors
                             hourlyForecastTimes: root.hourlyForecastTimes
                             hourlyForecastIcons: root.hourlyForecastIcons
                             hourlyForecastTemps: root.hourlyForecastTemps
@@ -482,7 +559,7 @@ PlasmoidItem {
                     radius: 3
                     color: {
                         var currentIdx = pageIndicator.useWideLayout ? wideSwipeView.currentIndex : swipeView.currentIndex
-                        return currentIdx === index ? "white" : "#666666"
+                        return currentIdx === index ? nColors.indicatorActive : nColors.indicatorInactive
                     }
                     opacity: {
                         var currentIdx = pageIndicator.useWideLayout ? wideSwipeView.currentIndex : swipeView.currentIndex

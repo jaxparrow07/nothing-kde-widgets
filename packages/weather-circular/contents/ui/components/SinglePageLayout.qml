@@ -11,6 +11,7 @@ Item {
     required property string highTemp
     required property string lowTemp
     required property bool isLoading
+    required property QtObject colors
 
     // Main container with margins (like other widgets)
     Item {
@@ -29,7 +30,7 @@ Item {
             y: parent.spacing / 2
             width: parent.width - parent.spacing
             height: parent.cellHeight - parent.spacing
-            color: "#1a1a1a"
+            color: root.colors.background
             radius: height / 2
             opacity: 0.95
 
@@ -45,6 +46,7 @@ Item {
                     weatherIconPath: root.weatherIconPath
                     isLoading: root.isLoading
                     iconScale: 0.8
+                    colors: root.colors
                 }
 
                 // Condition text
@@ -54,13 +56,13 @@ Item {
                     text: root.condition
                     font.pixelSize: parent.height * 0.22
                     font.weight: Font.Light
-                    color: "#ffffff"
+                    color: root.colors.textPrimary
                     opacity: root.isLoading ? 0.5 : 0.95
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
                     elide: Text.ElideRight
                     wrapMode: Text.WordWrap
-                    
+
                 }
             }
         }
@@ -72,7 +74,7 @@ Item {
             y: parent.cellHeight + parent.spacing / 2
             width: parent.cellWidth - parent.spacing
             height: parent.cellHeight - parent.spacing
-            color: "#1a1a1a"
+            color: root.colors.background
             radius: width / 2
             opacity: 0.95
 
@@ -83,6 +85,7 @@ Item {
                 temperature: root.currentTemp
                 isLoading: root.isLoading
                 textScale: 0.35
+                colors: root.colors
             }
         }
 
@@ -93,7 +96,7 @@ Item {
             y: parent.cellHeight + parent.spacing / 2
             width: parent.cellWidth - parent.spacing
             height: parent.cellHeight - parent.spacing
-            color: "#1a1a1a"
+            color: root.colors.background
             radius: width / 2
             opacity: 0.95
 
@@ -106,6 +109,7 @@ Item {
                 isLoading: root.isLoading
                 textScale: 0.2
                 spacing: 6
+                colors: root.colors
             }
         }
     }

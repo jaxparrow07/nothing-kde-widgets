@@ -6,6 +6,7 @@ Item {
     id: root
 
     required property string weatherIconPath
+    required property QtObject colors
     property bool isLoading: false
     property bool showBrief: false
     property string condition: ""
@@ -17,7 +18,8 @@ Item {
         width: parent.width * iconScale
         height: parent.height * iconScale
         source: weatherIconPath
-        color: "#ffffff"
+        color: root.colors.iconColor
+        isMask: true
         visible: !isLoading
     }
 
@@ -29,7 +31,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         text: condition
         font.pixelSize: parent.height * 0.12
-        color: "#ffffff"
+        color: root.colors.textPrimary
         opacity: 0.9
         font.weight: Font.Light
     }

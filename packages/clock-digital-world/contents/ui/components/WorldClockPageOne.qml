@@ -3,7 +3,10 @@ import QtQuick.Layouts
 
 // Page 1: City name + Time (12-hour) + AM/PM
 Item {
+    id: root
+
     // Required properties
+    required property QtObject colors
     required property string cityName
     required property string currentHours
     required property string currentMinutes
@@ -23,7 +26,7 @@ Item {
             text: cityName
             font.family: ndot55FontFamily
             font.pixelSize: Math.min(parent.width * 0.13, parent.height * 0.13)
-            color: "#ffffff"
+            color: root.colors.textPrimary
             opacity: 0.9
         }
 
@@ -47,7 +50,7 @@ Item {
                     text: currentHours
                     font.family: ndotFontFamily
                     font.pixelSize: Math.min(root.width * 0.18, root.height * 0.18)
-                    color: "#ffffff"
+                    color: root.colors.textPrimary
                     opacity: 1.0
                 }
 
@@ -55,7 +58,7 @@ Item {
                     text: ":"
                     font.family: ndotFontFamily
                     font.pixelSize: Math.min(root.width * 0.18, root.height * 0.18)
-                    color: "#ffffff"
+                    color: root.colors.textPrimary
                     opacity: colonVisible ? 1.0 : 0.3
 
                     Behavior on opacity {
@@ -67,7 +70,7 @@ Item {
                     text: currentMinutes
                     font.family: ndotFontFamily
                     font.pixelSize: Math.min(root.width * 0.18, root.height * 0.18)
-                    color: "#ffffff"
+                    color: root.colors.textPrimary
                     opacity: 1.0
                 }
             }
@@ -78,7 +81,7 @@ Item {
                 text: amPm
                 font.family: ndot55FontFamily
                 font.pixelSize: Math.min(root.width * 0.075, root.height * 0.075)
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.85
             }
 

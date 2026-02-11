@@ -5,11 +5,14 @@ import org.kde.kirigami as Kirigami
 Item {
     id: artworkRoot
 
+    // NothingColors reference
+    required property QtObject colors
+
     // Public properties
     property string artUrl: ""
     property int cornerRadius: 20
-    property string backgroundColor: "#1a1a1a"
-    property string fallbackIconColor: "#666666"
+    property color backgroundColor: colors.background
+    property color fallbackIconColor: colors.textDisabled
     property string fallbackIcon: "media-optical-audio"
 
     // Source image (hidden)
@@ -59,7 +62,7 @@ Item {
     // Fallback when no album art
     Rectangle {
         anchors.fill: parent
-        color: "#2a2a2a"
+        color: artworkRoot.colors.surface
         radius: artworkRoot.cornerRadius
         visible: artworkRoot.artUrl === ""
         z: 2

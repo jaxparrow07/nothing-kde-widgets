@@ -9,6 +9,7 @@ KCM.SimpleKCM {
     property alias cfg_borderEnabled: borderEnabledCheckbox.checked
     property alias cfg_borderSize: borderSizeSlider.value
     property alias cfg_pillShapeEnabled: pillShapeCheckbox.checked
+    property alias cfg_themeMode: themeModeCombo.currentIndex
 
     ColumnLayout {
         spacing: 10
@@ -83,6 +84,41 @@ KCM.SimpleKCM {
 
         Label {
             text: "Automatically creates a circle (if square) or pill shape (if rectangular). When disabled, uses standard rounded corners."
+            font.pointSize: 9
+            opacity: 0.7
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            height: 1
+            color: "#333333"
+            opacity: 0.3
+        }
+
+        // Theme Section
+        Label {
+            text: "Theme"
+            font.bold: true
+            font.pointSize: 11
+        }
+
+        RowLayout {
+            Label {
+                text: "Theme:"
+                Layout.alignment: Qt.AlignLeft
+            }
+
+            ComboBox {
+                id: themeModeCombo
+                model: ["Dark", "Light", "Follow System"]
+                Layout.fillWidth: true
+            }
+        }
+
+        Label {
+            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

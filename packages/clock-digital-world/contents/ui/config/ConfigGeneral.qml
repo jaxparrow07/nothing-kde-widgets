@@ -9,6 +9,7 @@ KCM.SimpleKCM {
 
     property alias cfg_cityName: cityNameField.text
     property string cfg_timeZone
+    property alias cfg_themeMode: themeModeCombo.currentIndex
 
     Config.TimezonesData {
         id: timezonesData
@@ -120,6 +121,34 @@ KCM.SimpleKCM {
 
         Label {
             text: "Select a timezone from the list above. The widget will display the time for the selected location."
+            font.pointSize: 9
+            opacity: 0.7
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            height: 1
+            color: "#333333"
+            opacity: 0.3
+        }
+
+        RowLayout {
+            Label {
+                text: "Theme:"
+                Layout.alignment: Qt.AlignLeft
+            }
+
+            ComboBox {
+                id: themeModeCombo
+                model: ["Dark", "Light", "Follow System"]
+                Layout.fillWidth: true
+            }
+        }
+
+        Label {
+            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

@@ -7,6 +7,7 @@ RowLayout {
     id: dailyForecast
 
     // Required properties - passed from parent
+    required property QtObject colors
     required property var dailyForecastDays
     required property var dailyForecastIcons
     required property var dailyForecastHighs
@@ -38,7 +39,7 @@ RowLayout {
                     text: dailyForecast.dailyForecastDays[index] || "---"
                     font.pixelSize: parent.parent.height * 0.125
                     font.weight: Font.Light
-                    color: "#aaaaaa"
+                    color: dailyForecast.colors.textSecondary
                 }
 
                 // Weather icon
@@ -49,7 +50,8 @@ RowLayout {
                     Layout.preferredWidth: parent.parent.height * 0.4
                     Layout.preferredHeight: parent.parent.height * 0.4
                     source: dailyForecast.getWeatherIcon(dailyForecast.dailyForecastIcons[index] || 0)
-                    color: "#ffffff"
+                    color: dailyForecast.colors.iconColor
+                    isMask: true
                 }
 
                 // High temp
@@ -58,7 +60,7 @@ RowLayout {
                     text: (dailyForecast.dailyForecastHighs[index] || "--") + "°"
                     font.pixelSize: parent.parent.height * 0.125
                     font.weight: Font.Normal
-                    color: "#ffffff"
+                    color: dailyForecast.colors.textPrimary
                 }
 
                 // Low temp
@@ -67,7 +69,7 @@ RowLayout {
                     text: (dailyForecast.dailyForecastLows[index] || "--") + "°"
                     font.pixelSize: parent.parent.height * 0.09
                     font.weight: Font.Light
-                    color: "#aaaaaa"
+                    color: dailyForecast.colors.textSecondary
                 }
             }
         }

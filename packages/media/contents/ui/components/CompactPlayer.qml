@@ -5,6 +5,9 @@ import org.kde.kirigami as Kirigami
 Item {
     id: compactRoot
 
+    // NothingColors reference
+    required property QtObject colors
+
     // Public properties - Media data
     property string albumArt: ""
     property string track: ""
@@ -16,7 +19,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         anchors.margins: 10
-        color: "#0f1419"
+        color: compactRoot.colors.surfaceAlt
         radius: 20
         opacity: 0.95
 
@@ -25,8 +28,8 @@ Item {
             anchors.fill: parent
             radius: 20
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#1a2332" }
-                GradientStop { position: 1.0; color: "#0f1419" }
+                GradientStop { position: 0.0; color: compactRoot.colors.surfaceGradient }
+                GradientStop { position: 1.0; color: compactRoot.colors.surfaceAlt }
             }
             opacity: 0.6
         }
@@ -49,7 +52,7 @@ Item {
                     Rectangle {
                         Layout.preferredWidth: 80
                         Layout.preferredHeight: 80
-                        color: "#2a2a2a"
+                        color: compactRoot.colors.surface
                         radius: 12
                         clip: true
 
@@ -68,7 +71,7 @@ Item {
                             width: 48
                             height: 48
                             source: "media-optical-audio"
-                            color: "#666666"
+                            color: compactRoot.colors.textDisabled
                             visible: compactRoot.albumArt === ""
                         }
                     }
@@ -83,7 +86,7 @@ Item {
                         Layout.preferredWidth: 44
                         Layout.preferredHeight: 44
                         radius: 22
-                        color: "#2a2a2a"
+                        color: compactRoot.colors.surface
                         opacity: 0.8
 
                         Kirigami.Icon {
@@ -106,7 +109,7 @@ Item {
                                 // Default fallback
                                 return "media-player"
                             }
-                            color: "white"
+                            color: compactRoot.colors.textPrimary
                         }
                     }
                 }
@@ -121,7 +124,7 @@ Item {
                 text: compactRoot.track || "No Track"
                 fontSize: 18
                 bold: true
-                textColor: "white"
+                textColor: compactRoot.colors.textPrimary
             }
 
             // Artist name
@@ -130,7 +133,7 @@ Item {
                 text: compactRoot.artist || "Unknown Artist"
                 font.pixelSize: 12
                 height: font.pixelSize + 4
-                color: "#b0b0b0"
+                color: compactRoot.colors.textPlaceholder
                 elide: Text.ElideRight
                 maximumLineCount: 1
             }
@@ -141,8 +144,8 @@ Item {
                 Layout.preferredHeight: 4
                 position: compactRoot.position
                 length: compactRoot.length
-                backgroundColor: "#2a2a2a"
-                progressColor: "white"
+                backgroundColor: compactRoot.colors.surface
+                progressColor: compactRoot.colors.textPrimary
             }
 
             Item {

@@ -4,12 +4,18 @@ import QtQuick.Effects
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
+import "components"
 
 PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     preferredRepresentation: fullRepresentation
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
 
     // Configuration properties
     property string imagePath: plasmoid.configuration.imagePath
@@ -72,7 +78,7 @@ PlasmoidItem {
         Rectangle {
             id: outerBackground
             anchors.fill: parent
-            color: "#1a1a1a"
+            color: nColors.background
             opacity: 0.95
             radius: root.outerRadius
         }
@@ -82,7 +88,7 @@ PlasmoidItem {
             id: mainRect
             anchors.fill: parent
             anchors.margins: borderEnabled ? borderSize : 0
-            color: "#1a1a1a"
+            color: nColors.background
             radius: root.calculatedRadius
             clip: true
 
@@ -122,7 +128,7 @@ PlasmoidItem {
             // Background layer (blocks anything beneath if needed)
             Rectangle {
                 anchors.fill: parent
-                color: "#1a1a1a"
+                color: nColors.background
                 radius: root.calculatedRadius
                 z: 1
             }
@@ -156,7 +162,7 @@ PlasmoidItem {
             // Fallback when no image is selected
             Rectangle {
                 anchors.fill: parent
-                color: "#2a2a2a"
+                color: nColors.surface
                 radius: root.calculatedRadius
                 visible: root.imagePath === ""
                 z: 2
@@ -170,14 +176,14 @@ PlasmoidItem {
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.3, 64)
                         Layout.preferredHeight: Math.min(parent.parent.height * 0.3, 64)
                         source: "image-x-generic"
-                        color: "#666666"
+                        color: nColors.textDisabled
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "No Image"
                         font.pixelSize: 14
-                        color: "#666666"
+                        color: nColors.textDisabled
                         visible: mainRect.width > 120 && mainRect.height > 120
                     }
 
@@ -186,7 +192,7 @@ PlasmoidItem {
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.7, 150)
                         text: "Right-click to configure"
                         font.pixelSize: 10
-                        color: "#555555"
+                        color: nColors.textDisabled
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Text.AlignHCenter
                         visible: mainRect.width > 150 && mainRect.height > 150
@@ -197,7 +203,7 @@ PlasmoidItem {
             // Error state when image fails to load
             Rectangle {
                 anchors.fill: parent
-                color: "#2a2a2a"
+                color: nColors.surface
                 radius: root.calculatedRadius
                 visible: root.imagePath !== "" && photoImage.status === Image.Error
                 z: 3
@@ -211,14 +217,14 @@ PlasmoidItem {
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.3, 64)
                         Layout.preferredHeight: Math.min(parent.parent.height * 0.3, 64)
                         source: "dialog-error"
-                        color: "#d32f2f"
+                        color: nColors.error
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Image Error"
                         font.pixelSize: 14
-                        color: "#d32f2f"
+                        color: nColors.error
                         visible: mainRect.width > 120 && mainRect.height > 120
                     }
 
@@ -227,7 +233,7 @@ PlasmoidItem {
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.7, 150)
                         text: "Failed to load image"
                         font.pixelSize: 10
-                        color: "#888888"
+                        color: nColors.textMuted
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Text.AlignHCenter
                         visible: mainRect.width > 150 && mainRect.height > 150

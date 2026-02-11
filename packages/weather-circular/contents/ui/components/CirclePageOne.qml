@@ -3,9 +3,12 @@ import QtQuick.Controls as QQC2
 
 // Page 1: Weather icon only
 Item {
+    id: root
+
     required property string weatherIconPath
     required property bool isLoading
     required property string errorMessage
+    required property QtObject colors
 
     CircleWeatherIcon {
         anchors.centerIn: parent
@@ -14,6 +17,7 @@ Item {
         weatherIconPath: parent.weatherIconPath
         isLoading: parent.isLoading
         iconScale: 1.0
+        colors: parent.colors
     }
 
     // Loading indicator
@@ -31,7 +35,7 @@ Item {
         anchors.centerIn: parent
         text: errorMessage
         font.pixelSize: parent.width * 0.08
-        color: "#ff4444"
+        color: root.colors.accent
         opacity: 0.9
         wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter

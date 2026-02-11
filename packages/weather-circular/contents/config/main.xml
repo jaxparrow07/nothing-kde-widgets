@@ -15,5 +15,8 @@
     <entry name="layoutMode" type="Int">
       <default>0</default>
     </entry>
+    <entry name="themeMode" type="Int">
+      <default>0</default>
+    </entry>
   </group>
 </kcfg>

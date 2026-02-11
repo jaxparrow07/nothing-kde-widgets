@@ -12,6 +12,11 @@ PlasmoidItem {
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     preferredRepresentation: fullRepresentation
 
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
+
     // Configuration properties
     property string location: plasmoid.configuration.location
     property int temperatureUnit: plasmoid.configuration.temperatureUnit
@@ -275,7 +280,7 @@ PlasmoidItem {
         Rectangle {
             anchors.fill: parent
             anchors.margins: 10
-            color: "#1a1a1a"
+            color: nColors.background
             radius: width / 2
             opacity: 0.95
             visible: root.layoutMode === 0
@@ -293,12 +298,14 @@ PlasmoidItem {
                     weatherIconPath: root.weatherIconPath
                     isLoading: root.isLoading
                     errorMessage: root.errorMessage
+                    colors: nColors
                 }
 
                 // PAGE 2: Temperature
                 CirclePageTwo {
                     currentTemp: root.currentTemp
                     isLoading: root.isLoading
+                    colors: nColors
                 }
 
                 // PAGE 3: High/Low
@@ -306,6 +313,7 @@ PlasmoidItem {
                     highTemp: root.highTemp
                     lowTemp: root.lowTemp
                     isLoading: root.isLoading
+                    colors: nColors
                 }
             }
         }
@@ -320,6 +328,7 @@ PlasmoidItem {
             highTemp: root.highTemp
             lowTemp: root.lowTemp
             isLoading: root.isLoading
+            colors: nColors
         }
 
         // Vertical Page Indicator (right center) - works for both layouts
@@ -341,7 +350,7 @@ PlasmoidItem {
                     width: 6
                     height: 6
                     radius: 3
-                    color: swipeView.currentIndex === index ? "white" : "#666666"
+                    color: swipeView.currentIndex === index ? nColors.indicatorActive : nColors.indicatorInactive
                     opacity: swipeView.currentIndex === index ? 0.95 : 0.45
 
                     Behavior on color {

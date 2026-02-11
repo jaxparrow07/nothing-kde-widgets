@@ -9,6 +9,7 @@ KCM.SimpleKCM {
     property alias cfg_location: locationField.text
     property alias cfg_temperatureUnit: temperatureUnitCombo.currentIndex
     property alias cfg_layoutMode: layoutModeCombo.currentIndex
+    property alias cfg_themeMode: themeModeCombo.currentIndex
 
     ColumnLayout {
         spacing: 10
@@ -84,6 +85,34 @@ KCM.SimpleKCM {
 
         Label {
             text: "Multi-page: Swipe vertically through weather icon, temperature, and high/low pages.\nSingle-page: View all information in a grid layout."
+            font.pointSize: 9
+            opacity: 0.7
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            height: 1
+            color: "#333333"
+            opacity: 0.3
+        }
+
+        RowLayout {
+            Label {
+                text: "Theme:"
+                Layout.alignment: Qt.AlignLeft
+            }
+
+            ComboBox {
+                id: themeModeCombo
+                model: ["Dark", "Light", "Follow System"]
+                Layout.fillWidth: true
+            }
+        }
+
+        Label {
+            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

@@ -12,7 +12,12 @@ PlasmoidItem {
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     preferredRepresentation: fullRepresentation
-    
+
+    Components.NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
+
     // MPRIS2 Model
     Mpris.Mpris2Model {
         id: mpris2Model
@@ -85,7 +90,7 @@ PlasmoidItem {
             mpris2Model.currentPlayer.Previous();
         }
     }
-    
+
     fullRepresentation: Item {
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
@@ -101,6 +106,7 @@ PlasmoidItem {
 
             // PAGE 1: Album cover carousel design
             Components.AlbumCoverCarousel {
+                colors: nColors
                 albumArt: root.albumArt
                 isPlaying: root.isPlaying
                 canGoPrevious: root.canGoPrevious
@@ -115,6 +121,7 @@ PlasmoidItem {
 
             // PAGE 2: Compact media player layout
             Components.CompactPlayer {
+                colors: nColors
                 albumArt: root.albumArt
                 track: root.track
                 artist: root.artist
@@ -141,7 +148,7 @@ PlasmoidItem {
                     width: 6
                     height: 6
                     radius: 3
-                    color: swipeView.currentIndex === index ? "white" : "#666666"
+                    color: swipeView.currentIndex === index ? nColors.indicatorActive : nColors.indicatorInactive
                     opacity: swipeView.currentIndex === index ? 0.95 : 0.45
 
                     Behavior on color {

@@ -11,7 +11,11 @@ PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
-    preferredRepresentation: fullRepresentation
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
 
     // Battery data properties
     property int batteryPercent: 0
@@ -266,6 +270,193 @@ PlasmoidItem {
         }
     }
 
+    // A real battery won't report 0% while charging — that's a PC without a real battery
+    readonly property bool showMainBattery: root.hasBattery && !(root.batteryPercent === 0 && root.isCharging)
+    // Total number of circles to show in compact view
+    readonly property int compactCircleCount: (showMainBattery ? 1 : 0) + root.bluetoothDevices.length
+    // Hide compact view entirely if nothing to show
+    readonly property bool compactVisible: compactCircleCount > 0
+
+    compactRepresentation: Item {
+        id: compactItem
+
+        visible: root.compactVisible
+
+        readonly property real cellSize: Math.min(width / Math.max(root.compactCircleCount, 1), height)
+        readonly property real ringSize: cellSize - 4
+        readonly property real ringWidth: ringSize * 0.12
+
+        states: [
+            State {
+                name: "horizontalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Horizontal
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: true
+                    compactItem.Layout.fillWidth: false
+                    compactItem.Layout.minimumWidth: compactItem.height * root.compactCircleCount
+                    compactItem.Layout.maximumWidth: compactItem.Layout.minimumWidth
+                }
+            },
+            State {
+                name: "verticalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: false
+                    compactItem.Layout.fillWidth: true
+                    compactItem.Layout.minimumHeight: compactItem.width * root.compactCircleCount
+                    compactItem.Layout.maximumHeight: compactItem.Layout.minimumHeight
+                }
+            },
+            State {
+                name: "desktop"
+                when: Plasmoid.formFactor !== PlasmaCore.Types.Horizontal && Plasmoid.formFactor !== PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.minimumWidth: 24 * root.compactCircleCount
+                    compactItem.Layout.minimumHeight: 24
+                }
+            }
+        ]
+
+        Row {
+            anchors.centerIn: parent
+            spacing: 0
+
+            // Main battery circle (only if battery is available)
+            Item {
+                width: compactItem.cellSize
+                height: compactItem.cellSize
+                visible: root.showMainBattery
+
+                Canvas {
+                    id: compactMainRing
+                    anchors.centerIn: parent
+                    width: compactItem.ringSize
+                    height: compactItem.ringSize
+
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.reset()
+                        var centerX = width / 2
+                        var centerY = height / 2
+                        var radius = (Math.min(width, height) - compactItem.ringWidth) / 2
+                        var startAngle = -Math.PI / 2
+                        var endAngle = startAngle + (2 * Math.PI * root.batteryPercent / 100)
+
+                        ctx.beginPath()
+                        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+                        ctx.strokeStyle = nColors.batteryBgFill
+                        ctx.lineWidth = compactItem.ringWidth
+                        ctx.stroke()
+
+                        ctx.beginPath()
+                        ctx.arc(centerX, centerY, radius, startAngle, endAngle)
+                        ctx.strokeStyle = root.batteryPercent <= 20 ? nColors.accent : nColors.batteryRingFill
+                        ctx.lineWidth = compactItem.ringWidth
+                        ctx.lineCap = "round"
+                        ctx.stroke()
+                    }
+
+                    Connections {
+                        target: root
+                        function onBatteryPercentChanged() { compactMainRing.requestPaint() }
+                    }
+                    Connections {
+                        target: nColors
+                        function onBatteryRingFillChanged() { compactMainRing.requestPaint() }
+                        function onBatteryBgFillChanged() { compactMainRing.requestPaint() }
+                        function onAccentChanged() { compactMainRing.requestPaint() }
+                    }
+                }
+
+                Kirigami.Icon {
+                    anchors.centerIn: parent
+                    width: compactItem.ringSize * 0.45
+                    height: compactItem.ringSize * 0.45
+                    source: "battery"
+                    color: nColors.iconColor
+                    isMask: true
+                }
+            }
+
+            // Bluetooth device circles
+            Repeater {
+                model: root.bluetoothDevices.length
+
+                Item {
+                    width: compactItem.cellSize
+                    height: compactItem.cellSize
+
+                    readonly property int btPercent: root.bluetoothDevices[index] ? root.bluetoothDevices[index].percentage : 0
+                    readonly property string btIcon: root.bluetoothDevices[index] ? root.bluetoothDevices[index].icon : ""
+
+                    Canvas {
+                        id: btRing
+                        anchors.centerIn: parent
+                        width: compactItem.ringSize
+                        height: compactItem.ringSize
+
+                        onPaint: {
+                            var ctx = getContext("2d")
+                            ctx.reset()
+                            var centerX = width / 2
+                            var centerY = height / 2
+                            var radius = (Math.min(width, height) - compactItem.ringWidth) / 2
+                            var startAngle = -Math.PI / 2
+                            var pct = parent.btPercent
+                            var endAngle = startAngle + (2 * Math.PI * pct / 100)
+
+                            ctx.beginPath()
+                            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+                            ctx.strokeStyle = nColors.batteryBgFill
+                            ctx.lineWidth = compactItem.ringWidth
+                            ctx.stroke()
+
+                            ctx.beginPath()
+                            ctx.arc(centerX, centerY, radius, startAngle, endAngle)
+                            ctx.strokeStyle = pct <= 20 ? nColors.accent : nColors.batteryRingFill
+                            ctx.lineWidth = compactItem.ringWidth
+                            ctx.lineCap = "round"
+                            ctx.stroke()
+                        }
+
+                        Connections {
+                            target: root
+                            function onBluetoothDevicesChanged() { btRing.requestPaint() }
+                        }
+                        Connections {
+                            target: nColors
+                            function onBatteryRingFillChanged() { btRing.requestPaint() }
+                            function onBatteryBgFillChanged() { btRing.requestPaint() }
+                            function onAccentChanged() { btRing.requestPaint() }
+                        }
+                    }
+
+                    Kirigami.Icon {
+                        anchors.centerIn: parent
+                        width: compactItem.ringSize * 0.45
+                        height: compactItem.ringSize * 0.45
+                        source: {
+                            if (parent.btIcon !== "") {
+                                return Qt.resolvedUrl("../device-icons/" + parent.btIcon + ".svg")
+                            }
+                            return "network-bluetooth"
+                        }
+                        color: nColors.iconColor
+                        isMask: true
+                    }
+                }
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.expanded = !root.expanded
+        }
+    }
+
     fullRepresentation: Item {
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
@@ -277,7 +468,7 @@ PlasmoidItem {
             id: mainBackground
             anchors.fill: parent
             anchors.margins: 10
-            color: "#1a1a1a"
+            color: nColors.background
             radius: 20
             opacity: 0.95
 
@@ -304,6 +495,7 @@ PlasmoidItem {
                         isCharging: root.isCharging
                         isBatterySaver: root.isBatterySaver
                         deviceType: "laptop"
+                        colors: nColors
                     }
                 }
 
@@ -322,6 +514,7 @@ PlasmoidItem {
                         isBatterySaver: false
                         deviceIcon: root.bluetoothDevices.length > 0 ? root.bluetoothDevices[0].icon : ""
                         isSystemDevice: false
+                        colors: nColors
                     }
                 }
 
@@ -340,6 +533,7 @@ PlasmoidItem {
                         isBatterySaver: false
                         deviceIcon: root.bluetoothDevices.length > 1 ? root.bluetoothDevices[1].icon : ""
                         isSystemDevice: false
+                        colors: nColors
                     }
                 }
 
@@ -359,7 +553,7 @@ PlasmoidItem {
                         text: root.batteryPercent + "%"
                         font.family: ndotFont.name
                         font.pixelSize: parent.width * 0.4
-                        color: "#ffffff"
+                        color: nColors.textPrimary
                         opacity: 0.95
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignBottom
@@ -380,7 +574,7 @@ PlasmoidItem {
                             text: Math.round(root.energyRate) + "W"
                             font.family: ndotFont.name
                             font.pixelSize: parent.parent.width * 0.35
-                            color: "#ffffff"
+                            color: nColors.textPrimary
                             opacity: 0.95
                             horizontalAlignment: Text.AlignRight
                         }
@@ -390,7 +584,7 @@ PlasmoidItem {
                             text: "PC"
                             font.family: ndotFont.name
                             font.pixelSize: parent.parent.width * 0.15
-                            color: "#888888"
+                            color: nColors.textMuted
                             opacity: 0.8
                             horizontalAlignment: Text.AlignRight
                         }
@@ -405,7 +599,7 @@ PlasmoidItem {
                         text: "PC"
                         font.family: ndotFont.name
                         font.pixelSize: parent.width * 0.3
-                        color: "#888888"
+                        color: nColors.textMuted
                         opacity: 0.8
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignBottom
@@ -428,7 +622,7 @@ PlasmoidItem {
                         Layout.preferredWidth: 48
                         Layout.preferredHeight: 48
                         source: "battery"
-                        color: "#666666"
+                        color: nColors.textDisabled
 
                         // Simple rotation animation for loading
                         RotationAnimator on rotation {
@@ -444,7 +638,7 @@ PlasmoidItem {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Detecting Battery..."
                         font.pixelSize: 14
-                        color: "#888888"
+                        color: nColors.textMuted
                     }
                 }
             }

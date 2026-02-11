@@ -3,12 +3,18 @@ import QtQuick.Layouts
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
+import "components"
 
 PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     preferredRepresentation: fullRepresentation
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
 
     property int hours: 0
     property int minutes: 0
@@ -71,7 +77,7 @@ PlasmoidItem {
                     // Draw dark background circle
                     ctx.beginPath()
                     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#f21a1a1a"
+                    ctx.fillStyle = Qt.rgba(nColors.background.r, nColors.background.g, nColors.background.b, 0.95)
                     ctx.fill()
 
                     // Only draw markers for Swiss Railway style (clockStyle === 0)
@@ -94,7 +100,7 @@ PlasmoidItem {
                                 var markerWidth = radius * 0.026  // 0.02 * 1.3 = 0.026 (30% thicker)
 
                                 ctx.rect(-markerWidth / 2, -markerStart, markerWidth, markerLength)
-                                ctx.fillStyle = "#ffffff"
+                                ctx.fillStyle = nColors.textPrimary
                                 ctx.fill()
                             } else {
                                 // Minute markers - smaller and thinner lines
@@ -102,7 +108,7 @@ PlasmoidItem {
                                 var minuteMarkerWidth = radius * 0.008
 
                                 ctx.rect(-minuteMarkerWidth / 2, -markerStart, minuteMarkerWidth, minuteMarkerLength)
-                                ctx.fillStyle = "#ffffff"
+                                ctx.fillStyle = nColors.textPrimary
                                 ctx.fill()
                             }
 
@@ -144,7 +150,7 @@ PlasmoidItem {
                         // Swiss Railway: sharp rectangular edges, protruding past center
                         ctx.beginPath()
                         ctx.rect(-handWidth / 2, -handLength, handWidth, handLength + counterWeight)
-                        ctx.fillStyle = "#ffffff"
+                        ctx.fillStyle = nColors.textPrimary
                         ctx.fill()
                     } else {
                         // Minimalist: rounded pill shape with 8% past pivot
@@ -164,7 +170,7 @@ PlasmoidItem {
                         ctx.lineTo(-pillWidth / 2 + roundRadius, pillCounterWeight)
                         ctx.arc(-pillWidth / 2 + roundRadius, pillCounterWeight - roundRadius, roundRadius, Math.PI * 0.5, Math.PI, false)
                         ctx.closePath()
-                        ctx.fillStyle = "#e0e0e0"
+                        ctx.fillStyle = nColors.borderLight
                         ctx.fill()
 
                         // Add subtle shadow/depth
@@ -216,7 +222,7 @@ PlasmoidItem {
                         // Swiss Railway: sharp rectangular edges, protruding past center
                         ctx.beginPath()
                         ctx.rect(-handWidth / 2, -handLength, handWidth, handLength + counterWeight)
-                        ctx.fillStyle = "#ffffff"
+                        ctx.fillStyle = nColors.textPrimary
                         ctx.fill()
                     } else {
                         // Minimalist: thinner rounded pill shape
@@ -236,7 +242,7 @@ PlasmoidItem {
                         ctx.lineTo(-pillWidth / 2 + roundRadius, pillCounterWeight)
                         ctx.arc(-pillWidth / 2 + roundRadius, pillCounterWeight - roundRadius, roundRadius, Math.PI * 0.5, Math.PI, false)
                         ctx.closePath()
-                        ctx.fillStyle = "#808080"
+                        ctx.fillStyle = nColors.neutral
                         ctx.fill()
 
                         // Add subtle shadow/depth
@@ -285,7 +291,7 @@ PlasmoidItem {
                     // White pivot dot for hour and minute hands
                     ctx.beginPath()
                     ctx.arc(0, 0, radius * 0.06, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#ffffff"
+                    ctx.fillStyle = nColors.textPrimary
                     ctx.fill()
 
                     ctx.restore()
@@ -311,7 +317,7 @@ PlasmoidItem {
                     // Red pivot dot for second hand
                     ctx.beginPath()
                     ctx.arc(0, 0, radius * 0.035, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#D71921"
+                    ctx.fillStyle = nColors.accentSecondHand
                     ctx.fill()
 
                     ctx.restore()
@@ -343,13 +349,13 @@ PlasmoidItem {
                     // Draw second hand with sharp rectangular edges
                     ctx.beginPath()
                     ctx.rect(-handWidth / 2, -handLength, handWidth, handLength + counterWeight)
-                    ctx.fillStyle = "#D71921"
+                    ctx.fillStyle = nColors.accentSecondHand
                     ctx.fill()
 
                     // Draw circular dot at 80% of second hand length
                     ctx.beginPath()
                     ctx.arc(0, -handLength * 0.75, endDotRadius, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#D71921"
+                    ctx.fillStyle = nColors.accentSecondHand
                     ctx.fill()
 
                     ctx.restore()
@@ -386,7 +392,7 @@ PlasmoidItem {
                     // Draw red dot on perimeter
                     ctx.beginPath()
                     ctx.arc(0, -dotDistance, dotRadius, 0, 2 * Math.PI)
-                    ctx.fillStyle = "#D71921"
+                    ctx.fillStyle = nColors.accentSecondHand
                     ctx.fill()
 
                     ctx.restore()
@@ -405,6 +411,24 @@ PlasmoidItem {
                         minimalistSecondHand.requestPaint()
                     }
                 }
+            }
+
+            Connections {
+                target: nColors
+                function onBackgroundChanged() { clockFace.requestPaint() }
+                function onTextPrimaryChanged() {
+                    clockFace.requestPaint()
+                    hourHand.requestPaint()
+                    minuteHand.requestPaint()
+                    pivotDots.requestPaint()
+                }
+                function onAccentSecondHandChanged() {
+                    secondHand.requestPaint()
+                    secondPivotDot.requestPaint()
+                    minimalistSecondHand.requestPaint()
+                }
+                function onBorderLightChanged() { hourHand.requestPaint() }
+                function onNeutralChanged() { minuteHand.requestPaint() }
             }
 
         }

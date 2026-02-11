@@ -5,6 +5,7 @@ Item {
     required property string highTemp
     required property string lowTemp
     required property bool isLoading
+    required property QtObject colors
 
     CircleHighLow {
         anchors.centerIn: parent
@@ -15,5 +16,6 @@ Item {
         isLoading: parent.isLoading
         textScale: 0.25
         spacing: 12
+        colors: parent.colors
     }
 }

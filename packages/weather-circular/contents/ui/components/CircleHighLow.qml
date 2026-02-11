@@ -7,6 +7,7 @@ Item {
 
     required property string highTemp
     required property string lowTemp
+    required property QtObject colors
     property bool isLoading: false
     property real textScale: 0.20
     property real spacing: 8
@@ -23,7 +24,7 @@ Item {
             Text {
                 text: "↑"
                 font.pixelSize: Math.min(root.width * textScale, root.height * textScale)
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.9
             }
 
@@ -31,7 +32,7 @@ Item {
                 text: highTemp + "°"
                 font.pixelSize: Math.min(root.width * textScale, root.height * textScale)
                 font.weight: Font.Light
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: isLoading ? 0.5 : 1.0
             }
         }
@@ -44,7 +45,7 @@ Item {
             Text {
                 text: "↓"
                 font.pixelSize: Math.min(root.width * textScale, root.height * textScale)
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.9
             }
 
@@ -52,7 +53,7 @@ Item {
                 text: lowTemp + "°"
                 font.pixelSize: Math.min(root.width * textScale, root.height * textScale)
                 font.weight: Font.Light
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: isLoading ? 0.5 : 1.0
             }
         }

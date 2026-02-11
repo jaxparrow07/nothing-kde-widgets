@@ -3,7 +3,10 @@ import QtQuick.Layouts
 
 // Square layout Page 2: High/Low temps with condition
 Item {
+    id: root
+
     // Required properties
+    required property QtObject colors
     required property string highTemp
     required property string lowTemp
     required property string condition
@@ -27,7 +30,7 @@ Item {
             Text {
                 text: "↑"
                 font.pixelSize: parent.parent.width * 0.19
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.9
             }
 
@@ -35,7 +38,7 @@ Item {
                 text: highTemp + "°"
                 font.pixelSize: parent.parent.width * 0.19
                 font.weight: Font.Normal
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: isLoading ? 0.5 : 1.0
             }
         }
@@ -48,7 +51,7 @@ Item {
             Text {
                 text: "↓"
                 font.pixelSize: parent.parent.width * 0.19
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: 0.9
             }
 
@@ -56,7 +59,7 @@ Item {
                 text: lowTemp + "°"
                 font.pixelSize: parent.parent.width * 0.19
                 font.weight: Font.Normal
-                color: "#ffffff"
+                color: root.colors.textPrimary
                 opacity: isLoading ? 0.5 : 1.0
             }
         }
@@ -71,7 +74,7 @@ Item {
             Layout.bottomMargin: 5
             text: condition
             font.pixelSize: parent.width * 0.09
-            color: "#ffffff"
+            color: root.colors.textPrimary
             opacity: 0.9
         }
 

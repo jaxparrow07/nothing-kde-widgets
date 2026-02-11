@@ -4,6 +4,7 @@ import QtQuick
 Item {
     required property string currentTemp
     required property bool isLoading
+    required property QtObject colors
 
     CircleTemperature {
         anchors.centerIn: parent
@@ -12,5 +13,6 @@ Item {
         temperature: parent.currentTemp
         isLoading: parent.isLoading
         textScale: 0.4
+        colors: parent.colors
     }
 }

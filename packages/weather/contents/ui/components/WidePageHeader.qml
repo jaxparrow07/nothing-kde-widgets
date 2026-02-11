@@ -7,6 +7,7 @@ RowLayout {
     id: header
 
     // Required properties - passed from parent
+    required property QtObject colors
     required property string weatherIconPath
     required property bool isLoading
     required property string errorMessage
@@ -26,7 +27,8 @@ RowLayout {
         Layout.preferredWidth: parent.height * 0.585
         Layout.preferredHeight: parent.height * 0.585
         source: header.weatherIconPath
-        color: "#ffffff"
+        color: header.colors.iconColor
+        isMask: true
         visible: !header.isLoading && header.errorMessage === ""
     }
 
@@ -35,7 +37,7 @@ RowLayout {
         text: header.currentTemp + "°"
         font.pixelSize: parent.height * 0.36
         font.weight: Font.Normal
-        color: "#ffffff"
+        color: header.colors.textPrimary
         opacity: header.isLoading ? 0.5 : 1.0
     }
 
@@ -49,14 +51,14 @@ RowLayout {
             Text {
                 text: "↑"
                 font.pixelSize: parent.parent.parent.height * 0.144
-                color: "#ffffff"
+                color: header.colors.textPrimary
                 opacity: 0.9
             }
             Text {
                 text: header.highTemp + "°"
                 font.pixelSize: parent.parent.parent.height * 0.144
                 font.weight: Font.Normal
-                color: "#ffffff"
+                color: header.colors.textPrimary
             }
         }
 
@@ -65,14 +67,14 @@ RowLayout {
             Text {
                 text: "↓"
                 font.pixelSize: parent.parent.parent.height * 0.144
-                color: "#ffffff"
+                color: header.colors.textPrimary
                 opacity: 0.9
             }
             Text {
                 text: header.lowTemp + "°"
                 font.pixelSize: parent.parent.parent.height * 0.144
                 font.weight: Font.Normal
-                color: "#ffffff"
+                color: header.colors.textPrimary
             }
         }
     }
@@ -87,7 +89,7 @@ RowLayout {
         Text {
             text: header.location
             font.pixelSize: parent.parent.height * 0.16
-            color: "#ffffff"
+            color: header.colors.textPrimary
             horizontalAlignment: Text.AlignRight
         }
 
@@ -95,7 +97,7 @@ RowLayout {
             text: header.condition
             font.pixelSize: parent.parent.height * 0.16
             font.weight: Font.Light
-            color: "#ffffff"
+            color: header.colors.textPrimary
             opacity: 0.8
             horizontalAlignment: Text.AlignRight
         }

@@ -4,6 +4,9 @@ import org.kde.kirigami as Kirigami
 Item {
     id: carouselRoot
 
+    // NothingColors reference
+    required property QtObject colors
+
     // Public properties - Media data
     property string albumArt: ""
     property bool isPlaying: false
@@ -27,7 +30,7 @@ Item {
         id: mainRect
         anchors.fill: parent
         anchors.margins: 10
-        color: "#1a1a1a"
+        color: carouselRoot.colors.background
         radius: 20
         opacity: 0.95
         clip: true
@@ -48,7 +51,7 @@ Item {
                 width: 32
                 height: 32
                 source: "media-skip-backward"
-                color: "white"
+                color: carouselRoot.colors.textPrimary
                 visible: carouselRoot.canGoPrevious
             }
 
@@ -63,7 +66,7 @@ Item {
                 width: 32
                 height: 32
                 source: "media-skip-forward"
-                color: "white"
+                color: carouselRoot.colors.textPrimary
                 visible: carouselRoot.canGoNext
             }
         }
@@ -89,9 +92,10 @@ Item {
             // Use the AlbumArtwork component
             AlbumArtwork {
                 anchors.fill: parent
+                colors: carouselRoot.colors
                 artUrl: carouselRoot.albumArt
                 cornerRadius: 20
-                backgroundColor: "#1a1a1a"
+                backgroundColor: carouselRoot.colors.background
                 z: 2
             }
 
@@ -115,7 +119,7 @@ Item {
                 width: 48
                 height: 48
                 source: carouselRoot.isPlaying ? "media-playback-pause" : "media-playback-start"
-                color: "white"
+                color: carouselRoot.colors.textPrimary
                 z: 10
                 // Show if paused OR if playing and hovering center
                 visible: (carouselRoot.canPlay || carouselRoot.canPause) && (!carouselRoot.isPlaying || carouselRoot.centerHovered)

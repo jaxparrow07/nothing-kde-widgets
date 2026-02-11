@@ -8,6 +8,7 @@ Kirigami.FormLayout {
 
     property alias cfg_deviceType: deviceTypeCombo.currentValue
     property alias cfg_updateInterval: updateIntervalSpin.value
+    property alias cfg_themeMode: themeModeCombo.currentIndex
     property string cfg_customIconMappings: ""
     property string cfg_deviceHistory: ""
 
@@ -32,6 +33,18 @@ Kirigami.FormLayout {
         } catch (e) {
             return []
         }
+    }
+
+    // Theme Section
+    Item {
+        Kirigami.FormData.isSection: true
+        Kirigami.FormData.label: i18n("Theme")
+    }
+
+    QQC2.ComboBox {
+        id: themeModeCombo
+        Kirigami.FormData.label: i18n("Theme:")
+        model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
     }
 
     // Basic Settings Section

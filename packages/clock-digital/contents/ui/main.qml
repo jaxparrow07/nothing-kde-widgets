@@ -2,18 +2,22 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
+import "components"
 
 PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
-    preferredRepresentation: fullRepresentation
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
 
     property bool use24HourFormat: plasmoid.configuration.use24HourFormat
 
     property string currentHours: ""
     property string currentMinutes: ""
-    property bool colonVisible: true
 
     // Individual digits
     property string hoursDigit1: "0"
@@ -34,14 +38,6 @@ PlasmoidItem {
         repeat: true
         onTriggered: updateTime()
         Component.onCompleted: updateTime()
-    }
-
-    // Timer to blink the colon separator (every 500ms)
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: root.colonVisible = !root.colonVisible
     }
 
     function updateTime() {
@@ -68,6 +64,79 @@ PlasmoidItem {
         root.hoursDigit2 = hoursStr.length > 1 ? hoursStr[1] : hoursStr[0]
         root.minutesDigit1 = minutesStr[0]
         root.minutesDigit2 = minutesStr[1]
+    }
+
+    compactRepresentation: Item {
+        id: compactItem
+
+        states: [
+            State {
+                name: "horizontalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Horizontal
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: true
+                    compactItem.Layout.fillWidth: false
+                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + compactItem.height * 0.4
+                    compactItem.Layout.maximumWidth: compactItem.Layout.minimumWidth
+                }
+            },
+            State {
+                name: "verticalPanel"
+                when: Plasmoid.formFactor === PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.fillHeight: false
+                    compactItem.Layout.fillWidth: true
+                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + compactItem.width * 0.4
+                    compactItem.Layout.maximumHeight: compactItem.Layout.minimumHeight
+                }
+            },
+            State {
+                name: "desktop"
+                when: Plasmoid.formFactor !== PlasmaCore.Types.Horizontal && Plasmoid.formFactor !== PlasmaCore.Types.Vertical
+
+                PropertyChanges {
+                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + 8
+                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + 8
+                }
+            }
+        ]
+
+        Row {
+            id: compactRow
+            anchors.centerIn: parent
+            spacing: 4
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.currentHours
+                font.family: ndotFont.name
+                font.pixelSize: compactItem.height * 0.55
+                color: nColors.textPrimary
+            }
+
+            BlinkingSeparator {
+                anchors.verticalCenter: parent.verticalCenter
+                dotSize: Math.max(compactItem.height * 0.08, 3)
+                dotColor: nColors.textPrimary
+                dotSpacing: Math.max(compactItem.height * 0.04, 2)
+                blinking: true
+            }
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.currentMinutes
+                font.family: ndotFont.name
+                font.pixelSize: compactItem.height * 0.55
+                color: nColors.textPrimary
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.expanded = !root.expanded
+        }
     }
 
     fullRepresentation: Item {
@@ -100,7 +169,7 @@ PlasmoidItem {
             id: mainRect
             anchors.fill: parent
             anchors.margins: 10
-            color: "#1a1a1a"
+            color: nColors.background
             radius: parent.calculatedRadius
             opacity: 0.95
 
@@ -123,7 +192,7 @@ PlasmoidItem {
                             text: root.hoursDigit1
                             font.family: ndotFont.name
                             font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: "#ffffff"
+                            color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -133,7 +202,7 @@ PlasmoidItem {
                             text: root.hoursDigit2
                             font.family: ndotFont.name
                             font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: "#ffffff"
+                            color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -149,7 +218,7 @@ PlasmoidItem {
                             text: root.minutesDigit1
                             font.family: ndotFont.name
                             font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: "#ffffff"
+                            color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -159,7 +228,7 @@ PlasmoidItem {
                             text: root.minutesDigit2
                             font.family: ndotFont.name
                             font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: "#ffffff"
+                            color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -182,7 +251,7 @@ PlasmoidItem {
                         text: root.hoursDigit1
                         font.family: ndotFont.name
                         font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
-                        color: "#ffffff"
+                        color: nColors.textPrimary
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -193,41 +262,18 @@ PlasmoidItem {
                         text: root.hoursDigit2
                         font.family: ndotFont.name
                         font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
-                        color: "#ffffff"
+                        color: nColors.textPrimary
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
 
                     // Blinking circles separator
-                    Column {
+                    BlinkingSeparator {
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: Math.min(parent.parent.height * 0.1, 8)
-
-                        Rectangle {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: Math.min(parent.parent.parent.height * 0.07, 10)
-                            height: width
-                            radius: width / 2
-                            color: "#ffffff"
-                            opacity: root.colonVisible ? 1.0 : 0.3
-
-                            Behavior on opacity {
-                                NumberAnimation { duration: 100 }
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: Math.min(parent.parent.parent.height * 0.07, 10)
-                            height: width
-                            radius: width / 2
-                            color: "#ffffff"
-                            opacity: root.colonVisible ? 1.0 : 0.3
-
-                            Behavior on opacity {
-                                NumberAnimation { duration: 100 }
-                            }
-                        }
+                        dotSize: Math.min(parent.parent.height * 0.07, 10)
+                        dotColor: nColors.textPrimary
+                        dotSpacing: Math.min(parent.parent.height * 0.1, 8)
+                        blinking: true
                     }
 
                     // Minutes digit 1
@@ -236,7 +282,7 @@ PlasmoidItem {
                         text: root.minutesDigit1
                         font.family: ndotFont.name
                         font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
-                        color: "#ffffff"
+                        color: nColors.textPrimary
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -247,7 +293,7 @@ PlasmoidItem {
                         text: root.minutesDigit2
                         font.family: ndotFont.name
                         font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
-                        color: "#ffffff"
+                        color: nColors.textPrimary
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }

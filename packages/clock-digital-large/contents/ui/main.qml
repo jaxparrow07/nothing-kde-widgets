@@ -3,11 +3,18 @@ import QtQuick.Layouts
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents
+import "components"
 
 PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+
+    NothingColors {
+        id: nColors
+        themeMode: plasmoid.configuration.themeMode
+    }
+
     preferredRepresentation: fullRepresentation
 
     property int fontStyle: plasmoid.configuration.fontStyle
@@ -113,7 +120,7 @@ PlasmoidItem {
                 font.family: robotoFont.name
                 font.bold: true
                 font.weight: Font.Bold
-                color: root.useDarkerFont ? "#2a2a2a" : "#ffffff"
+                color: nColors.textPrimary
                 opacity: 0.9
                 Layout.preferredHeight: 10
 
@@ -122,7 +129,7 @@ PlasmoidItem {
                     var availableWidth = parent.width - 40
 
                     return Math.min(availableHeight * 0.1, availableWidth * 0.1)
-                    
+
                 }
 
                 Layout.topMargin: 0
@@ -140,7 +147,7 @@ PlasmoidItem {
                 Layout.topMargin: -30
 
                 text: root.currentTime
-                color: root.useDarkerFont ? "#2a2a2a" : "#ffffff"
+                color: nColors.textPrimary
 
                 // Font selection based on style
                 font.family: {
