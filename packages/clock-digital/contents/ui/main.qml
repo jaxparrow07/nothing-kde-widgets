@@ -76,11 +76,11 @@ PlasmoidItem {
     property int currentSeconds: 0
     readonly property bool colonVisible: currentSeconds % 2 === 0
 
-    property var timezonesData: ({})
-
     Config.TimezonesData {
         id: timezonesDataSource
     }
+
+    property var timezonesData: ({})
 
     function loadTimezones() {
         var timezoneMap = {}
@@ -91,20 +91,94 @@ PlasmoidItem {
         root.timezonesData = timezoneMap
     }
 
-    function getTimezoneOffset(timezone) {
-        if (root.timezonesData && root.timezonesData[timezone]) {
-            return root.timezonesData[timezone].offset
+    // --- DST-aware offset calculation ---
+
+    // Returns the Nth occurrence of a weekday in a given month/year
+    // weekday: 0=Sun, 1=Mon, ... 6=Sat; n: 1=first, 2=second, etc.
+    function nthWeekday(year, month, weekday, n) {
+        var d = new Date(Date.UTC(year, month, 1))
+        var count = 0
+        while (d.getUTCMonth() === month) {
+            if (d.getUTCDay() === weekday) {
+                count++
+                if (count === n) return d.getUTCDate()
+            }
+            d.setUTCDate(d.getUTCDate() + 1)
         }
-        return 0
+        return 1
+    }
+
+    // Returns the last occurrence of a weekday in a given month/year
+    function lastWeekday(year, month, weekday) {
+        var d = new Date(Date.UTC(year, month + 1, 0)) // last day of month
+        while (d.getUTCDay() !== weekday) {
+            d.setUTCDate(d.getUTCDate() - 1)
+        }
+        return d.getUTCDate()
+    }
+
+    // Check if DST is active for a given UTC date and DST group
+    function isDSTActive(utcDate, dstGroup) {
+        if (!dstGroup || dstGroup === "") return false
+
+        var year = utcDate.getUTCFullYear()
+        var month = utcDate.getUTCMonth() // 0-indexed
+        var day = utcDate.getUTCDate()
+
+        if (dstGroup === "namerica") {
+            // 2nd Sunday in March (2:00 local) → 1st Sunday in November (2:00 local)
+            var marStart = nthWeekday(year, 2, 0, 2) // March, Sunday, 2nd
+            var novEnd = nthWeekday(year, 10, 0, 1)  // November, Sunday, 1st
+            var afterStart = (month > 2) || (month === 2 && day >= marStart)
+            var beforeEnd = (month < 10) || (month === 10 && day < novEnd)
+            return afterStart && beforeEnd
+        }
+
+        if (dstGroup === "europe") {
+            // Last Sunday in March → Last Sunday in October
+            var marLast = lastWeekday(year, 2, 0) // March, last Sunday
+            var octLast = lastWeekday(year, 9, 0) // October, last Sunday
+            var afterStart2 = (month > 2) || (month === 2 && day >= marLast)
+            var beforeEnd2 = (month < 9) || (month === 9 && day < octLast)
+            return afterStart2 && beforeEnd2
+        }
+
+        if (dstGroup === "australia") {
+            // 1st Sunday in October → 1st Sunday in April (southern hemisphere: summer = Oct-Apr)
+            var octStart = nthWeekday(year, 9, 0, 1)  // October, Sunday, 1st
+            var aprEnd = nthWeekday(year, 3, 0, 1)     // April, Sunday, 1st
+            var inSummer = (month > 9) || (month === 9 && day >= octStart)
+            var beforeApr = (month < 3) || (month === 3 && day < aprEnd)
+            return inSummer || beforeApr
+        }
+
+        if (dstGroup === "nz") {
+            // Last Sunday in September → 1st Sunday in April
+            var sepLast = lastWeekday(year, 8, 0) // September, last Sunday
+            var aprEndNZ = nthWeekday(year, 3, 0, 1)
+            var inSummerNZ = (month > 8) || (month === 8 && day >= sepLast)
+            var beforeAprNZ = (month < 3) || (month === 3 && day < aprEndNZ)
+            return inSummerNZ || beforeAprNZ
+        }
+
+        return false
+    }
+
+    function getTimezoneOffset(timezone) {
+        if (!root.timezonesData || !root.timezonesData[timezone]) return 0
+
+        var tz = root.timezonesData[timezone]
+        var offset = tz.offset
+        if (isDSTActive(new Date(), tz.dst || "")) {
+            offset += 1.0
+        }
+        return offset
     }
 
     function getTimeInTimezone(timezone) {
         var now = new Date()
-        var utcHours = now.getUTCHours()
-        var utcMinutes = now.getUTCMinutes()
         var offset = getTimezoneOffset(timezone)
-
-        var totalMinutes = (utcHours * 60 + utcMinutes) + (offset * 60)
+        var totalMinutes = (now.getUTCHours() * 60 + now.getUTCMinutes()) + (offset * 60)
 
         while (totalMinutes < 0) totalMinutes += 24 * 60
         while (totalMinutes >= 24 * 60) totalMinutes -= 24 * 60
@@ -127,28 +201,26 @@ PlasmoidItem {
 
     function getDayOfWeekInTimezone(timezone) {
         var now = new Date()
-        var utcDay = now.getUTCDay()
-        var utcHours = now.getUTCHours()
         var offset = getTimezoneOffset(timezone)
-        var totalHours = utcHours + offset
+        var totalHours = now.getUTCHours() + offset
 
         var dayOffset = 0
         if (totalHours < 0) dayOffset = -1
         if (totalHours >= 24) dayOffset = 1
 
-        var adjustedDay = (utcDay + dayOffset + 7) % 7
+        var adjustedDay = (now.getUTCDay() + dayOffset + 7) % 7
         var dayNames = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
         return dayNames[adjustedDay]
     }
 
     function calculateHourDifference(timezone) {
         var now = new Date()
-        var localOffsetMinutes = -now.getTimezoneOffset()
-        var localOffsetHours = localOffsetMinutes / 60
+        var localOffsetHours = -now.getTimezoneOffset() / 60
         var selectedOffsetHours = getTimezoneOffset(timezone)
-        var diffHours = selectedOffsetHours - localOffsetHours
-        var sign = diffHours >= 0 ? "+" : ""
-        return sign + diffHours.toFixed(1)
+        var diff = selectedOffsetHours - localOffsetHours
+        var sign = diff >= 0 ? "+" : ""
+        if (diff === Math.floor(diff)) return sign + diff.toFixed(0)
+        return sign + diff.toFixed(1)
     }
 
     function updateWorldTime() {
@@ -206,7 +278,6 @@ PlasmoidItem {
         }
     }
 
-    // Load timezones when needed
     Component.onCompleted: {
         loadTimezones()
         if (widgetVariant === 1) {
