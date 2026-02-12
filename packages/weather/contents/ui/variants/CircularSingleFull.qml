@@ -1,5 +1,6 @@
 import QtQuick
 import "../components"
+import "../components/circle"
 
 Item {
     id: fullItem

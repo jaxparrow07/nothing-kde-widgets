@@ -13,19 +13,19 @@ KCM.SimpleKCM {
 
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

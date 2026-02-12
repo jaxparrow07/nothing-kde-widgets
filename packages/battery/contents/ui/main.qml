@@ -670,7 +670,7 @@ PlasmoidItem {
                 anchors.bottom: parent.bottom
                 anchors.rightMargin: 20
                 anchors.bottomMargin: 20
-                text: "PC"
+                text: i18n("PC")
                 font.family: ndotFont.name
                 font.pixelSize: 17
                 color: nColors.textPrimary
@@ -707,7 +707,7 @@ PlasmoidItem {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Detecting Battery..."
+                        text: i18n("Detecting Battery...")
                         font.pixelSize: 17
                         color: nColors.textPrimary
                         opacity: 0.7

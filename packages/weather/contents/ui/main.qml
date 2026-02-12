@@ -5,6 +5,9 @@ import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
 import "components"
+import "components/circle"
+import "components/square"
+import "components/wide"
 
 PlasmoidItem {
     id: root
@@ -415,8 +418,8 @@ PlasmoidItem {
 
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
-        Layout.minimumWidth: 200
-        Layout.minimumHeight: 200
+        Layout.minimumWidth: 100
+        Layout.minimumHeight: 100
 
         sourceComponent: {
             if (!root.variantChosen) return selectorComponent

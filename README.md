@@ -27,12 +27,12 @@
 |-------------|--------------|----------|---------|
 | **Analog Clock** | `clock-analog` | Modern, Swiss | <img src="0-images/analog-clock/analog-clock-modern.png" width="150"> <img src="0-images/analog-clock/analog-clock-swiss.png" width="150"> |
 | **Digital Clock** | `clock-digital` | Pill, Square | <img src="0-images/digital-clock/digital-clock-pill.png" width="150"> <img src="0-images/digital-clock/digital-clock-square.png" width="150"> |
+| **Digital Clock (World)** | `clock-digital` | Page 1, Page 2 | <img src="0-images/world-clock/world-clock-1.png" width="150"> <img src="0-images/world-clock/world-clock-2.png" width="150"> |
 | **Digital Clock Large** | `clock-digital-large` | Serif, Sharp | <img src="0-images/digital-clock-large/serif.png" width="150"> <img src="0-images/digital-clock-large/sharp.png" width="150"> |
-| **World Clock** | `clock-digital-world` | Page 1, Page 2 | <img src="0-images/world-clock/world-clock-1.png" width="150"> <img src="0-images/world-clock/world-clock-2.png" width="150"> |
 | **Date Widget** | `date` | Page 1 | <img src="0-images/date/date-1.png" width="150"> |
 | **Battery** | `battery` | Page 1 | <img src="0-images/battery/battery-1.png" width="150"> |
 | **Weather** | `weather` | Rect Page 1, Rect Page 2, Square Page 1, Square Page 2 | <img src="0-images/weather-default/weather-rect-1.png" width="150"> <img src="0-images/weather-default/weather-rect-2.png" width="150"> <img src="0-images/weather-default/weather-square-1.png" width="150"> <img src="0-images/weather-default/weather-square-2.png" width="150"> |
-| **Weather Circular** | `weather-circular` | Circle Page 1, Circle Page 2, Circle Page 3, Grid | <img src="0-images/weather-circle/weather-circle-1.png" width="150"> <img src="0-images/weather-circle/weather-circle-2.png" width="150"> <img src="0-images/weather-circle/weather-circle-3.png" width="150"> <img src="0-images/weather-circle/weather-grid.png" width="150"> |
+| **Weather (Circular)** | `weather` | Circle Page 1, Circle Page 2, Circle Page 3, Grid | <img src="0-images/weather-circle/weather-circle-1.png" width="150"> <img src="0-images/weather-circle/weather-circle-2.png" width="150"> <img src="0-images/weather-circle/weather-circle-3.png" width="150"> <img src="0-images/weather-circle/weather-grid.png" width="150"> |
 | **Media Player** | `media` | Page 1, Page 2 | <img src="0-images/media/media-1.png" width="150"> <img src="0-images/media/media-2.png" width="150"> |
 | **Photo Frame** | `photo` | Pill, Square | <img src="0-images/photo/photo-pill.png" width="150"> <img src="0-images/photo/photo-square.png" width="150"> |
 
@@ -73,13 +73,11 @@ or
 
 Available package names:
 - `clock-analog` - Analog clock widget
-- `clock-digital` - Digital clock widget
+- `clock-digital` - Digital & World clock widget
 - `clock-digital-large` - Large digital clock widget
-- `clock-digital-world` - World clock widget
 - `date` - Date display widget
 - `battery` - Battery monitoring widget
-- `weather` - Weather widget with multiple layouts
-- `weather-circular` - Circular weather widget
+- `weather` - Weather widget with multiple layouts ( square, rectangular, and circular - single and double page )
 - `media` - Media player control widget
 - `photo` - Photo frame widget
 
@@ -202,6 +200,9 @@ This project is not affiliated with, endorsed by, or sponsored by Nothing Techno
 
 ## Contributing
 Contributions are welcome! Please feel free to submit issues and pull requests on [GitHub](https://github.com/jaxparrow07/nothing-kde-widgets).
+
+### Translations
+Want to translate the widgets into your language? See the [Translation Guide](translate/TRANSLATE.md) for instructions.
 
 ## Support
 If you like these widgets, consider supporting the development:

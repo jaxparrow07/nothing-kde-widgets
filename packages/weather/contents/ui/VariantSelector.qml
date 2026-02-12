@@ -21,7 +21,7 @@ Item {
 
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Choose Style"
+                text: i18n("Choose Style")
                 font.pixelSize: 14
                 font.weight: Font.Medium
                 color: selector.colors.textSecondary
@@ -31,9 +31,9 @@ Item {
 
             Repeater {
                 model: [
-                    { label: "Full", variant: 0 },
-                    { label: "Circular", variant: 1 },
-                    { label: "Circle Pages", variant: 2 }
+                    { label: i18n("Full"), variant: 0 },
+                    { label: i18n("Circular"), variant: 1 },
+                    { label: i18n("Circle Pages"), variant: 2 }
                 ]
 
                 Text {
@@ -59,7 +59,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
-                text: "can be changed later in configuration"
+                text: i18n("can be changed later in configuration")
                 font.pixelSize: 10
                 color: selector.colors.textMuted
                 wrapMode: Text.WordWrap

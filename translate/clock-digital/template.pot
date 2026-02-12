@@ -1,0 +1,103 @@
+# Nothing Digital Clock - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_com.jaxparrow07.nothingkdewidgets."
+"digitalclock 2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: packages/clock-digital/contents/config/config.qml:6
+msgid "General"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:72
+msgid "Style:"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:105
+#: packages/clock-digital/contents/ui/VariantSelector.qml:34
+msgid "Digital Clock"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:141
+#: packages/clock-digital/contents/ui/VariantSelector.qml:35
+msgid "World Clock"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:166
+msgid "Use 24-Hour Format"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:172
+msgid ""
+"Show time in 24-hour format (e.g., 14:30) instead of 12-hour format (e.g., "
+"2:30)"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:190
+msgid "City Name:"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:196
+msgid "e.g., Austin, New York, Tokyo"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:202
+msgid "Enter the city name to display on the widget."
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:219
+msgid "Time Zone:"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:244
+msgid ""
+"Select a timezone from the list above. The widget will display the time for "
+"the selected location."
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:262
+msgid "Theme:"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:268
+msgid "Dark"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:268
+msgid "Light"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:268
+msgid "Follow System"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/config/ConfigGeneral.qml:274
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+
+#: packages/clock-digital/contents/ui/main.qml:269
+msgid "click to configure"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/VariantSelector.qml:24
+msgid "Choose Style"
+msgstr ""
+
+#: packages/clock-digital/contents/ui/VariantSelector.qml:61
+msgid "can be changed later in configuration"
+msgstr ""

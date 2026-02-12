@@ -16,7 +16,7 @@ KCM.SimpleKCM {
 
         // Border Settings Section
         Label {
-            text: "Border Settings"
+            text: i18n("Border Settings")
             font.bold: true
             font.pointSize: 11
         }
@@ -24,12 +24,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: borderEnabledCheckbox
-                text: "Enable Borders"
+                text: i18n("Enable Borders")
             }
         }
 
         Label {
-            text: "Adds margin around the image to reveal the dark background, creating a frame effect"
+            text: i18n("Adds margin around the image to reveal the dark background, creating a frame effect")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -42,7 +42,7 @@ KCM.SimpleKCM {
             enabled: borderEnabledCheckbox.checked
 
             Label {
-                text: "Border Size:"
+                text: i18n("Border Size:")
                 Layout.alignment: Qt.AlignLeft
             }
 
@@ -70,7 +70,7 @@ KCM.SimpleKCM {
 
         // Shape Settings Section
         Label {
-            text: "Shape Settings"
+            text: i18n("Shape Settings")
             font.bold: true
             font.pointSize: 11
         }
@@ -78,12 +78,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: pillShapeCheckbox
-                text: "Pill Shape"
+                text: i18n("Pill Shape")
             }
         }
 
         Label {
-            text: "Automatically creates a circle (if square) or pill shape (if rectangular). When disabled, uses standard rounded corners."
+            text: i18n("Automatically creates a circle (if square) or pill shape (if rectangular). When disabled, uses standard rounded corners.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -99,26 +99,26 @@ KCM.SimpleKCM {
 
         // Theme Section
         Label {
-            text: "Theme"
+            text: i18n("Theme")
             font.bold: true
             font.pointSize: 11
         }
 
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

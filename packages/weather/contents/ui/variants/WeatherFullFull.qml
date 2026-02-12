@@ -3,6 +3,8 @@ import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import "../components"
+import "../components/square"
+import "../components/wide"
 
 Item {
     id: fullItem

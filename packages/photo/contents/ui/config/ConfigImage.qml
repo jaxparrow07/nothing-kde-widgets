@@ -16,7 +16,7 @@ KCM.SimpleKCM {
 
         // Image Source Section
         Label {
-            text: "Image Source"
+            text: i18n("Image Source")
             font.bold: true
             font.pointSize: 11
         }
@@ -28,18 +28,18 @@ KCM.SimpleKCM {
             TextField {
                 id: imagePathField
                 Layout.fillWidth: true
-                placeholderText: "Select an image file..."
+                placeholderText: i18n("Select an image file...")
                 readOnly: true
             }
 
             Button {
-                text: "Browse..."
+                text: i18n("Browse...")
                 onClicked: fileDialog.open()
             }
         }
 
         Label {
-            text: "Select a photo to display in the widget (PNG, JPG, JPEG, WebP)"
+            text: i18n("Select a photo to display in the widget (PNG, JPG, JPEG, WebP)")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -55,7 +55,7 @@ KCM.SimpleKCM {
 
         // Image Fit Mode Section
         Label {
-            text: "Image Fit Mode"
+            text: i18n("Image Fit Mode")
             font.bold: true
             font.pointSize: 11
         }
@@ -65,19 +65,19 @@ KCM.SimpleKCM {
             Layout.fillWidth: true
 
             Label {
-                text: "Fit Mode:"
+                text: i18n("Fit Mode:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: imageFillModeCombo
-                model: ["Crop (Fill Frame)", "Fit (Show All)", "Stretch"]
+                model: [i18n("Crop (Fill Frame)"), i18n("Fit (Show All)"), i18n("Stretch")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Crop: Fills the frame completely, may crop parts of the image\nFit: Shows the entire image, may have letterboxing\nStretch: Fills frame completely, may distort the image"
+            text: i18n("Crop: Fills the frame completely, may crop parts of the image\nFit: Shows the entire image, may have letterboxing\nStretch: Fills frame completely, may distort the image")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -93,7 +93,7 @@ KCM.SimpleKCM {
 
         // Effects Section
         Label {
-            text: "Effects"
+            text: i18n("Effects")
             font.bold: true
             font.pointSize: 11
         }
@@ -101,12 +101,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: grayscaleCheckbox
-                text: "Grayscale"
+                text: i18n("Grayscale")
             }
         }
 
         Label {
-            text: "Convert the image to black and white (grayscale)"
+            text: i18n("Convert the image to black and white (grayscale)")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -120,7 +120,7 @@ KCM.SimpleKCM {
 
     FileDialog {
         id: fileDialog
-        title: "Select an Image"
+        title: i18n("Select an Image")
         nameFilters: ["Image files (*.png *.jpg *.jpeg *.webp *.bmp *.gif)"]
         onAccepted: {
             imagePathField.text = fileDialog.selectedFile

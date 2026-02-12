@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 Jack Faith <zinczorphin@email.com>
-# SPDX-License-Identifier: GPL-3.0+
-
 set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Build translations if gettext is available
+build_translations() {
+	if command -v msgfmt &>/dev/null; then
+		echo "[*] Compiling translations..."
+		"${SCRIPT_DIR}/translate/build.sh" 2>/dev/null || true
+	fi
+}
 
 # Function to install a single widget
 install_widget() {
@@ -52,6 +59,7 @@ install_widget() {
 # Main script logic
 if [[ "$1" == "--all" || "$1" == "-a" ]]; then
 	echo "[*] Installing all widgets..."
+	build_translations
 
 	# Get all widget directories
 	WIDGETS=($(ls -d packages/*/ 2>/dev/null | xargs -n 1 basename))
@@ -101,6 +109,7 @@ if [[ "$1" == "--all" || "$1" == "-a" ]]; then
 
 elif [[ -n "$1" && -d "packages/$1" ]]; then
 	# Install single widget with reload
+	build_translations
 	install_widget "$1" "false"
 	echo "[+] Installation complete!"
 else

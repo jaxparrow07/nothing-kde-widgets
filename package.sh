@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# SPDX-FileCopyrightText: 2024 Jack Faith <zinczorphin@email.com>
-# SPDX-License-Identifier: GPL-3.0+
-
 # Package KDE Plasma widgets into distributable .plasmoid files
 
 set -e

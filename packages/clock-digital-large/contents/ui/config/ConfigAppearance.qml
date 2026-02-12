@@ -17,19 +17,19 @@ KCM.SimpleKCM {
 
         RowLayout {
             Label {
-                text: "Font Style:"
+                text: i18n("Font Style:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: fontStyleCombo
-                model: ["Dotted", "Dot Matrix", "Serif", "Segmented", "Segmented Sharp"]
+                model: [i18n("Dotted"), i18n("Dot Matrix"), i18n("Serif"), i18n("Segmented"), i18n("Segmented Sharp")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dotted: Bigger dots, cleaner look"
+            text: i18n("Dotted: Bigger dots, cleaner look")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -37,7 +37,7 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: "Dot Matrix: Nothing's iconic dot matrix font"
+            text: i18n("Dot Matrix: Nothing's iconic dot matrix font")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -45,7 +45,7 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: "Serif: Nothing's new serif font"
+            text: i18n("Serif: Nothing's new serif font")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -53,7 +53,7 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: "Segmented: Subway board inspired font that nothing designed"
+            text: i18n("Segmented: Subway board inspired font that nothing designed")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -61,7 +61,7 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: "Segmented Sharp: Segmented but sharper"
+            text: i18n("Segmented Sharp: Segmented but sharper")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -69,7 +69,7 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: "NOTE: Segmented fonts don't have separator (:)"
+            text: i18n("NOTE: Segmented fonts don't have separator (:)")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -87,12 +87,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: showDateCheckbox
-                text: "Show Date"
+                text: i18n("Show Date")
             }
         }
 
         Label {
-            text: "Display the current date above the time (e.g., \"Thu, 31 Jan\")"
+            text: i18n("Display the current date above the time (e.g., \"Thu, 31 Jan\")")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -102,12 +102,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: use24HourCheckbox
-                text: "Use 24-Hour Format"
+                text: i18n("Use 24-Hour Format")
             }
         }
 
         Label {
-            text: "Show time in 24-hour format (e.g., 14:30) instead of 12-hour format (e.g., 2:30)"
+            text: i18n("Show time in 24-hour format (e.g., 14:30) instead of 12-hour format (e.g., 2:30)")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -124,12 +124,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: useDarkerFontCheckbox
-                text: "Use Darker Font Color"
+                text: i18n("Use Darker Font Color")
             }
         }
 
         Label {
-            text: "Use a darker font color for better visibility on lighter backgrounds"
+            text: i18n("Use a darker font color for better visibility on lighter backgrounds")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -145,19 +145,19 @@ KCM.SimpleKCM {
 
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

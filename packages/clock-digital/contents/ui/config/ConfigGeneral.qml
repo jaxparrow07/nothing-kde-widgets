@@ -69,7 +69,7 @@ KCM.SimpleKCM {
 
         // --- Style selection ---
         Label {
-            text: "Style:"
+            text: i18n("Style:")
             font.weight: Font.Medium
         }
 
@@ -102,7 +102,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Digital Clock"
+                        text: i18n("Digital Clock")
                         font.pointSize: 9
                     }
                 }
@@ -138,7 +138,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "World Clock"
+                        text: i18n("World Clock")
                         font.pointSize: 9
                     }
                 }
@@ -163,13 +163,13 @@ KCM.SimpleKCM {
             visible: cfg_widgetVariant === 0
             CheckBox {
                 id: use24HourCheckbox
-                text: "Use 24-Hour Format"
+                text: i18n("Use 24-Hour Format")
             }
         }
 
         Label {
             visible: cfg_widgetVariant === 0
-            text: "Show time in 24-hour format (e.g., 14:30) instead of 12-hour format (e.g., 2:30)"
+            text: i18n("Show time in 24-hour format (e.g., 14:30) instead of 12-hour format (e.g., 2:30)")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -187,19 +187,19 @@ KCM.SimpleKCM {
         // --- World clock settings (variant 1) ---
         Label {
             visible: cfg_widgetVariant === 1
-            text: "City Name:"
+            text: i18n("City Name:")
         }
 
         TextField {
             id: cityNameField
             visible: cfg_widgetVariant === 1
-            placeholderText: "e.g., Austin, New York, Tokyo"
+            placeholderText: i18n("e.g., Austin, New York, Tokyo")
             Layout.fillWidth: true
         }
 
         Label {
             visible: cfg_widgetVariant === 1
-            text: "Enter the city name to display on the widget."
+            text: i18n("Enter the city name to display on the widget.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -216,7 +216,7 @@ KCM.SimpleKCM {
 
         Label {
             visible: cfg_widgetVariant === 1
-            text: "Time Zone:"
+            text: i18n("Time Zone:")
         }
 
         ComboBox {
@@ -241,7 +241,7 @@ KCM.SimpleKCM {
 
         Label {
             visible: cfg_widgetVariant === 1
-            text: "Select a timezone from the list above. The widget will display the time for the selected location."
+            text: i18n("Select a timezone from the list above. The widget will display the time for the selected location.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -259,19 +259,19 @@ KCM.SimpleKCM {
         // --- Theme (always visible) ---
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

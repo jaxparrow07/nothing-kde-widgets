@@ -1,0 +1,160 @@
+# Nothing Photo - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_com.jaxparrow07.nothingkdewidgets.photo "
+"1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: packages/photo/contents/config/config.qml:6
+msgid "Image"
+msgstr ""
+
+#: packages/photo/contents/config/config.qml:11
+msgid "Appearance"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:19
+msgid "Border Settings"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:27
+msgid "Enable Borders"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:32
+msgid ""
+"Adds margin around the image to reveal the dark background, creating a frame "
+"effect"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:45
+msgid "Border Size:"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:73
+msgid "Shape Settings"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:81
+msgid "Pill Shape"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:86
+msgid ""
+"Automatically creates a circle (if square) or pill shape (if rectangular). "
+"When disabled, uses standard rounded corners."
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:102
+msgid "Theme"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:109
+msgid "Theme:"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Dark"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Light"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Follow System"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:121
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:19
+msgid "Image Source"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:31
+msgid "Select an image file..."
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:36
+msgid "Browse..."
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:42
+msgid "Select a photo to display in the widget (PNG, JPG, JPEG, WebP)"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:58
+msgid "Image Fit Mode"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:68
+msgid "Fit Mode:"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Crop (Fill Frame)"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Fit (Show All)"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Stretch"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:80
+msgid ""
+"Crop: Fills the frame completely, may crop parts of the image\n"
+"Fit: Shows the entire image, may have letterboxing\n"
+"Stretch: Fills frame completely, may distort the image"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:96
+msgid "Effects"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:104
+msgid "Grayscale"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:109
+msgid "Convert the image to black and white (grayscale)"
+msgstr ""
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:123
+msgid "Select an Image"
+msgstr ""
+
+#: packages/photo/contents/ui/main.qml:184
+msgid "No Image"
+msgstr ""
+
+#: packages/photo/contents/ui/main.qml:193
+msgid "Right-click to configure"
+msgstr ""
+
+#: packages/photo/contents/ui/main.qml:225
+msgid "Image Error"
+msgstr ""
+
+#: packages/photo/contents/ui/main.qml:234
+msgid "Failed to load image"
+msgstr ""

@@ -1,0 +1,76 @@
+# Nothing Analog Clock - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_com.jaxparrow07.nothingkdewidgets."
+"analogclock 2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: packages/clock-analog/contents/config/config.qml:6
+msgid "Appearance"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:19
+msgid "Style:"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:52
+#: packages/clock-analog/contents/ui/VariantSelector.qml:34
+msgid "Swiss Railway"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:88
+#: packages/clock-analog/contents/ui/VariantSelector.qml:35
+msgid "Minimalist"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:112
+msgid "Smooth Moving Second Hand"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:117
+msgid ""
+"Update second hand every 50ms instead of 1000ms ( 1s ) for a smoother motion"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:134
+msgid "Theme:"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Dark"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Light"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Follow System"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:146
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+
+#: packages/clock-analog/contents/ui/VariantSelector.qml:24
+msgid "Choose Style"
+msgstr ""
+
+#: packages/clock-analog/contents/ui/VariantSelector.qml:61
+msgid "can be changed later in configuration"
+msgstr ""

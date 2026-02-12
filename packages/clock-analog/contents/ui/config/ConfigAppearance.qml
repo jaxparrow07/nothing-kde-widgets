@@ -16,7 +16,7 @@ KCM.SimpleKCM {
 
         // --- Style selection ---
         Label {
-            text: "Style:"
+            text: i18n("Style:")
             font.weight: Font.Medium
         }
 
@@ -49,7 +49,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Swiss Railway"
+                        text: i18n("Swiss Railway")
                         font.pointSize: 9
                     }
                 }
@@ -85,7 +85,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Minimalist"
+                        text: i18n("Minimalist")
                         font.pointSize: 9
                     }
                 }
@@ -109,12 +109,12 @@ KCM.SimpleKCM {
         RowLayout {
             CheckBox {
                 id: smoothHandsCheckbox
-                text: "Smooth Moving Second Hand"
+                text: i18n("Smooth Moving Second Hand")
             }
         }
 
         Label {
-            text: "Update second hand every 50ms instead of 1000ms ( 1s ) for a smoother motion"
+            text: i18n("Update second hand every 50ms instead of 1000ms ( 1s ) for a smoother motion")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -131,19 +131,19 @@ KCM.SimpleKCM {
         // --- Theme ---
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

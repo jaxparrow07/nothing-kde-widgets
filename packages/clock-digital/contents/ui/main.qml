@@ -266,7 +266,7 @@ PlasmoidItem {
         Text {
             anchors.centerIn: parent
             visible: !root.variantChosen
-            text: "click to configure"
+            text: i18n("click to configure")
             font.pixelSize: compactItem.height * 0.25
             font.weight: Font.Medium
             color: nColors.textSecondary

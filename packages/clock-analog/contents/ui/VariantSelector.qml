@@ -21,7 +21,7 @@ Item {
 
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Choose Style"
+                text: i18n("Choose Style")
                 font.pixelSize: 14
                 font.weight: Font.Medium
                 color: selector.colors.textSecondary
@@ -31,8 +31,8 @@ Item {
 
             Repeater {
                 model: [
-                    { label: "Swiss Railway", variant: 0 },
-                    { label: "Minimalist", variant: 1 }
+                    { label: i18n("Swiss Railway"), variant: 0 },
+                    { label: i18n("Minimalist"), variant: 1 }
                 ]
 
                 Text {
@@ -58,7 +58,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
-                text: "can be changed later in configuration"
+                text: i18n("can be changed later in configuration")
                 font.pixelSize: 10
                 color: selector.colors.textMuted
                 wrapMode: Text.WordWrap

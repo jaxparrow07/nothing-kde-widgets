@@ -181,7 +181,7 @@ PlasmoidItem {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "No Image"
+                        text: i18n("No Image")
                         font.pixelSize: 14
                         color: nColors.textDisabled
                         visible: mainRect.width > 120 && mainRect.height > 120
@@ -190,7 +190,7 @@ PlasmoidItem {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.7, 150)
-                        text: "Right-click to configure"
+                        text: i18n("Right-click to configure")
                         font.pixelSize: 10
                         color: nColors.textDisabled
                         wrapMode: Text.WordWrap
@@ -222,7 +222,7 @@ PlasmoidItem {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Image Error"
+                        text: i18n("Image Error")
                         font.pixelSize: 14
                         color: nColors.error
                         visible: mainRect.width > 120 && mainRect.height > 120
@@ -231,7 +231,7 @@ PlasmoidItem {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.preferredWidth: Math.min(parent.parent.width * 0.7, 150)
-                        text: "Failed to load image"
+                        text: i18n("Failed to load image")
                         font.pixelSize: 10
                         color: nColors.textMuted
                         wrapMode: Text.WordWrap

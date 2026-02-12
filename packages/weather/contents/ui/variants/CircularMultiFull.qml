@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls as QQC2
 import "../components"
+import "../components/circle"
 
 Item {
     id: fullItem

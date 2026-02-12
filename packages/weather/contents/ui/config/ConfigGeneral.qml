@@ -17,7 +17,7 @@ KCM.SimpleKCM {
 
         // --- Style selection ---
         Label {
-            text: "Style:"
+            text: i18n("Style:")
             font.weight: Font.Medium
         }
 
@@ -50,7 +50,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Full"
+                        text: i18n("Full")
                         font.pointSize: 9
                     }
                 }
@@ -86,7 +86,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Circular"
+                        text: i18n("Circular")
                         font.pointSize: 9
                     }
                 }
@@ -122,7 +122,7 @@ KCM.SimpleKCM {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Circle Pages"
+                        text: i18n("Circle Pages")
                         font.pointSize: 9
                     }
                 }
@@ -145,19 +145,19 @@ KCM.SimpleKCM {
         // --- Location ---
         RowLayout {
             Label {
-                text: "Location:"
+                text: i18n("Location:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             TextField {
                 id: locationField
-                placeholderText: "e.g., New York, Chennai, Villupuram"
+                placeholderText: i18n("e.g., New York, Chennai, Villupuram")
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Enter a city name for weather information. The widget will automatically find the coordinates."
+            text: i18n("Enter a city name for weather information. The widget will automatically find the coordinates.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -174,19 +174,19 @@ KCM.SimpleKCM {
         // --- Temperature Unit ---
         RowLayout {
             Label {
-                text: "Temperature Unit:"
+                text: i18n("Temperature Unit:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: temperatureUnitCombo
-                model: ["Celsius (\u00B0C)", "Fahrenheit (\u00B0F)"]
+                model: [i18n("Celsius (\u00B0C)"), i18n("Fahrenheit (\u00B0F)")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Choose between Celsius and Fahrenheit for temperature display."
+            text: i18n("Choose between Celsius and Fahrenheit for temperature display.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
@@ -203,19 +203,19 @@ KCM.SimpleKCM {
         // --- Theme ---
         RowLayout {
             Label {
-                text: "Theme:"
+                text: i18n("Theme:")
                 Layout.alignment: Qt.AlignLeft
             }
 
             ComboBox {
                 id: themeModeCombo
-                model: ["Dark", "Light", "Follow System"]
+                model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
                 Layout.fillWidth: true
             }
         }
 
         Label {
-            text: "Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme."
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true
