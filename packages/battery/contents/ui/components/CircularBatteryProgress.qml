@@ -70,15 +70,15 @@ Item {
     // Centered content: device icon and status indicator
     Item {
         anchors.centerIn: parent
-        width: parent.width * 0.5
-        height: parent.height * 0.5
+        width: parent.width * 0.6
+        height: parent.height * 0.6
 
         // Device icon container with proper positioning
         Item {
             id: deviceIconContainer
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width * 0.7
-            height: parent.height * 0.7
+            width: parent.width * 0.75
+            height: parent.height * 0.75
 
             // Calculate Y position properly to avoid overflow
             readonly property bool hasStatusIndicator: root.isSystemDevice && (root.isCharging || root.isBatterySaver)

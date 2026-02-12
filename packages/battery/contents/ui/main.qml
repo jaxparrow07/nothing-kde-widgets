@@ -472,140 +472,210 @@ PlasmoidItem {
             radius: 20
             opacity: 0.95
 
-            // 2x2 Grid Layout
-            GridLayout {
-                anchors.fill: parent
-                anchors.margins: 15
-                rows: 2
-                columns: 2
-                rowSpacing: 10
-                columnSpacing: 10
+            // Build a flat device list: main battery (if present) + BT devices
+            // Devices flow into a 2x2 grid: top-left, top-right, bottom-left, bottom-right
+            readonly property int deviceCount: (root.showMainBattery ? 1 : 0) + root.bluetoothDevices.length
+            readonly property real cellWidth: (width - 40) / 2
+            readonly property real cellHeight: (height - 40) / 2
 
-                // TOP LEFT - Main laptop battery circle (hidden in PC mode)
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.row: 0
-                    Layout.column: 0
-                    visible: !root.isPCMode
-
-                    CircularBatteryProgress {
-                        anchors.fill: parent
-                        percentage: root.batteryPercent
-                        isCharging: root.isCharging
-                        isBatterySaver: root.isBatterySaver
-                        deviceType: "laptop"
-                        colors: nColors
-                    }
+            // Helper to get device info by slot index
+            function slotDevice(slot) {
+                // slot 0..3 maps to the flat list: main battery first, then BT devices
+                var mainOffset = root.showMainBattery ? 1 : 0
+                if (slot === 0 && root.showMainBattery) {
+                    return { type: "main" }
                 }
-
-                // TOP RIGHT - First Bluetooth device
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.row: 0
-                    Layout.column: 1
-                    visible: root.bluetoothDevices.length > 0
-
-                    CircularBatteryProgress {
-                        anchors.fill: parent
-                        percentage: root.bluetoothDevices.length > 0 ? root.bluetoothDevices[0].percentage : 0
-                        isCharging: false
-                        isBatterySaver: false
-                        deviceIcon: root.bluetoothDevices.length > 0 ? root.bluetoothDevices[0].icon : ""
-                        isSystemDevice: false
-                        colors: nColors
-                    }
+                var btIndex = slot - mainOffset
+                if (btIndex >= 0 && btIndex < root.bluetoothDevices.length) {
+                    return { type: "bt", index: btIndex }
                 }
+                return null
+            }
 
-                // BOTTOM LEFT - Second Bluetooth device
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.row: 1
-                    Layout.column: 0
-                    visible: root.bluetoothDevices.length > 1
+            // Grid positions
+            readonly property var gridPositions: [
+                { x: 15, y: 15 },                              // top-left
+                { x: 15 + cellWidth + 10, y: 15 },             // top-right
+                { x: 15, y: 15 + cellHeight + 10 },            // bottom-left
+                { x: 15 + cellWidth + 10, y: 15 + cellHeight + 10 } // bottom-right
+            ]
 
-                    CircularBatteryProgress {
-                        anchors.fill: parent
-                        percentage: root.bluetoothDevices.length > 1 ? root.bluetoothDevices[1].percentage : 0
-                        isCharging: false
-                        isBatterySaver: false
-                        deviceIcon: root.bluetoothDevices.length > 1 ? root.bluetoothDevices[1].icon : ""
-                        isSystemDevice: false
-                        colors: nColors
+            // Slot 0 - top left
+            Item {
+                x: mainBackground.gridPositions[0].x
+                y: mainBackground.gridPositions[0].y
+                width: mainBackground.cellWidth
+                height: mainBackground.cellHeight
+                visible: mainBackground.deviceCount > 0
+
+                CircularBatteryProgress {
+                    anchors.fill: parent
+                    percentage: {
+                        var dev = mainBackground.slotDevice(0)
+                        if (!dev) return 0
+                        if (dev.type === "main") return root.batteryPercent
+                        return root.bluetoothDevices[dev.index].percentage
                     }
+                    isCharging: {
+                        var dev = mainBackground.slotDevice(0)
+                        return dev && dev.type === "main" ? root.isCharging : false
+                    }
+                    isBatterySaver: {
+                        var dev = mainBackground.slotDevice(0)
+                        return dev && dev.type === "main" ? root.isBatterySaver : false
+                    }
+                    deviceType: {
+                        var dev = mainBackground.slotDevice(0)
+                        return dev && dev.type === "main" ? "laptop" : ""
+                    }
+                    deviceIcon: {
+                        var dev = mainBackground.slotDevice(0)
+                        if (!dev || dev.type === "main") return ""
+                        return root.bluetoothDevices[dev.index].icon
+                    }
+                    isSystemDevice: {
+                        var dev = mainBackground.slotDevice(0)
+                        return dev ? dev.type === "main" : false
+                    }
+                    colors: nColors
                 }
+            }
 
-                // BOTTOM RIGHT - Battery percentage or PC watts usage
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.row: 1
-                    Layout.column: 1
+            // Slot 1 - top right
+            Item {
+                x: mainBackground.gridPositions[1].x
+                y: mainBackground.gridPositions[1].y
+                width: mainBackground.cellWidth
+                height: mainBackground.cellHeight
+                visible: mainBackground.deviceCount > 1
 
-                    // Battery percentage (laptop mode)
-                    Text {
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        anchors.rightMargin: 2
-                        anchors.bottomMargin: 2
-                        text: root.batteryPercent + "%"
-                        font.family: ndotFont.name
-                        font.pixelSize: parent.width * 0.4
-                        color: nColors.textPrimary
-                        opacity: 0.95
-                        horizontalAlignment: Text.AlignRight
-                        verticalAlignment: Text.AlignBottom
-                        visible: root.hasBattery
+                CircularBatteryProgress {
+                    anchors.fill: parent
+                    percentage: {
+                        var dev = mainBackground.slotDevice(1)
+                        if (!dev) return 0
+                        if (dev.type === "main") return root.batteryPercent
+                        return root.bluetoothDevices[dev.index].percentage
                     }
-
-                    // PC watts usage (PC mode with power data)
-                    ColumnLayout {
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        anchors.rightMargin: 2
-                        anchors.bottomMargin: 2
-                        spacing: 0
-                        visible: root.isPCMode && root.energyRate > 0
-
-                        Text {
-                            Layout.alignment: Qt.AlignRight
-                            text: Math.round(root.energyRate) + "W"
-                            font.family: ndotFont.name
-                            font.pixelSize: parent.parent.width * 0.35
-                            color: nColors.textPrimary
-                            opacity: 0.95
-                            horizontalAlignment: Text.AlignRight
-                        }
-
-                        Text {
-                            Layout.alignment: Qt.AlignRight
-                            text: "PC"
-                            font.family: ndotFont.name
-                            font.pixelSize: parent.parent.width * 0.15
-                            color: nColors.textMuted
-                            opacity: 0.8
-                            horizontalAlignment: Text.AlignRight
-                        }
+                    isCharging: {
+                        var dev = mainBackground.slotDevice(1)
+                        return dev && dev.type === "main" ? root.isCharging : false
                     }
-
-                    // PC mode without power data
-                    Text {
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        anchors.rightMargin: 2
-                        anchors.bottomMargin: 2
-                        text: "PC"
-                        font.family: ndotFont.name
-                        font.pixelSize: parent.width * 0.3
-                        color: nColors.textMuted
-                        opacity: 0.8
-                        horizontalAlignment: Text.AlignRight
-                        verticalAlignment: Text.AlignBottom
-                        visible: root.isPCMode && root.energyRate <= 0
+                    isBatterySaver: {
+                        var dev = mainBackground.slotDevice(1)
+                        return dev && dev.type === "main" ? root.isBatterySaver : false
                     }
+                    deviceType: {
+                        var dev = mainBackground.slotDevice(1)
+                        return dev && dev.type === "main" ? "laptop" : ""
+                    }
+                    deviceIcon: {
+                        var dev = mainBackground.slotDevice(1)
+                        if (!dev || dev.type === "main") return ""
+                        return root.bluetoothDevices[dev.index].icon
+                    }
+                    isSystemDevice: {
+                        var dev = mainBackground.slotDevice(1)
+                        return dev ? dev.type === "main" : false
+                    }
+                    colors: nColors
                 }
+            }
+
+            // Slot 2 - bottom left
+            Item {
+                x: mainBackground.gridPositions[2].x
+                y: mainBackground.gridPositions[2].y
+                width: mainBackground.cellWidth
+                height: mainBackground.cellHeight
+                visible: mainBackground.deviceCount > 2
+
+                CircularBatteryProgress {
+                    anchors.fill: parent
+                    percentage: {
+                        var dev = mainBackground.slotDevice(2)
+                        if (!dev) return 0
+                        if (dev.type === "main") return root.batteryPercent
+                        return root.bluetoothDevices[dev.index].percentage
+                    }
+                    isCharging: {
+                        var dev = mainBackground.slotDevice(2)
+                        return dev && dev.type === "main" ? root.isCharging : false
+                    }
+                    isBatterySaver: {
+                        var dev = mainBackground.slotDevice(2)
+                        return dev && dev.type === "main" ? root.isBatterySaver : false
+                    }
+                    deviceType: {
+                        var dev = mainBackground.slotDevice(2)
+                        return dev && dev.type === "main" ? "laptop" : ""
+                    }
+                    deviceIcon: {
+                        var dev = mainBackground.slotDevice(2)
+                        if (!dev || dev.type === "main") return ""
+                        return root.bluetoothDevices[dev.index].icon
+                    }
+                    isSystemDevice: {
+                        var dev = mainBackground.slotDevice(2)
+                        return dev ? dev.type === "main" : false
+                    }
+                    colors: nColors
+                }
+            }
+
+            // Slot 3 - bottom right
+            Item {
+                x: mainBackground.gridPositions[3].x
+                y: mainBackground.gridPositions[3].y
+                width: mainBackground.cellWidth
+                height: mainBackground.cellHeight
+                visible: mainBackground.deviceCount > 3
+
+                CircularBatteryProgress {
+                    anchors.fill: parent
+                    percentage: {
+                        var dev = mainBackground.slotDevice(3)
+                        if (!dev) return 0
+                        if (dev.type === "main") return root.batteryPercent
+                        return root.bluetoothDevices[dev.index].percentage
+                    }
+                    isCharging: {
+                        var dev = mainBackground.slotDevice(3)
+                        return dev && dev.type === "main" ? root.isCharging : false
+                    }
+                    isBatterySaver: {
+                        var dev = mainBackground.slotDevice(3)
+                        return dev && dev.type === "main" ? root.isBatterySaver : false
+                    }
+                    deviceType: {
+                        var dev = mainBackground.slotDevice(3)
+                        return dev && dev.type === "main" ? "laptop" : ""
+                    }
+                    deviceIcon: {
+                        var dev = mainBackground.slotDevice(3)
+                        if (!dev || dev.type === "main") return ""
+                        return root.bluetoothDevices[dev.index].icon
+                    }
+                    isSystemDevice: {
+                        var dev = mainBackground.slotDevice(3)
+                        return dev ? dev.type === "main" : false
+                    }
+                    colors: nColors
+                }
+            }
+
+            // PC label (small, bottom-right corner) - only when detected as PC
+            Text {
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                anchors.bottomMargin: 20
+                text: "PC"
+                font.family: ndotFont.name
+                font.pixelSize: 17
+                color: nColors.textPrimary
+                opacity: 0.6
+                visible: !root.showMainBattery && root.hasBattery
             }
 
             // Loading indicator
@@ -622,7 +692,8 @@ PlasmoidItem {
                         Layout.preferredWidth: 48
                         Layout.preferredHeight: 48
                         source: "battery"
-                        color: nColors.textDisabled
+                        color: nColors.textPrimary
+                        opacity: 0.5
 
                         // Simple rotation animation for loading
                         RotationAnimator on rotation {
@@ -637,8 +708,9 @@ PlasmoidItem {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: "Detecting Battery..."
-                        font.pixelSize: 14
-                        color: nColors.textMuted
+                        font.pixelSize: 17
+                        color: nColors.textPrimary
+                        opacity: 0.7
                     }
                 }
             }
