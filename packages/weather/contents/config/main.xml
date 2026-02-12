@@ -6,6 +6,9 @@
   <kcfgfile name=""/>
 
   <group name="General">
+    <entry name="widgetVariant" type="Int">
+      <default>-1</default>
+    </entry>
     <entry name="location" type="String">
       <default>Villupuram</default>
     </entry>

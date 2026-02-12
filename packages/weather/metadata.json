@@ -8,13 +8,13 @@
             }
         ],
         "Category": "Environment and Weather",
-        "Description": "Comprehensive weather widget with multiple layouts and detailed information, in Nothing style :)",
+        "Description": "Weather widget with variant selection: Full, Circular, and Circle Pages layouts, in Nothing style :)",
         "EnabledByDefault": true,
         "Icon": "/icon.png",
         "Id": "com.jaxparrow07.nothingkdewidgets.weather",
-        "License": "GPL-2.0+",
+        "License": "GPL-3.0",
         "Name": "Nothing Weather",
-        "Version": "1.0",
+        "Version": "2.0",
         "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
     },
     "X-Plasma-API-Minimum-Version": "6.0"
