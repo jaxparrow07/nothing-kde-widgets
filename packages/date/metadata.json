@@ -12,9 +12,9 @@
         "EnabledByDefault": true,
         "Icon": "/icon.png",
         "Id": "com.jaxparrow07.nothingkdewidgets.date",
-        "License": "GPL-2.0+",
+        "License": "GPL-3.0",
         "Name": "Nothing Date",
-        "Version": "1.0",
+        "Version": "1.1",
         "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
     },
     "X-Plasma-API-Minimum-Version": "6.0"

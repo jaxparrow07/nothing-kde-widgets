@@ -133,8 +133,8 @@ PlasmoidItem {
     fullRepresentation: Item {
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
-        Layout.minimumWidth: 120
-        Layout.minimumHeight: 120
+        Layout.minimumWidth: 200
+        Layout.minimumHeight: 200
 
         property bool foldHovered: false
 
