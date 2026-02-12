@@ -6,8 +6,8 @@
   <kcfgfile name=""/>
 
   <group name="Appearance">
-    <entry name="clockStyle" type="Int">
-      <default>0</default>
+    <entry name="widgetVariant" type="Int">
+      <default>-1</default>
     </entry>
     <entry name="smoothHands" type="Bool">
       <default>false</default>
