@@ -10,7 +10,8 @@ Item {
     required property string cityName
     required property string currentHours
     required property string currentMinutes
-    required property bool colonVisible
+    required property int currentSeconds
+    readonly property bool colonVisible: currentSeconds % 2 === 0
     required property string amPm
     required property string ndot55FontFamily
     required property string ndotFontFamily

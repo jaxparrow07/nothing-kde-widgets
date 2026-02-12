@@ -6,11 +6,20 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="use24HourFormat" type="Bool">
-      <default>true</default>
+    <entry name="widgetVariant" type="Int">
+      <default>-1</default>
     </entry>
     <entry name="themeMode" type="Int">
       <default>0</default>
+    </entry>
+    <entry name="use24HourFormat" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="cityName" type="String">
+      <default>Austin</default>
+    </entry>
+    <entry name="timeZone" type="String">
+      <default>America/Chicago</default>
     </entry>
   </group>
 </kcfg>

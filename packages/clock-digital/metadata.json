@@ -8,13 +8,13 @@
             }
         ],
         "Category": "Date and Time",
-        "Description": "Minimalist digital clock with pill layout when expanded horizontally.",
+        "Description": "Minimalist digital clock with variant selection: Digital Clock or World Clock.",
         "EnabledByDefault": true,
         "Icon": "/icon.png",
         "Id": "com.jaxparrow07.nothingkdewidgets.digitalclock",
-        "License": "GPL-2.0+",
+        "License": "GPL-3.0",
         "Name": "Nothing Digital Clock",
-        "Version": "1.0",
+        "Version": "2.0",
         "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
     },
     "X-Plasma-API-Minimum-Version": "6.0"

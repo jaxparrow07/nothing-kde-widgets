@@ -1,50 +1,51 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as QQC2
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import "components"
+import "config" as Config
 
 PlasmoidItem {
     id: root
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
 
+    // --- Variant selection ---
+    property int widgetVariant: plasmoid.configuration.widgetVariant
+    readonly property bool variantChosen: widgetVariant >= 0
+
+    // --- Shared state ---
     NothingColors {
         id: nColors
         themeMode: plasmoid.configuration.themeMode
     }
 
-    property bool use24HourFormat: plasmoid.configuration.use24HourFormat
-
-    property string currentHours: ""
-    property string currentMinutes: ""
-
-    // Individual digits
-    property string hoursDigit1: "0"
-    property string hoursDigit2: "0"
-    property string minutesDigit1: "0"
-    property string minutesDigit2: "0"
-
-    // Load the ndot font
     FontLoader {
         id: ndotFont
         source: Qt.resolvedUrl("../fonts/ndot.ttf")
     }
 
-    // Timer to update time every second
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: updateTime()
-        Component.onCompleted: updateTime()
+    FontLoader {
+        id: ndot55Font
+        source: Qt.resolvedUrl("../fonts/ndot-55.otf")
     }
 
-    function updateTime() {
+    // --- Digital clock state (variant 0) ---
+    property bool use24HourFormat: plasmoid.configuration.use24HourFormat
+
+    property string currentHours: ""
+    property string currentMinutes: ""
+
+    property string hoursDigit1: "0"
+    property string hoursDigit2: "0"
+    property string minutesDigit1: "0"
+    property string minutesDigit2: "0"
+
+    function updateDigitalTime() {
         var now = new Date()
         var hours = now.getHours()
 
-        // Convert to 12-hour format if needed
         if (!root.use24HourFormat) {
             hours = hours % 12
             if (hours === 0) hours = 12
@@ -52,20 +53,178 @@ PlasmoidItem {
 
         var minutes = now.getMinutes()
 
-        // Format as strings with zero-padding
         var hoursStr = hours < 10 ? "0" + hours : hours.toString()
         var minutesStr = minutes < 10 ? "0" + minutes : minutes.toString()
 
         root.currentHours = hoursStr
         root.currentMinutes = minutesStr
 
-        // Split into individual digits
         root.hoursDigit1 = hoursStr.length > 1 ? hoursStr[0] : "0"
         root.hoursDigit2 = hoursStr.length > 1 ? hoursStr[1] : hoursStr[0]
         root.minutesDigit1 = minutesStr[0]
         root.minutesDigit2 = minutesStr[1]
     }
 
+    // --- World clock state (variant 1) ---
+    property string cityName: plasmoid.configuration.cityName
+    property string timeZone: plasmoid.configuration.timeZone
+    readonly property string cityAbbrev: cityName.substring(0, 3).toUpperCase()
+
+    property string amPm: "AM"
+    property string dayOfWeek: "Friday"
+    property string hourDifference: "+0.0"
+    property int currentSeconds: 0
+    readonly property bool colonVisible: currentSeconds % 2 === 0
+
+    property var timezonesData: ({})
+
+    Config.TimezonesData {
+        id: timezonesDataSource
+    }
+
+    function loadTimezones() {
+        var timezoneMap = {}
+        for (var i = 0; i < timezonesDataSource.timezones.length; i++) {
+            var tz = timezonesDataSource.timezones[i]
+            timezoneMap[tz.id] = tz
+        }
+        root.timezonesData = timezoneMap
+    }
+
+    function getTimezoneOffset(timezone) {
+        if (root.timezonesData && root.timezonesData[timezone]) {
+            return root.timezonesData[timezone].offset
+        }
+        return 0
+    }
+
+    function getTimeInTimezone(timezone) {
+        var now = new Date()
+        var utcHours = now.getUTCHours()
+        var utcMinutes = now.getUTCMinutes()
+        var offset = getTimezoneOffset(timezone)
+
+        var totalMinutes = (utcHours * 60 + utcMinutes) + (offset * 60)
+
+        while (totalMinutes < 0) totalMinutes += 24 * 60
+        while (totalMinutes >= 24 * 60) totalMinutes -= 24 * 60
+
+        var hours = Math.floor(totalMinutes / 60)
+        var minutes = totalMinutes % 60
+
+        var ampm = "AM"
+        if (hours >= 12) {
+            ampm = "PM"
+            if (hours > 12) hours -= 12
+        }
+        if (hours === 0) hours = 12
+
+        var minutesStr = minutes < 10 ? "0" + minutes : minutes.toString()
+        var hoursStr = hours < 10 ? "0" + hours : hours.toString()
+
+        return hoursStr + ":" + minutesStr + " " + ampm
+    }
+
+    function getDayOfWeekInTimezone(timezone) {
+        var now = new Date()
+        var utcDay = now.getUTCDay()
+        var utcHours = now.getUTCHours()
+        var offset = getTimezoneOffset(timezone)
+        var totalHours = utcHours + offset
+
+        var dayOffset = 0
+        if (totalHours < 0) dayOffset = -1
+        if (totalHours >= 24) dayOffset = 1
+
+        var adjustedDay = (utcDay + dayOffset + 7) % 7
+        var dayNames = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
+        return dayNames[adjustedDay]
+    }
+
+    function calculateHourDifference(timezone) {
+        var now = new Date()
+        var localOffsetMinutes = -now.getTimezoneOffset()
+        var localOffsetHours = localOffsetMinutes / 60
+        var selectedOffsetHours = getTimezoneOffset(timezone)
+        var diffHours = selectedOffsetHours - localOffsetHours
+        var sign = diffHours >= 0 ? "+" : ""
+        return sign + diffHours.toFixed(1)
+    }
+
+    function updateWorldTime() {
+        var timeStr = getTimeInTimezone(timeZone)
+        timeStr = timeStr.trim()
+
+        var ampmIndex = -1
+        if (timeStr.toUpperCase().indexOf("AM") !== -1) {
+            ampmIndex = timeStr.toUpperCase().indexOf("AM")
+            amPm = "AM"
+        } else if (timeStr.toUpperCase().indexOf("PM") !== -1) {
+            ampmIndex = timeStr.toUpperCase().indexOf("PM")
+            amPm = "PM"
+        }
+
+        var currentTime
+        if (ampmIndex !== -1) {
+            currentTime = timeStr.substring(0, ampmIndex).trim()
+        } else {
+            currentTime = timeStr
+            amPm = ""
+        }
+
+        var timeParts = currentTime.split(":")
+        if (timeParts.length >= 2) {
+            currentHours = timeParts[0].trim()
+            currentMinutes = timeParts[1].trim()
+
+            if (currentHours.length === 1) currentHours = "0" + currentHours
+            if (currentMinutes.length === 1) currentMinutes = "0" + currentMinutes
+        } else {
+            currentHours = "12"
+            currentMinutes = "00"
+        }
+
+        dayOfWeek = getDayOfWeekInTimezone(timeZone)
+        hourDifference = calculateHourDifference(timeZone)
+    }
+
+    onTimeZoneChanged: if (widgetVariant === 1) updateWorldTime()
+    onCityNameChanged: if (widgetVariant === 1) updateWorldTime()
+
+    // --- Timer ---
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            root.currentSeconds = new Date().getSeconds()
+            if (root.widgetVariant === 0) {
+                root.updateDigitalTime()
+            } else if (root.widgetVariant === 1) {
+                root.updateWorldTime()
+            }
+        }
+    }
+
+    // Load timezones when needed
+    Component.onCompleted: {
+        loadTimezones()
+        if (widgetVariant === 1) {
+            updateWorldTime()
+        } else if (widgetVariant === 0) {
+            updateDigitalTime()
+        }
+    }
+
+    onWidgetVariantChanged: {
+        if (widgetVariant === 0) {
+            updateDigitalTime()
+        } else if (widgetVariant === 1) {
+            updateWorldTime()
+        }
+    }
+
+    // --- Compact representation ---
     compactRepresentation: Item {
         id: compactItem
 
@@ -77,7 +236,7 @@ PlasmoidItem {
                 PropertyChanges {
                     compactItem.Layout.fillHeight: true
                     compactItem.Layout.fillWidth: false
-                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + compactItem.height * 0.4
+                    compactItem.Layout.minimumWidth: Math.max(compactRow.implicitWidth, compactWorldRow.implicitWidth) + compactItem.height * 0.4
                     compactItem.Layout.maximumWidth: compactItem.Layout.minimumWidth
                 }
             },
@@ -88,7 +247,7 @@ PlasmoidItem {
                 PropertyChanges {
                     compactItem.Layout.fillHeight: false
                     compactItem.Layout.fillWidth: true
-                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + compactItem.width * 0.4
+                    compactItem.Layout.minimumHeight: Math.max(compactRow.implicitHeight, compactWorldRow.implicitHeight) + compactItem.width * 0.4
                     compactItem.Layout.maximumHeight: compactItem.Layout.minimumHeight
                 }
             },
@@ -97,16 +256,28 @@ PlasmoidItem {
                 when: Plasmoid.formFactor !== PlasmaCore.Types.Horizontal && Plasmoid.formFactor !== PlasmaCore.Types.Vertical
 
                 PropertyChanges {
-                    compactItem.Layout.minimumWidth: compactRow.implicitWidth + 8
-                    compactItem.Layout.minimumHeight: compactRow.implicitHeight + 8
+                    compactItem.Layout.minimumWidth: Math.max(compactRow.implicitWidth, compactWorldRow.implicitWidth) + 8
+                    compactItem.Layout.minimumHeight: Math.max(compactRow.implicitHeight, compactWorldRow.implicitHeight) + 8
                 }
             }
         ]
 
+        // Prompt to configure when no variant chosen
+        Text {
+            anchors.centerIn: parent
+            visible: !root.variantChosen
+            text: "click to configure"
+            font.pixelSize: compactItem.height * 0.25
+            font.weight: Font.Medium
+            color: nColors.textSecondary
+        }
+
+        // Digital clock compact (variant 0)
         Row {
             id: compactRow
             anchors.centerIn: parent
             spacing: 4
+            visible: root.variantChosen && root.widgetVariant === 0
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
@@ -121,7 +292,7 @@ PlasmoidItem {
                 dotSize: Math.max(compactItem.height * 0.08, 3)
                 dotColor: nColors.textPrimary
                 dotSpacing: Math.max(compactItem.height * 0.04, 2)
-                blinking: true
+                seconds: root.currentSeconds
             }
 
             Text {
@@ -133,101 +304,224 @@ PlasmoidItem {
             }
         }
 
+        // World clock compact (variant 1) - horizontal: AUS XX:YY AM/PM
+        Row {
+            id: compactWorldRow
+            anchors.centerIn: parent
+            spacing: compactItem.height * 0.08
+            visible: root.variantChosen && root.widgetVariant === 1
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                rightPadding: compactItem.height * 0.08
+                text: root.cityAbbrev
+                font.family: ndot55Font.name
+                font.pixelSize: compactItem.height * 0.3
+                color: nColors.textSecondary
+            }
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.currentHours
+                font.family: ndotFont.name
+                font.pixelSize: compactItem.height * 0.55
+                color: nColors.textPrimary
+            }
+
+            BlinkingSeparator {
+                anchors.verticalCenter: parent.verticalCenter
+                dotSize: Math.max(compactItem.height * 0.08, 3)
+                dotColor: nColors.textPrimary
+                dotSpacing: Math.max(compactItem.height * 0.04, 2)
+                seconds: root.currentSeconds
+            }
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.currentMinutes
+                font.family: ndotFont.name
+                font.pixelSize: compactItem.height * 0.55
+                color: nColors.textPrimary
+            }
+
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.amPm
+                font.family: ndot55Font.name
+                font.pixelSize: compactItem.height * 0.3
+                color: nColors.textPrimary
+                opacity: 0.85
+            }
+        }
+
         MouseArea {
             anchors.fill: parent
             onClicked: root.expanded = !root.expanded
         }
     }
 
-    fullRepresentation: Item {
+    // --- Full representation ---
+    fullRepresentation: Loader {
+        id: fullLoader
+
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
-        Layout.minimumWidth: 200
+        Layout.minimumWidth: 100
         Layout.minimumHeight: 100
 
-        readonly property real dotSize: Math.min(height * 0.075,10)
+        sourceComponent: {
+            if (!root.variantChosen) return selectorComponent
+            if (root.widgetVariant === 0) return digitalFullComponent
+            if (root.widgetVariant === 1) return worldFullComponent
+            return selectorComponent
+        }
+    }
 
-        // Calculate pill-shape radius based on aspect ratio
-        readonly property real calculatedRadius: {
-            var w = width
-            var h = height
-            var aspectRatio = w / h
+    Component {
+        id: selectorComponent
+        VariantSelector {
+            colors: nColors
+        }
+    }
 
-            // If width is twice the height (or more), make it pill-shaped
-            if (aspectRatio >= 1.8) {
-                return h / 2
+    Component {
+        id: digitalFullComponent
+        Item {
+            readonly property real dotSize: Math.min(height * 0.075, 10)
+
+            readonly property real calculatedRadius: {
+                var w = width
+                var h = height
+                var aspectRatio = w / h
+                if (aspectRatio >= 1.8) {
+                    return h / 2
+                }
+                return 20
             }
 
-            // Otherwise use standard radius
-            return 20
-        }
+            readonly property bool isPillMode: (width / height) >= 1.8
 
-        // Determine if we should use pill mode (horizontal layout)
-        readonly property bool isPillMode: (width / height) >= 1.8
-
-        Rectangle {
-            id: mainRect
-            anchors.fill: parent
-            anchors.margins: 10
-            color: nColors.background
-            radius: parent.calculatedRadius
-            opacity: 0.95
-
-            // Vertical layout (default square mode)
-            Item {
+            Rectangle {
+                id: mainRect
                 anchors.fill: parent
-                visible: !parent.parent.isPillMode
+                anchors.margins: 10
+                color: nColors.background
+                radius: parent.calculatedRadius
+                opacity: 0.95
 
-                Column {
-                    anchors.centerIn: parent
-                    spacing: 5
+                // Vertical layout (default square mode)
+                Item {
+                    anchors.fill: parent
+                    visible: !parent.parent.isPillMode
 
-                    // Hours display (separated digits)
-                    Row {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        spacing: 12
+                    Column {
+                        anchors.centerIn: parent
+                        spacing: 5
 
-                        Text {
-                            width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
-                            text: root.hoursDigit1
-                            font.family: ndotFont.name
-                            font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: nColors.textPrimary
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Row {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            spacing: 12
+
+                            Text {
+                                width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
+                                text: root.hoursDigit1
+                                font.family: ndotFont.name
+                                font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                                color: nColors.textPrimary
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                            Text {
+                                width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
+                                text: root.hoursDigit2
+                                font.family: ndotFont.name
+                                font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                                color: nColors.textPrimary
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                         }
 
-                        Text {
-                            width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
-                            text: root.hoursDigit2
-                            font.family: ndotFont.name
-                            font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
-                            color: nColors.textPrimary
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Row {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            spacing: 12
+
+                            Text {
+                                width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
+                                text: root.minutesDigit1
+                                font.family: ndotFont.name
+                                font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                                color: nColors.textPrimary
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+
+                            Text {
+                                width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
+                                text: root.minutesDigit2
+                                font.family: ndotFont.name
+                                font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                                color: nColors.textPrimary
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                         }
                     }
+                }
 
-                    // Minutes display (separated digits)
+                // Horizontal layout (pill mode)
+                Item {
+                    anchors.fill: parent
+                    visible: parent.parent.isPillMode
+
                     Row {
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.centerIn: parent
                         spacing: 12
 
                         Text {
-                            width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
-                            text: root.minutesDigit1
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: root.hoursDigit1
                             font.family: ndotFont.name
-                            font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                            font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
                             color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
 
                         Text {
-                            width: Math.min(parent.parent.parent.width * 0.2, parent.parent.parent.height * 0.15)
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: root.hoursDigit2
+                            font.family: ndotFont.name
+                            font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                            color: nColors.textPrimary
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        BlinkingSeparator {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dotSize: Math.min(parent.parent.height * 0.07, 10)
+                            dotColor: nColors.textPrimary
+                            dotSpacing: Math.min(parent.parent.height * 0.1, 8)
+                            seconds: root.currentSeconds
+                        }
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: root.minutesDigit1
+                            font.family: ndotFont.name
+                            font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                            color: nColors.textPrimary
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
                             text: root.minutesDigit2
                             font.family: ndotFont.name
-                            font.pixelSize: Math.min(parent.parent.parent.width * 0.25, parent.parent.parent.height * 0.2)
+                            font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
                             color: nColors.textPrimary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
@@ -235,67 +529,255 @@ PlasmoidItem {
                     }
                 }
             }
+        }
+    }
 
-            // Horizontal layout (pill mode)
-            Item {
+    Component {
+        id: worldFullComponent
+        Item {
+            readonly property bool isPillMode: (width / height) >= 1.8
+
+            readonly property real calculatedRadius: {
+                var aspectRatio = width / height
+                if (aspectRatio >= 1.8) {
+                    return height / 2
+                }
+                return 20
+            }
+
+            // --- SQUARE / DEFAULT LAYOUT (with SwipeView) ---
+            Rectangle {
+                id: mainRect
                 anchors.fill: parent
-                visible: parent.parent.isPillMode
+                anchors.margins: 10
+                color: nColors.background
+                radius: parent.calculatedRadius
+                opacity: 0.95
+                visible: !parent.isPillMode
 
+                QQC2.SwipeView {
+                    id: swipeView
+                    anchors.fill: parent
+                    anchors.margins: 15
+                    currentIndex: 0
+                    clip: true
+                    orientation: Qt.Vertical
+
+                    Item {
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: 0
+
+                            Text {
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.topMargin: 5
+                                text: root.cityName
+                                font.family: ndot55Font.name
+                                font.pixelSize: Math.min(parent.width * 0.13, parent.height * 0.13)
+                                color: nColors.textPrimary
+                                opacity: 0.9
+                            }
+
+                            Item { Layout.fillHeight: true }
+
+                            RowLayout {
+                                Layout.alignment: Qt.AlignHLeft | Qt.AlignBottom
+                                Layout.bottomMargin: 10
+                                Layout.fillWidth: true
+                                spacing: 8
+
+                                Row {
+                                    spacing: 4
+
+                                    Text {
+                                        text: root.currentHours
+                                        font.family: ndotFont.name
+                                        font.pixelSize: Math.min(parent.parent.parent.width * 0.18, parent.parent.parent.height * 0.18)
+                                        color: nColors.textPrimary
+                                    }
+
+                                    Text {
+                                        text: ":"
+                                        font.family: ndotFont.name
+                                        font.pixelSize: Math.min(parent.parent.parent.width * 0.18, parent.parent.parent.height * 0.18)
+                                        color: nColors.textPrimary
+                                        opacity: root.colonVisible ? 1.0 : 0.3
+                                        Behavior on opacity { NumberAnimation { duration: 100 } }
+                                    }
+
+                                    Text {
+                                        text: root.currentMinutes
+                                        font.family: ndotFont.name
+                                        font.pixelSize: Math.min(parent.parent.parent.width * 0.18, parent.parent.parent.height * 0.18)
+                                        color: nColors.textPrimary
+                                    }
+                                }
+
+                                Text {
+                                    Layout.alignment: Qt.AlignTop
+                                    text: root.amPm
+                                    font.family: ndot55Font.name
+                                    font.pixelSize: Math.min(parent.parent.width * 0.12, parent.parent.height * 0.12)
+                                    color: nColors.textPrimary
+                                    opacity: 0.85
+                                }
+
+                                Item { Layout.fillWidth: true; Layout.preferredWidth: 1 }
+                            }
+                        }
+                    }
+
+                    Item {
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: 0
+
+                            Text {
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.topMargin: 5
+                                text: root.dayOfWeek
+                                font.family: ndot55Font.name
+                                font.pixelSize: Math.min(parent.width * 0.13, parent.height * 0.13)
+                                color: nColors.textPrimary
+                                opacity: 0.9
+                            }
+
+                            Item { Layout.fillHeight: true }
+
+                            RowLayout {
+                                Layout.alignment: Qt.AlignHLeft | Qt.AlignBottom
+                                Layout.bottomMargin: 10
+                                Layout.fillWidth: true
+                                spacing: 8
+
+                                Text {
+                                    Layout.alignment: Qt.AlignBottom
+                                    text: root.hourDifference
+                                    font.family: ndotFont.name
+                                    font.pixelSize: Math.min(parent.parent.width * 0.18, parent.parent.height * 0.18)
+                                    color: nColors.textPrimary
+                                }
+
+                                Text {
+                                    Layout.alignment: Qt.AlignBottom
+                                    text: "H"
+                                    font.family: ndot55Font.name
+                                    font.pixelSize: Math.min(parent.parent.width * 0.075, parent.parent.height * 0.075)
+                                    color: nColors.textPrimary
+                                    opacity: 0.85
+                                    Layout.bottomMargin: 5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Page Indicator (square mode only)
+            Column {
+                anchors {
+                    right: parent.right
+                    rightMargin: 16
+                    verticalCenter: parent.verticalCenter
+                }
+                spacing: 8
+                z: 100
+                visible: !parent.isPillMode
+
+                Repeater {
+                    model: 2
+
+                    Rectangle {
+                        width: 6
+                        height: 6
+                        radius: 3
+                        color: swipeView.currentIndex === index ? nColors.indicatorActive : nColors.indicatorInactive
+                        opacity: swipeView.currentIndex === index ? 0.95 : 0.45
+
+                        Behavior on color { ColorAnimation { duration: 200 } }
+                        Behavior on opacity { NumberAnimation { duration: 200 } }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            anchors.margins: -4
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: swipeView.currentIndex = index
+                        }
+                    }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton
+                z: 5
+                visible: !parent.isPillMode
+                onWheel: {
+                    if (wheel.angleDelta.y < 0) swipeView.incrementCurrentIndex()
+                    else if (wheel.angleDelta.y > 0) swipeView.decrementCurrentIndex()
+                }
+            }
+
+            // --- PILL MODE LAYOUT ---
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: 10
+                color: nColors.background
+                radius: parent.calculatedRadius
+                opacity: 0.95
+                visible: parent.isPillMode
+
+                // City abbreviation in top-left corner
+                Text {
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.leftMargin: parent.radius * 0.5
+                    anchors.topMargin: parent.height * 0.12
+                    text: root.cityAbbrev
+                    font.family: ndot55Font.name
+                    font.pixelSize: parent.height * 0.18
+                    color: nColors.textSecondary
+                    opacity: 0.8
+                }
+
+                // Time centered
                 Row {
                     anchors.centerIn: parent
-                    spacing: 12
+                    spacing: 8
 
-                    // Hours digit 1
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: root.hoursDigit1
+                        text: root.currentHours
                         font.family: ndotFont.name
-                        font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                        font.pixelSize: Math.min(parent.parent.width * 0.12, parent.parent.height * 0.5)
                         color: nColors.textPrimary
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
                     }
 
-                    // Hours digit 2
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: root.hoursDigit2
+                        text: ":"
                         font.family: ndotFont.name
-                        font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                        font.pixelSize: Math.min(parent.parent.width * 0.12, parent.parent.height * 0.5)
                         color: nColors.textPrimary
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
+                        opacity: root.colonVisible ? 1.0 : 0.3
+                        Behavior on opacity { NumberAnimation { duration: 100 } }
                     }
 
-                    // Blinking circles separator
-                    BlinkingSeparator {
-                        anchors.verticalCenter: parent.verticalCenter
-                        dotSize: Math.min(parent.parent.height * 0.07, 10)
-                        dotColor: nColors.textPrimary
-                        dotSpacing: Math.min(parent.parent.height * 0.1, 8)
-                        blinking: true
-                    }
-
-                    // Minutes digit 1
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: root.minutesDigit1
+                        text: root.currentMinutes
                         font.family: ndotFont.name
-                        font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                        font.pixelSize: Math.min(parent.parent.width * 0.12, parent.parent.height * 0.5)
                         color: nColors.textPrimary
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
                     }
 
-                    // Minutes digit 2
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: root.minutesDigit2
-                        font.family: ndotFont.name
-                        font.pixelSize: Math.min(parent.parent.width * 0.15, parent.parent.height * 0.5)
+                        text: root.amPm
+                        font.family: ndot55Font.name
+                        font.pixelSize: Math.min(parent.parent.width * 0.08, parent.parent.height * 0.3)
                         color: nColors.textPrimary
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
+                        opacity: 0.7
                     }
                 }
             }
