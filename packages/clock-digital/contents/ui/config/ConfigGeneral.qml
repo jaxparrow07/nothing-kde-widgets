@@ -229,12 +229,10 @@ KCM.SimpleKCM {
                 id: timezoneModel
             }
 
-            onCurrentIndexChanged: {
+            onActivated: {
                 if (currentIndex >= 0 && currentIndex < timezoneModel.count) {
                     cfg_timeZone = timezoneModel.get(currentIndex).value
-                    if (!cfg_cityName || cfg_cityName === "") {
-                        cfg_cityName = timezoneModel.get(currentIndex).city
-                    }
+                    cfg_cityName = timezoneModel.get(currentIndex).city
                 }
             }
         }
