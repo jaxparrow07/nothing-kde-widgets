@@ -10,6 +10,7 @@ KCM.SimpleKCM {
     property int cfg_widgetVariant
     property alias cfg_smoothHands: smoothHandsCheckbox.checked
     property alias cfg_themeMode: themeModeCombo.currentIndex
+    property alias cfg_useSystemAccent: useSystemAccentCheckbox.checked
 
     ColumnLayout {
         spacing: 10
@@ -143,7 +144,22 @@ KCM.SimpleKCM {
         }
 
         Label {
-            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Uses your KDE color scheme.")
+            text: i18n("Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. Follow System: Matches your KDE dark/light scheme.")
+            font.pointSize: 9
+            opacity: 0.7
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+        }
+
+        RowLayout {
+            CheckBox {
+                id: useSystemAccentCheckbox
+                text: i18n("Use system accent color")
+            }
+        }
+
+        Label {
+            text: i18n("Replace Nothing's red accent with your KDE system highlight color while keeping the Nothing aesthetic.")
             font.pointSize: 9
             opacity: 0.7
             Layout.fillWidth: true

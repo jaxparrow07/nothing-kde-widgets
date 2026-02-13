@@ -9,6 +9,7 @@ Kirigami.FormLayout {
     property alias cfg_deviceType: deviceTypeCombo.currentValue
     property alias cfg_updateInterval: updateIntervalSpin.value
     property alias cfg_themeMode: themeModeCombo.currentIndex
+    property alias cfg_useSystemAccent: useSystemAccentCheckbox.checked
     property string cfg_customIconMappings: ""
     property string cfg_deviceHistory: ""
 
@@ -45,6 +46,20 @@ Kirigami.FormLayout {
         id: themeModeCombo
         Kirigami.FormData.label: i18n("Theme:")
         model: [i18n("Dark"), i18n("Light"), i18n("Follow System")]
+    }
+
+    QQC2.CheckBox {
+        id: useSystemAccentCheckbox
+        text: i18n("Use system accent color")
+        Kirigami.FormData.label: ""
+    }
+
+    QQC2.Label {
+        text: i18n("Replace Nothing's red accent with your KDE system highlight color while keeping the Nothing aesthetic.")
+        wrapMode: Text.WordWrap
+        font.pointSize: Kirigami.Theme.smallFont.pointSize
+        opacity: 0.6
+        Layout.fillWidth: true
     }
 
     // Basic Settings Section

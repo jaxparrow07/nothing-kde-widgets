@@ -16,6 +16,7 @@ PlasmoidItem {
     Components.NothingColors {
         id: nColors
         themeMode: plasmoid.configuration.themeMode
+        useSystemAccent: plasmoid.configuration.useSystemAccent
     }
 
     // MPRIS2 Model

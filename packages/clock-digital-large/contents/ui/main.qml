@@ -13,6 +13,7 @@ PlasmoidItem {
     NothingColors {
         id: nColors
         themeMode: plasmoid.configuration.themeMode
+        useSystemAccent: plasmoid.configuration.useSystemAccent
     }
 
     preferredRepresentation: fullRepresentation
