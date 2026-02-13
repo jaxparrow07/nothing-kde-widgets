@@ -3,7 +3,7 @@
 <img width="1280" height="400" alt="Nothing KDE Widgets Banner" src="0-images/banner.png" />
 
 <p align="center">
-    <i>v1.0</i><br>
+    <i>v1.2</i><br>
     A collection of minimalist KDE Plasma 6 widgets inspired by Nothing's design language<br><br>
     <a href="https://github.com/jaxparrow07/nothing-kde-widgets/releases/latest">
         <img src="https://img.shields.io/github/downloads/jaxparrow07/nothing-kde-widgets/latest/total?style=for-the-badge" alt="Download Latest Release">
