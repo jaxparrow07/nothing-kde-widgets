@@ -187,11 +187,8 @@ All Nothing fonts are trademarks of Nothing Technology Limited. These fonts are 
 
 ### Icons
 Weather icons are scraped or drawn over Nothing related projects.
-- Weather icons: Custom Nothing-style icons
+- Weather icons: Collected from various sources ( widget apps, internet )
 - Battery icons: Iconify
-
-### License
-This project is licensed under GPL-2.0+ and GPL-3.0+ (varies by widget). See individual widget metadata for specific license information.
 
 ### Disclaimer
 This project is not affiliated with, endorsed by, or sponsored by Nothing Technology Limited. All product names, logos, and brands are property of their respective owners.
