@@ -1,0 +1,170 @@
+# Nothing Photo - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_com.jaxparrow07.nothingkdewidgets.photo "
+"1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2026-02-13 21:26+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: packages/photo/contents/config/config.qml:6
+msgid "Image"
+msgstr "Afbeelding"
+
+#: packages/photo/contents/config/config.qml:11
+msgid "Appearance"
+msgstr "Vormgeving"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:19
+msgid "Border Settings"
+msgstr "Kaderinstellingen"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:27
+msgid "Enable Borders"
+msgstr "Kaders tonen"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:32
+msgid ""
+"Adds margin around the image to reveal the dark background, creating a frame "
+"effect"
+msgstr "Toon marges rond afbeeldingen om fotolijstjes na te bootsen"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:45
+msgid "Border Size:"
+msgstr "Kaderdikte:"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:73
+msgid "Shape Settings"
+msgstr "Vorminstellingen"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:81
+msgid "Pill Shape"
+msgstr "Pilvormig"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:86
+msgid ""
+"Automatically creates a circle (if square) or pill shape (if rectangular). "
+"When disabled, uses standard rounded corners."
+msgstr ""
+"Voorzie de widget automatisch van een cirkelvorm (indien vierkant) of "
+"pilvorm (indien rechthoekig). Schakel uit om de standaardhoeken te tonen."
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:102
+msgid "Theme"
+msgstr "Thema"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:109
+msgid "Theme:"
+msgstr "Thema:"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Dark"
+msgstr "Donker"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Light"
+msgstr "Licht"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:115
+msgid "Follow System"
+msgstr "Systeemthema"
+
+#: packages/photo/contents/ui/config/ConfigAppearance.qml:121
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+"Donker: Nothing's kenmerkende donkere vormgeving. Licht: Nothing's lichte "
+"kleuren. Systeemthema: gebruik het KDE-kleurenschema."
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:19
+msgid "Image Source"
+msgstr "Afbeeldingslocatie"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:31
+msgid "Select an image file..."
+msgstr "Kies een afbeeldingsbestand…"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:36
+msgid "Browse..."
+msgstr "Bladeren…"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:42
+msgid "Select a photo to display in the widget (PNG, JPG, JPEG, WebP)"
+msgstr "Kies de foto die je op de widget wilt tonen (png, jpg, jpeg, webp)"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:58
+msgid "Image Fit Mode"
+msgstr "Afbeeldingen inpassen"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:68
+msgid "Fit Mode:"
+msgstr "Inpassen:"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Crop (Fill Frame)"
+msgstr "Bijsnijden (lijst opvullen)"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Fit (Show All)"
+msgstr "Inpassen (alles tonen)"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:74
+msgid "Stretch"
+msgstr "Uitrekken"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:80
+msgid ""
+"Crop: Fills the frame completely, may crop parts of the image\n"
+"Fit: Shows the entire image, may have letterboxing\n"
+"Stretch: Fills frame completely, may distort the image"
+msgstr ""
+"Bijsnijden: vul de lijst volledig op, maar snijd sommige delen bij (indien "
+"nodig)\n"
+"Inpassen: toon de volledige afbeelding, zelfs als deze eigenlijk niet "
+"volledig past\n"
+"Uitrekken: vul de lijst volledig op, maar met mogelijke ruis"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:96
+msgid "Effects"
+msgstr "Effecten"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:104
+msgid "Grayscale"
+msgstr "Grijswaarden"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:109
+msgid "Convert the image to black and white (grayscale)"
+msgstr "Maak er een zwart-witafbeelding van (grijswaarden)"
+
+#: packages/photo/contents/ui/config/ConfigImage.qml:123
+msgid "Select an Image"
+msgstr "Kies een afbeelding"
+
+#: packages/photo/contents/ui/main.qml:184
+msgid "No Image"
+msgstr "Geen afbeelding"
+
+#: packages/photo/contents/ui/main.qml:193
+msgid "Right-click to configure"
+msgstr "Rechtsklikken om in te stellen"
+
+#: packages/photo/contents/ui/main.qml:225
+msgid "Image Error"
+msgstr "Foutmelding"
+
+#: packages/photo/contents/ui/main.qml:234
+msgid "Failed to load image"
+msgstr "De afbeelding kan niet worden geladen"

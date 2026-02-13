@@ -1,0 +1,107 @@
+# Nothing Weather - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"plasma_applet_com.jaxparrow07.nothingkdewidgets.weather 2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2026-02-13 21:20+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: packages/weather/contents/config/config.qml:6
+msgid "General"
+msgstr "Algemeen"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:20
+msgid "Style:"
+msgstr "Stijl:"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:53
+#: packages/weather/contents/ui/VariantSelector.qml:34
+msgid "Full"
+msgstr "Volledig"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:89
+#: packages/weather/contents/ui/VariantSelector.qml:35
+msgid "Circular"
+msgstr "Rond"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:125
+#: packages/weather/contents/ui/VariantSelector.qml:36
+msgid "Circle Pages"
+msgstr "Ronde pagina's"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:148
+msgid "Location:"
+msgstr "Plaats:"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:154
+msgid "e.g., New York, Chennai, Villupuram"
+msgstr "bijv. Amsterdam, Berlijn, Gent"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:160
+msgid ""
+"Enter a city name for weather information. The widget will automatically "
+"find the coordinates."
+msgstr ""
+"Voer een plaatsnaam in om de huidige weersvoorspelling op te vragen. De "
+"widget zoekt automatisch naar de juiste coördinaten."
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:177
+msgid "Temperature Unit:"
+msgstr "Temperatuureenheid:"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:183
+msgid "Celsius (°C)"
+msgstr "Celsius (°C)"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:183
+msgid "Fahrenheit (°F)"
+msgstr "Fahrenheit (°F)"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:189
+msgid "Choose between Celsius and Fahrenheit for temperature display."
+msgstr "Kies uit Celsius of Fahrenheit om de temperatuur aan te geven."
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:206
+msgid "Theme:"
+msgstr "Thema:"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:212
+msgid "Dark"
+msgstr "Donker"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:212
+msgid "Light"
+msgstr "Licht"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:212
+msgid "Follow System"
+msgstr "Systeemthema"
+
+#: packages/weather/contents/ui/config/ConfigGeneral.qml:218
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+"Donker: Nothing's kenmerkende donkere vormgeving. Licht: Nothing's lichte "
+"kleuren. Systeemthema: gebruik het KDE-kleurenschema."
+
+#: packages/weather/contents/ui/VariantSelector.qml:24
+msgid "Choose Style"
+msgstr "Stijl kiezen"
+
+#: packages/weather/contents/ui/VariantSelector.qml:62
+msgid "can be changed later in configuration"
+msgstr "dit kan te allen tijde worden aangepast in de instellingen"

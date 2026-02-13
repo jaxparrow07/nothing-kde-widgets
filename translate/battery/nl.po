@@ -1,0 +1,112 @@
+# Nothing Devices and Battery - Translation Template
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"plasma_applet_com.jaxparrow07.nothingkdewidgets.battery 1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:58+0530\n"
+"PO-Revision-Date: 2026-02-13 21:28+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: packages/battery/contents/config/config.qml:6
+msgid "General"
+msgstr "Algemeen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:41
+msgid "Theme"
+msgstr "Thema"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:46
+msgid "Theme:"
+msgstr "Thema:"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:47
+msgid "Dark"
+msgstr "Donker"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:47
+msgid "Light"
+msgstr "Licht"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:47
+msgid "Follow System"
+msgstr "Systeemthema"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:53
+msgid "Basic Settings"
+msgstr "Algemene instellingen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:58
+msgid "Device Type:"
+msgstr "Soort apparaat:"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:62
+msgid "Laptop"
+msgstr "Laptop"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:63
+msgid "Desktop PC"
+msgstr "Desktop-pc"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:78
+msgid "Update Interval (ms):"
+msgstr "Bijwerken, iedere (in ms):"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:88
+msgid "Custom Device Icons"
+msgstr "Aangepaste apparaatpictogrammen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:93
+msgid "Icon Mappings:"
+msgstr "Pictogramkoppelingen:"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:98
+msgid "Add custom icon mappings based on device name patterns"
+msgstr "Toon aangepaste pictogrammen op basis van naamspatronen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:120
+msgid "Device name pattern"
+msgstr "Naamspatroon van apparaat"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:192
+msgid "Add Mapping"
+msgstr "Koppeling toevoegen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:206
+msgid "Device History"
+msgstr "Apparaatgeschiedenis"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:211
+msgid "Previously Connected:"
+msgstr "Eerder verbonden:"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:215
+msgid "Bluetooth devices that have been connected to this system"
+msgstr ""
+"Bluetoothapparaten die eerder verbonden zijn geweest met deze computer"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:250
+msgid "Quick Add"
+msgstr "Snel toevoegen"
+
+#: packages/battery/contents/ui/config/ConfigGeneral.qml:266
+msgid "No devices found in history"
+msgstr "Er is geen apparaatgeschiedenis"
+
+#: packages/battery/contents/ui/main.qml:673
+msgid "PC"
+msgstr "Pc"
+
+#: packages/battery/contents/ui/main.qml:710
+msgid "Detecting Battery..."
+msgstr "Bezig met vaststellen van accu…"

@@ -1,0 +1,48 @@
+# Nothing Media - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: plasma_applet_com.jaxparrow07.nothingkdewidgets.media "
+"1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2026-02-13 21:26+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: packages/media/contents/config/config.qml:6
+msgid "General"
+msgstr "Algemeen"
+
+#: packages/media/contents/ui/config/ConfigGeneral.qml:16
+msgid "Theme:"
+msgstr "Thema:"
+
+#: packages/media/contents/ui/config/ConfigGeneral.qml:22
+msgid "Dark"
+msgstr "Donker"
+
+#: packages/media/contents/ui/config/ConfigGeneral.qml:22
+msgid "Light"
+msgstr "Licht"
+
+#: packages/media/contents/ui/config/ConfigGeneral.qml:22
+msgid "Follow System"
+msgstr "Systeemthema"
+
+#: packages/media/contents/ui/config/ConfigGeneral.qml:28
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+"Donker: Nothing's kenmerkende donkere vormgeving. Licht: Nothing's lichte "
+"kleuren. Systeemthema: gebruik het KDE-kleurenschema."

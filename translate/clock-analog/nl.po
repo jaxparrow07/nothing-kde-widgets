@@ -1,0 +1,81 @@
+# Nothing Analog Clock - Translation Template
+# This file is put in the public domain.
+# Translators:
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"plasma_applet_com.jaxparrow07.nothingkdewidgets.analogclock 2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/jaxparrow07/nothing-kde-widgets/"
+"issues\n"
+"POT-Creation-Date: 2026-02-13 00:57+0530\n"
+"PO-Revision-Date: 2026-02-13 21:37+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: packages/clock-analog/contents/config/config.qml:6
+msgid "Appearance"
+msgstr "Vormgeving"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:19
+msgid "Style:"
+msgstr "Stijl:"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:52
+#: packages/clock-analog/contents/ui/VariantSelector.qml:34
+msgid "Swiss Railway"
+msgstr "Zwitserse Spoorwegen"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:88
+#: packages/clock-analog/contents/ui/VariantSelector.qml:35
+msgid "Minimalist"
+msgstr "Minimalistisch"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:112
+msgid "Smooth Moving Second Hand"
+msgstr "Vloeiende secondewijzer gebruiken"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:117
+msgid ""
+"Update second hand every 50ms instead of 1000ms ( 1s ) for a smoother motion"
+msgstr ""
+"Verplaats de secondewijzer iedere 50 ms in plaats van 1000 ms (1 sec.) om "
+"een vloeiender indruk te geven"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:134
+msgid "Theme:"
+msgstr "Thema:"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Dark"
+msgstr "Donker"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Light"
+msgstr "Licht"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:140
+msgid "Follow System"
+msgstr "Systeemthema"
+
+#: packages/clock-analog/contents/ui/config/ConfigAppearance.qml:146
+msgid ""
+"Dark: Nothing's signature dark aesthetic. Light: Nothing's light palette. "
+"Follow System: Uses your KDE color scheme."
+msgstr ""
+"Donker: Nothing's kenmerkende donkere vormgeving. Licht: Nothing's lichte "
+"kleuren. Systeemthema: gebruik het KDE-kleurenschema."
+
+#: packages/clock-analog/contents/ui/VariantSelector.qml:24
+msgid "Choose Style"
+msgstr "Stijl kiezen"
+
+#: packages/clock-analog/contents/ui/VariantSelector.qml:61
+msgid "can be changed later in configuration"
+msgstr "dit kan te allen tijde worden aangepast in de instellingen"
