@@ -419,8 +419,8 @@ PlasmoidItem {
 
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
-        Layout.minimumWidth: 100
-        Layout.minimumHeight: 100
+        Layout.minimumWidth: 200
+        Layout.minimumHeight: 200
 
         sourceComponent: {
             if (!root.variantChosen) return selectorComponent

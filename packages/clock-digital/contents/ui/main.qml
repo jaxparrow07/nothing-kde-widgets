@@ -75,8 +75,6 @@ PlasmoidItem {
     property string dayOfWeek: "Friday"
     property string hourDifference: "+0.0"
     property int currentSeconds: 0
-    readonly property bool colonVisible: currentSeconds % 2 === 0
-
     Config.TimezonesData {
         id: timezonesDataSource
     }
@@ -438,8 +436,8 @@ PlasmoidItem {
 
         Layout.preferredWidth: 200
         Layout.preferredHeight: 200
-        Layout.minimumWidth: 100
-        Layout.minimumHeight: 100
+        Layout.minimumWidth: 200
+        Layout.minimumHeight: 200
 
         sourceComponent: {
             if (!root.variantChosen) return selectorComponent
@@ -673,7 +671,7 @@ PlasmoidItem {
                                         font.family: ndotFont.name
                                         font.pixelSize: Math.min(parent.parent.parent.width * 0.18, parent.parent.parent.height * 0.18)
                                         color: nColors.textPrimary
-                                        opacity: root.colonVisible ? 1.0 : 0.3
+                                        opacity: (root.currentSeconds % 2) === 0 ? 1.0 : 0.3
                                         Behavior on opacity { NumberAnimation { duration: 100 } }
                                     }
 
@@ -831,7 +829,7 @@ PlasmoidItem {
                         font.family: ndotFont.name
                         font.pixelSize: Math.min(parent.parent.width * 0.12, parent.parent.height * 0.5)
                         color: nColors.textPrimary
-                        opacity: root.colonVisible ? 1.0 : 0.3
+                        opacity: (root.currentSeconds % 2) === 0 ? 1.0 : 0.3
                         Behavior on opacity { NumberAnimation { duration: 100 } }
                     }
 
