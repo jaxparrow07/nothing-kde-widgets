@@ -207,14 +207,69 @@ PlasmoidItem {
         hourlyForecastTemps = temps
     }
 
+    // Check if a hint matches any of the result's geographic fields
+    function hintMatches(hint, fields, words, fullFields) {
+        // Exact word/field match first (handles "Canada", "US", etc.)
+        if (words.indexOf(hint) !== -1 || fullFields.indexOf(hint) !== -1)
+            return true
+        // Initialism match: "BC" matches "British Columbia" by checking
+        // if each character matches the start of consecutive words
+        if (hint.length >= 2 && hint.length <= 5) {
+            for (var i = 0; i < fullFields.length; i++) {
+                var fieldWords = fullFields[i].split(/\s+/)
+                if (fieldWords.length === hint.length) {
+                    var initialsMatch = true
+                    for (var c = 0; c < hint.length; c++) {
+                        if (!fieldWords[c] || fieldWords[c].charAt(0) !== hint.charAt(c)) {
+                            initialsMatch = false
+                            break
+                        }
+                    }
+                    if (initialsMatch)
+                        return true
+                }
+            }
+        }
+        return false
+    }
+
+    // Find the best matching result for hints like "BC", "Canada", etc.
+    function pickBestResult(results, hints) {
+        if (hints.length === 0 || results.length === 1)
+            return results[0]
+
+        for (var i = 0; i < results.length; i++) {
+            var r = results[i]
+            var fields = [r.country || "", r.country_code || "",
+                          r.admin1 || "", r.admin2 || "", r.admin3 || ""]
+            var words = fields.join(" ").toLowerCase().split(/\s+/)
+            var fullFields = fields.map(function(f) { return f.toLowerCase() })
+
+            var allMatch = true
+            for (var j = 0; j < hints.length; j++) {
+                if (!hintMatches(hints[j].toLowerCase(), fields, words, fullFields)) {
+                    allMatch = false
+                    break
+                }
+            }
+            if (allMatch)
+                return r
+        }
+        return results[0]
+    }
+
     // Geocoding function
     function geocodeLocation() {
         isLoading = true
         errorMessage = ""
 
+        var parts = location.split(",").map(function(s) { return s.trim() })
+        var city = parts[0]
+        var hints = parts.slice(1).filter(function(s) { return s.length > 0 })
+
         var xhr = new XMLHttpRequest()
         var url = "https://geocoding-api.open-meteo.com/v1/search?name=" +
-                  encodeURIComponent(location) + "&count=1&language=en&format=json"
+                  encodeURIComponent(city) + "&count=10&language=en&format=json"
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -222,8 +277,9 @@ PlasmoidItem {
                     try {
                         var response = JSON.parse(xhr.responseText)
                         if (response.results && response.results.length > 0) {
-                            latitude = response.results[0].latitude
-                            longitude = response.results[0].longitude
+                            var best = pickBestResult(response.results, hints)
+                            latitude = best.latitude
+                            longitude = best.longitude
                             fetchWeatherData()
                         } else {
                             errorMessage = "Location not found"
