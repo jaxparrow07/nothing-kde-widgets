@@ -26,7 +26,7 @@ RowLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: parent.width / 6
-            Layout.alignment: Qt.AlignVTop
+            Layout.alignment: Qt.AlignTop
 
             ColumnLayout {
                 anchors.centerIn: parent

@@ -54,6 +54,16 @@ PlasmoidItem {
     property bool isLoading: true
     property string errorMessage: ""
 
+    // Active XHR objects kept as properties to prevent garbage collection
+    property var activeGeoXhr: null
+    property var activeWeatherXhr: null
+    // Flag to avoid duplicate geocoding call from both onLocationChanged and Component.onCompleted
+    property bool _componentReady: false
+
+    // Network request timeout (ms) and short retry interval after a failed request (ms)
+    readonly property int requestTimeoutMs: 10000
+    readonly property int retryIntervalMs: 30000
+
     // Temperature unit symbol
     readonly property string tempUnit: temperatureUnit === 0 ? "°C" : "°F"
     readonly property string apiTempUnit: temperatureUnit === 0 ? "celsius" : "fahrenheit"
@@ -260,6 +270,12 @@ PlasmoidItem {
 
     // Geocoding function
     function geocodeLocation() {
+        // Abort any in-flight geocoding request
+        if (activeGeoXhr !== null) {
+            activeGeoXhr.abort()
+            activeGeoXhr = null
+        }
+
         isLoading = true
         errorMessage = ""
 
@@ -268,11 +284,17 @@ PlasmoidItem {
         var hints = parts.slice(1).filter(function(s) { return s.length > 0 })
 
         var xhr = new XMLHttpRequest()
+        // Keep a reference on the component to prevent garbage collection
+        activeGeoXhr = xhr
+
         var url = "https://geocoding-api.open-meteo.com/v1/search?name=" +
                   encodeURIComponent(city) + "&count=10&language=en&format=json"
 
+        xhr.timeout = requestTimeoutMs
+
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (activeGeoXhr === xhr) activeGeoXhr = null
                 if (xhr.status === 200) {
                     try {
                         var response = JSON.parse(xhr.responseText)
@@ -288,16 +310,26 @@ PlasmoidItem {
                             condition = i18n("Location not found")
                         }
                     } catch (e) {
-                        errorMessage = "Error parsing location data"
+                        errorMessage = i18n("Error parsing location data")
                         isLoading = false
                         console.error("Geocoding parse error:", e)
                     }
-                } else {
-                    errorMessage = "Network error"
+                } else if (xhr.status !== 0) {
+                    // status 0 means the request was aborted; don't treat that as an error
+                    errorMessage = i18n("Network error")
                     isLoading = false
+                    retryTimer.restart()
                     console.error("Geocoding request failed:", xhr.status)
                 }
             }
+        }
+
+        xhr.ontimeout = function() {
+            if (activeGeoXhr === xhr) activeGeoXhr = null
+            errorMessage = i18n("Network timeout")
+            isLoading = false
+            retryTimer.restart()
+            console.error("Geocoding request timed out")
         }
 
         xhr.open("GET", url)
@@ -311,7 +343,15 @@ PlasmoidItem {
             return
         }
 
+        // Abort any in-flight weather request
+        if (activeWeatherXhr !== null) {
+            activeWeatherXhr.abort()
+            activeWeatherXhr = null
+        }
+
         var xhr = new XMLHttpRequest()
+        // Keep a reference on the component to prevent garbage collection
+        activeWeatherXhr = xhr
 
         // Variant 0 needs full forecast data; variants 1 & 2 only need current + daily
         var needsFullForecast = (widgetVariant === 0)
@@ -326,8 +366,11 @@ PlasmoidItem {
                   "&timezone=auto" +
                   "&forecast_days=" + (needsFullForecast ? "7" : "1")
 
+        xhr.timeout = requestTimeoutMs
+
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (activeWeatherXhr === xhr) activeWeatherXhr = null
                 if (xhr.status === 200) {
                     try {
                         var response = JSON.parse(xhr.responseText)
@@ -355,16 +398,26 @@ PlasmoidItem {
                         isLoading = false
                         errorMessage = ""
                     } catch (e) {
-                        errorMessage = "Error parsing weather data"
+                        errorMessage = i18n("Error parsing weather data")
                         isLoading = false
                         console.error("Weather parse error:", e)
                     }
-                } else {
-                    errorMessage = "Failed to fetch weather"
+                } else if (xhr.status !== 0) {
+                    // status 0 means the request was aborted; don't treat that as an error
+                    errorMessage = i18n("Failed to fetch weather")
                     isLoading = false
+                    retryTimer.restart()
                     console.error("Weather request failed:", xhr.status)
                 }
             }
+        }
+
+        xhr.ontimeout = function() {
+            if (activeWeatherXhr === xhr) activeWeatherXhr = null
+            errorMessage = i18n("Network timeout")
+            isLoading = false
+            retryTimer.restart()
+            console.error("Weather request timed out")
         }
 
         xhr.open("GET", url)
@@ -379,7 +432,19 @@ PlasmoidItem {
         onTriggered: fetchWeatherData()
     }
 
-    onLocationChanged: geocodeLocation()
+    // Short retry timer: fires once after retryIntervalMs when a network request fails at startup
+    Timer {
+        id: retryTimer
+        interval: retryIntervalMs
+        repeat: false
+        onTriggered: geocodeLocation()
+    }
+
+    onLocationChanged: {
+        // Skip the signal that fires during initial property binding setup;
+        // Component.onCompleted handles the first load.
+        if (_componentReady) geocodeLocation()
+    }
 
     onTemperatureUnitChanged: {
         if (latitude !== 0 || longitude !== 0) {
@@ -394,7 +459,10 @@ PlasmoidItem {
         }
     }
 
-    Component.onCompleted: geocodeLocation()
+    Component.onCompleted: {
+        _componentReady = true
+        geocodeLocation()
+    }
 
     // --- Compact representation ---
     compactRepresentation: Item {
@@ -653,7 +721,7 @@ PlasmoidItem {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton
                 z: 5
-                onWheel: {
+                onWheel: function(wheel) {
                     if (parent.isWideLayout) {
                         if (wheel.angleDelta.y < 0) wideSwipeView.incrementCurrentIndex()
                         else if (wheel.angleDelta.y > 0) wideSwipeView.decrementCurrentIndex()
@@ -756,7 +824,7 @@ PlasmoidItem {
                 anchors.fill: parent
                 acceptedButtons: Qt.NoButton
                 z: 5
-                onWheel: {
+                onWheel: function(wheel) {
                     if (wheel.angleDelta.y < 0) circleSwipeView.incrementCurrentIndex()
                     else if (wheel.angleDelta.y > 0) circleSwipeView.decrementCurrentIndex()
                 }

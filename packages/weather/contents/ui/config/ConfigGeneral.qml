@@ -9,7 +9,9 @@ KCM.SimpleKCM {
 
     property int cfg_widgetVariant
     property alias cfg_location: locationField.text
+    property string cfg_locationDefault
     property alias cfg_temperatureUnit: temperatureUnitCombo.currentIndex
+    property int cfg_temperatureUnitDefault
     property alias cfg_themeMode: themeModeCombo.currentIndex
     property alias cfg_useSystemAccent: useSystemAccentCheckbox.checked
 
