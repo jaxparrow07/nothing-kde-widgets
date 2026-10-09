@@ -11,9 +11,10 @@
     <a href="https://www.pling.com/c/2330403/">
         <img src="https://img.shields.io/badge/KDE_Store-Download-blue?style=for-the-badge&logo=kde" alt="KDE Store Collection">
     </a>
-    <a href="https://ko-fi.com/devrinth">
-        <img src="https://img.shields.io/badge/Buy_me_a_Kofi-donate-blue?style=for-the-badge&logo=kofi&color=%23FF6433" alt="Support on Ko-fi">
-    </a>
+    <br><br>
+    <a href="https://www.buymeacoffee.com/jaxparrow07">
+  <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=jaxparrow07&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee" height="50">
+</a>
 </p>
 
 ---
@@ -204,6 +205,4 @@ Want to translate the widgets into your language? See the [Translation Guide](tr
 ## Support
 If you like these widgets, consider supporting the development:
 
-<a href="https://ko-fi.com/devrinth">
-    <img src="https://img.shields.io/badge/Buy_me_a_Kofi-donate-blue?style=for-the-badge&logo=kofi&color=%23FF6433" alt="Support on Ko-fi">
-</a>
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://www.buymeacoffee.com/jaxparrow07)
