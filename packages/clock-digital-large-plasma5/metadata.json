@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zinczorphin@email.com",
+                "Name": "Jack Faith"
+            }
+        ],
+        "Category": "Date and Time",
+        "Description": "Text only digital clock with multiple Nothing inspired font variants",
+        "EnabledByDefault": true,
+        "Icon": "/icon.png",
+        "Id": "com.jaxparrow07.nothingkdewidgets.digitalclocklarge-plasma5",
+        "License": "GPL-3.0",
+        "Name": "Nothing Digital Clock Large (Plasma 5)",
+        "Version": "1.3",
+        "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

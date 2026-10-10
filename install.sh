@@ -24,17 +24,44 @@ install_widget() {
 	echo "[*] Processing widget: ${WIDGET_NAME}"
 	echo "================================"
 
+	if command -v kpackagetool6 &> /dev/null; then
+		KPACKAGE="kpackagetool6"
+	elif command -v kpackagetool5 &> /dev/null; then
+		KPACKAGE="kpackagetool5"
+	elif command -v plasmapkg2 &> /dev/null; then
+		KPACKAGE="plasmapkg2"
+	fi
+
 	# Extract widget ID first
 	local widgetId=$(jq -r ".KPlugin.Id" "$METADATA_FILE")
 
+	# Stage the widget with symlinks resolved so the installed copy is self-contained
+	local STAGE_DIR=$(mktemp -d)
+	trap "rm -rf $STAGE_DIR" EXIT
+	echo "[*] Resolving symlinks into staging directory..."
+	tar -C "${WIDGET_DIR}" -chf - . | tar -C "$STAGE_DIR" -xf -
 
-	if [[ -d "$HOME/.local/share/plasma/plasmoids/${widgetId}" ]]; then
-		echo "[+] Widget already installed. Updating: ${widgetId}"
-		kpackagetool6 --type=Plasma/Applet -u "${WIDGET_DIR}"
-		local install_result=$?
+	if [[ -n "$KPACKAGE" ]]; then
+		if [[ -d "$HOME/.local/share/plasma/plasmoids/${widgetId}" ]]; then
+			echo "[+] Widget already installed. Updating: ${widgetId}"
+			$KPACKAGE --type=Plasma/Applet -u "$STAGE_DIR"
+			local install_result=$?
+		else
+			echo "[+] Installing widget: ${widgetId}"
+			$KPACKAGE --type=Plasma/Applet -i "$STAGE_DIR"
+			local install_result=$?
+		fi
 	else
-		echo "[+] Installing widget: ${widgetId}"
-		kpackagetool6 --type=Plasma/Applet -i "${WIDGET_DIR}"
+		echo "[!] Packaging tools not found, falling back to manual copy..."
+		local DEST_DIR="$HOME/.local/share/plasma/plasmoids/${widgetId}"
+		mkdir -p "$HOME/.local/share/plasma/plasmoids/"
+		if [[ -d "$DEST_DIR" ]]; then
+			echo "[+] Widget already installed. Updating: ${widgetId} (manual copy)"
+			rm -rf "$DEST_DIR"
+		else
+			echo "[+] Installing widget: ${widgetId} (manual copy)"
+		fi
+		cp -r "$STAGE_DIR" "$DEST_DIR"
 		local install_result=$?
 	fi
 	
@@ -49,7 +76,13 @@ install_widget() {
 	# Post-install hook: Restart plasmashell (unless skipped)
 	if [[ "$SKIP_RELOAD" != "true" ]]; then
 		echo "[*] Post-install hook: restarting plasmashell..."
-		killall plasmashell && kstart plasmashell
+		if command -v killall &> /dev/null; then
+			killall plasmashell && (kstart plasmashell || kstart5 plasmashell || plasmashell &)
+		elif command -v pkill &> /dev/null; then
+			pkill plasmashell && (kstart plasmashell || kstart5 plasmashell || plasmashell &)
+		else
+			echo "[!] Could not restart plasmashell automatically (killall/pkill not found)."
+		fi
 		echo "[+] Plasmashell restarted"
 	fi
 
@@ -61,8 +94,37 @@ if [[ "$1" == "--all" || "$1" == "-a" ]]; then
 	echo "[*] Installing all widgets..."
 	build_translations
 
+	# Determine Plasma version
+	PLASMA_VER=""
+	if [[ "$2" == "--plasma5" || "$2" == "-p5" ]]; then
+		PLASMA_VER=5
+		echo "[*] Forced Plasma 5 installation"
+	elif [[ "$2" == "--plasma6" || "$2" == "-p6" ]]; then
+		PLASMA_VER=6
+		echo "[*] Forced Plasma 6 installation"
+	elif command -v kpackagetool6 &> /dev/null; then
+		PLASMA_VER=6
+		echo "[*] Detected Plasma 6"
+	else
+		PLASMA_VER=5
+		echo "[*] Detected Plasma 5"
+	fi
+
 	# Get all widget directories
-	WIDGETS=($(ls -d packages/*/ 2>/dev/null | xargs -n 1 basename))
+	ALL_WIDGETS=($(ls -d packages/*/ 2>/dev/null | xargs -n 1 basename))
+	WIDGETS=()
+
+	for w in "${ALL_WIDGETS[@]}"; do
+		if [[ "$PLASMA_VER" == "6" ]]; then
+			if [[ ! "$w" == *"-plasma5" ]]; then
+				WIDGETS+=("$w")
+			fi
+		else
+			if [[ "$w" == *"-plasma5" ]]; then
+				WIDGETS+=("$w")
+			fi
+		fi
+	done
 
 	if [[ ${#WIDGETS[@]} -eq 0 ]]; then
 		echo "[!] No widgets found in packages directory"
@@ -104,7 +166,13 @@ if [[ "$1" == "--all" || "$1" == "-a" ]]; then
 	# Reload plasmashell once at the end
 	echo ""
 	echo "[*] Reloading plasmashell..."
-	killall plasmashell && kstart plasmashell
+	if command -v killall &> /dev/null; then
+		killall plasmashell && (kstart plasmashell || kstart5 plasmashell || plasmashell &)
+	elif command -v pkill &> /dev/null; then
+		pkill plasmashell && (kstart plasmashell || kstart5 plasmashell || plasmashell &)
+	else
+		echo "[!] Could not restart plasmashell automatically."
+	fi
 	echo "[+] All done!"
 
 elif [[ -n "$1" && -d "packages/$1" ]]; then
@@ -124,5 +192,7 @@ else
 	echo "Usage:"
 	echo "  ./install.sh <package_folder>    Install a single widget"
 	echo "  ./install.sh --all | -a          Install all widgets"
+	echo "  ./install.sh --all --plasma5     Install all KDE 5 widgets"
+	echo "  ./install.sh --all --plasma6     Install all KDE 6 widgets"
 	exit 1
 fi

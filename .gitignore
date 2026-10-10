@@ -2,3 +2,5 @@
 /2-packaged/*.plasmoid
 vars
 translate/**/*.po~
+packages/*/contents/locale/**/*.mo
+messages.mo

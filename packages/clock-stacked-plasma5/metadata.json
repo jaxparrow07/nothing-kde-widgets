@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "zinczorphin@email.com",
+                "Name": "Jack Faith"
+            }
+        ],
+        "Category": "Date and Time",
+        "Description": "Four-line vertically stacked clock with a classic dot-matrix typeface.",
+        "EnabledByDefault": true,
+        "Icon": "/icon.png",
+        "Id": "com.jaxparrow07.nothingkdewidgets.stackedclock-plasma5",
+        "License": "GPL-3.0",
+        "Name": "Nothing Stacked Clock (Plasma 5)",
+        "Version": "2.0",
+        "Website": "https://github.com/jaxparrow07/nothing-kde-widgets"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml"
+}

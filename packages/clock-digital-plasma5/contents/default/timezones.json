@@ -1,0 +1,683 @@
+{
+  "timezones": [
+    {
+      "id": "Pacific/Midway",
+      "name": "Midway",
+      "city": "Midway",
+      "country": "US",
+      "offset": -11.0
+    },
+    {
+      "id": "Pacific/Honolulu",
+      "name": "Honolulu",
+      "city": "Honolulu",
+      "country": "US",
+      "offset": -10.0
+    },
+    {
+      "id": "America/Anchorage",
+      "name": "Anchorage",
+      "city": "Anchorage",
+      "country": "US",
+      "offset": -9.0
+    },
+    {
+      "id": "America/Los_Angeles",
+      "name": "Los Angeles",
+      "city": "Los Angeles",
+      "country": "US",
+      "offset": -8.0
+    },
+    {
+      "id": "America/Vancouver",
+      "name": "Vancouver",
+      "city": "Vancouver",
+      "country": "CA",
+      "offset": -8.0
+    },
+    {
+      "id": "America/Tijuana",
+      "name": "Tijuana",
+      "city": "Tijuana",
+      "country": "MX",
+      "offset": -8.0
+    },
+    {
+      "id": "America/Phoenix",
+      "name": "Phoenix",
+      "city": "Phoenix",
+      "country": "US",
+      "offset": -7.0
+    },
+    {
+      "id": "America/Denver",
+      "name": "Denver",
+      "city": "Denver",
+      "country": "US",
+      "offset": -7.0
+    },
+    {
+      "id": "America/Edmonton",
+      "name": "Edmonton",
+      "city": "Edmonton",
+      "country": "CA",
+      "offset": -7.0
+    },
+    {
+      "id": "America/Chicago",
+      "name": "Chicago",
+      "city": "Chicago",
+      "country": "US",
+      "offset": -6.0
+    },
+    {
+      "id": "America/Mexico_City",
+      "name": "Mexico City",
+      "city": "Mexico City",
+      "country": "MX",
+      "offset": -6.0
+    },
+    {
+      "id": "America/Winnipeg",
+      "name": "Winnipeg",
+      "city": "Winnipeg",
+      "country": "CA",
+      "offset": -6.0
+    },
+    {
+      "id": "America/Guatemala",
+      "name": "Guatemala",
+      "city": "Guatemala City",
+      "country": "GT",
+      "offset": -6.0
+    },
+    {
+      "id": "America/New_York",
+      "name": "New York",
+      "city": "New York",
+      "country": "US",
+      "offset": -5.0
+    },
+    {
+      "id": "America/Toronto",
+      "name": "Toronto",
+      "city": "Toronto",
+      "country": "CA",
+      "offset": -5.0
+    },
+    {
+      "id": "America/Bogota",
+      "name": "Bogotá",
+      "city": "Bogotá",
+      "country": "CO",
+      "offset": -5.0
+    },
+    {
+      "id": "America/Lima",
+      "name": "Lima",
+      "city": "Lima",
+      "country": "PE",
+      "offset": -5.0
+    },
+    {
+      "id": "America/Caracas",
+      "name": "Caracas",
+      "city": "Caracas",
+      "country": "VE",
+      "offset": -4.0
+    },
+    {
+      "id": "America/Halifax",
+      "name": "Halifax",
+      "city": "Halifax",
+      "country": "CA",
+      "offset": -4.0
+    },
+    {
+      "id": "America/Santiago",
+      "name": "Santiago",
+      "city": "Santiago",
+      "country": "CL",
+      "offset": -4.0
+    },
+    {
+      "id": "America/La_Paz",
+      "name": "La Paz",
+      "city": "La Paz",
+      "country": "BO",
+      "offset": -4.0
+    },
+    {
+      "id": "America/St_Johns",
+      "name": "St. John's",
+      "city": "St. John's",
+      "country": "CA",
+      "offset": -3.5
+    },
+    {
+      "id": "America/Sao_Paulo",
+      "name": "São Paulo",
+      "city": "São Paulo",
+      "country": "BR",
+      "offset": -3.0
+    },
+    {
+      "id": "America/Buenos_Aires",
+      "name": "Buenos Aires",
+      "city": "Buenos Aires",
+      "country": "AR",
+      "offset": -3.0
+    },
+    {
+      "id": "America/Montevideo",
+      "name": "Montevideo",
+      "city": "Montevideo",
+      "country": "UY",
+      "offset": -3.0
+    },
+    {
+      "id": "Atlantic/South_Georgia",
+      "name": "South Georgia",
+      "city": "South Georgia",
+      "country": "GS",
+      "offset": -2.0
+    },
+    {
+      "id": "Atlantic/Azores",
+      "name": "Azores",
+      "city": "Azores",
+      "country": "PT",
+      "offset": -1.0
+    },
+    {
+      "id": "Atlantic/Cape_Verde",
+      "name": "Cape Verde",
+      "city": "Cape Verde",
+      "country": "CV",
+      "offset": -1.0
+    },
+    {
+      "id": "Europe/London",
+      "name": "London",
+      "city": "London",
+      "country": "GB",
+      "offset": 0.0
+    },
+    {
+      "id": "Europe/Dublin",
+      "name": "Dublin",
+      "city": "Dublin",
+      "country": "IE",
+      "offset": 0.0
+    },
+    {
+      "id": "Europe/Lisbon",
+      "name": "Lisbon",
+      "city": "Lisbon",
+      "country": "PT",
+      "offset": 0.0
+    },
+    {
+      "id": "Africa/Casablanca",
+      "name": "Casablanca",
+      "city": "Casablanca",
+      "country": "MA",
+      "offset": 0.0
+    },
+    {
+      "id": "Atlantic/Reykjavik",
+      "name": "Reykjavik",
+      "city": "Reykjavik",
+      "country": "IS",
+      "offset": 0.0
+    },
+    {
+      "id": "Europe/Paris",
+      "name": "Paris",
+      "city": "Paris",
+      "country": "FR",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Berlin",
+      "name": "Berlin",
+      "city": "Berlin",
+      "country": "DE",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Rome",
+      "name": "Rome",
+      "city": "Rome",
+      "country": "IT",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Madrid",
+      "name": "Madrid",
+      "city": "Madrid",
+      "country": "ES",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Amsterdam",
+      "name": "Amsterdam",
+      "city": "Amsterdam",
+      "country": "NL",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Brussels",
+      "name": "Brussels",
+      "city": "Brussels",
+      "country": "BE",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Vienna",
+      "name": "Vienna",
+      "city": "Vienna",
+      "country": "AT",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Warsaw",
+      "name": "Warsaw",
+      "city": "Warsaw",
+      "country": "PL",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Prague",
+      "name": "Prague",
+      "city": "Prague",
+      "country": "CZ",
+      "offset": 1.0
+    },
+    {
+      "id": "Africa/Lagos",
+      "name": "Lagos",
+      "city": "Lagos",
+      "country": "NG",
+      "offset": 1.0
+    },
+    {
+      "id": "Europe/Athens",
+      "name": "Athens",
+      "city": "Athens",
+      "country": "GR",
+      "offset": 2.0
+    },
+    {
+      "id": "Europe/Bucharest",
+      "name": "Bucharest",
+      "city": "Bucharest",
+      "country": "RO",
+      "offset": 2.0
+    },
+    {
+      "id": "Europe/Helsinki",
+      "name": "Helsinki",
+      "city": "Helsinki",
+      "country": "FI",
+      "offset": 2.0
+    },
+    {
+      "id": "Europe/Istanbul",
+      "name": "Istanbul",
+      "city": "Istanbul",
+      "country": "TR",
+      "offset": 3.0
+    },
+    {
+      "id": "Europe/Kyiv",
+      "name": "Kyiv",
+      "city": "Kyiv",
+      "country": "UA",
+      "offset": 2.0
+    },
+    {
+      "id": "Africa/Cairo",
+      "name": "Cairo",
+      "city": "Cairo",
+      "country": "EG",
+      "offset": 2.0
+    },
+    {
+      "id": "Africa/Johannesburg",
+      "name": "Johannesburg",
+      "city": "Johannesburg",
+      "country": "ZA",
+      "offset": 2.0
+    },
+    {
+      "id": "Asia/Jerusalem",
+      "name": "Jerusalem",
+      "city": "Jerusalem",
+      "country": "IL",
+      "offset": 2.0
+    },
+    {
+      "id": "Asia/Beirut",
+      "name": "Beirut",
+      "city": "Beirut",
+      "country": "LB",
+      "offset": 2.0
+    },
+    {
+      "id": "Europe/Moscow",
+      "name": "Moscow",
+      "city": "Moscow",
+      "country": "RU",
+      "offset": 3.0
+    },
+    {
+      "id": "Asia/Baghdad",
+      "name": "Baghdad",
+      "city": "Baghdad",
+      "country": "IQ",
+      "offset": 3.0
+    },
+    {
+      "id": "Asia/Kuwait",
+      "name": "Kuwait",
+      "city": "Kuwait City",
+      "country": "KW",
+      "offset": 3.0
+    },
+    {
+      "id": "Asia/Riyadh",
+      "name": "Riyadh",
+      "city": "Riyadh",
+      "country": "SA",
+      "offset": 3.0
+    },
+    {
+      "id": "Africa/Nairobi",
+      "name": "Nairobi",
+      "city": "Nairobi",
+      "country": "KE",
+      "offset": 3.0
+    },
+    {
+      "id": "Asia/Tehran",
+      "name": "Tehran",
+      "city": "Tehran",
+      "country": "IR",
+      "offset": 3.5
+    },
+    {
+      "id": "Asia/Dubai",
+      "name": "Dubai",
+      "city": "Dubai",
+      "country": "AE",
+      "offset": 4.0
+    },
+    {
+      "id": "Asia/Muscat",
+      "name": "Muscat",
+      "city": "Muscat",
+      "country": "OM",
+      "offset": 4.0
+    },
+    {
+      "id": "Asia/Baku",
+      "name": "Baku",
+      "city": "Baku",
+      "country": "AZ",
+      "offset": 4.0
+    },
+    {
+      "id": "Asia/Kabul",
+      "name": "Kabul",
+      "city": "Kabul",
+      "country": "AF",
+      "offset": 4.5
+    },
+    {
+      "id": "Asia/Karachi",
+      "name": "Karachi",
+      "city": "Karachi",
+      "country": "PK",
+      "offset": 5.0
+    },
+    {
+      "id": "Asia/Tashkent",
+      "name": "Tashkent",
+      "city": "Tashkent",
+      "country": "UZ",
+      "offset": 5.0
+    },
+    {
+      "id": "Asia/Kolkata",
+      "name": "Kolkata",
+      "city": "Kolkata",
+      "country": "IN",
+      "offset": 5.5
+    },
+    {
+      "id": "Asia/Mumbai",
+      "name": "Mumbai",
+      "city": "Mumbai",
+      "country": "IN",
+      "offset": 5.5
+    },
+    {
+      "id": "Asia/Delhi",
+      "name": "Delhi",
+      "city": "Delhi",
+      "country": "IN",
+      "offset": 5.5
+    },
+    {
+      "id": "Asia/Colombo",
+      "name": "Colombo",
+      "city": "Colombo",
+      "country": "LK",
+      "offset": 5.5
+    },
+    {
+      "id": "Asia/Kathmandu",
+      "name": "Kathmandu",
+      "city": "Kathmandu",
+      "country": "NP",
+      "offset": 5.75
+    },
+    {
+      "id": "Asia/Dhaka",
+      "name": "Dhaka",
+      "city": "Dhaka",
+      "country": "BD",
+      "offset": 6.0
+    },
+    {
+      "id": "Asia/Almaty",
+      "name": "Almaty",
+      "city": "Almaty",
+      "country": "KZ",
+      "offset": 6.0
+    },
+    {
+      "id": "Asia/Yangon",
+      "name": "Yangon",
+      "city": "Yangon",
+      "country": "MM",
+      "offset": 6.5
+    },
+    {
+      "id": "Asia/Bangkok",
+      "name": "Bangkok",
+      "city": "Bangkok",
+      "country": "TH",
+      "offset": 7.0
+    },
+    {
+      "id": "Asia/Jakarta",
+      "name": "Jakarta",
+      "city": "Jakarta",
+      "country": "ID",
+      "offset": 7.0
+    },
+    {
+      "id": "Asia/Ho_Chi_Minh",
+      "name": "Ho Chi Minh",
+      "city": "Ho Chi Minh City",
+      "country": "VN",
+      "offset": 7.0
+    },
+    {
+      "id": "Asia/Shanghai",
+      "name": "Shanghai",
+      "city": "Shanghai",
+      "country": "CN",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Beijing",
+      "name": "Beijing",
+      "city": "Beijing",
+      "country": "CN",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Hong_Kong",
+      "name": "Hong Kong",
+      "city": "Hong Kong",
+      "country": "HK",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Singapore",
+      "name": "Singapore",
+      "city": "Singapore",
+      "country": "SG",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Taipei",
+      "name": "Taipei",
+      "city": "Taipei",
+      "country": "TW",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Manila",
+      "name": "Manila",
+      "city": "Manila",
+      "country": "PH",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Kuala_Lumpur",
+      "name": "Kuala Lumpur",
+      "city": "Kuala Lumpur",
+      "country": "MY",
+      "offset": 8.0
+    },
+    {
+      "id": "Australia/Perth",
+      "name": "Perth",
+      "city": "Perth",
+      "country": "AU",
+      "offset": 8.0
+    },
+    {
+      "id": "Asia/Tokyo",
+      "name": "Tokyo",
+      "city": "Tokyo",
+      "country": "JP",
+      "offset": 9.0
+    },
+    {
+      "id": "Asia/Seoul",
+      "name": "Seoul",
+      "city": "Seoul",
+      "country": "KR",
+      "offset": 9.0
+    },
+    {
+      "id": "Australia/Adelaide",
+      "name": "Adelaide",
+      "city": "Adelaide",
+      "country": "AU",
+      "offset": 9.5
+    },
+    {
+      "id": "Australia/Darwin",
+      "name": "Darwin",
+      "city": "Darwin",
+      "country": "AU",
+      "offset": 9.5
+    },
+    {
+      "id": "Australia/Sydney",
+      "name": "Sydney",
+      "city": "Sydney",
+      "country": "AU",
+      "offset": 10.0
+    },
+    {
+      "id": "Australia/Melbourne",
+      "name": "Melbourne",
+      "city": "Melbourne",
+      "country": "AU",
+      "offset": 10.0
+    },
+    {
+      "id": "Australia/Brisbane",
+      "name": "Brisbane",
+      "city": "Brisbane",
+      "country": "AU",
+      "offset": 10.0
+    },
+    {
+      "id": "Pacific/Guam",
+      "name": "Guam",
+      "city": "Guam",
+      "country": "GU",
+      "offset": 10.0
+    },
+    {
+      "id": "Pacific/Noumea",
+      "name": "Nouméa",
+      "city": "Nouméa",
+      "country": "NC",
+      "offset": 11.0
+    },
+    {
+      "id": "Pacific/Auckland",
+      "name": "Auckland",
+      "city": "Auckland",
+      "country": "NZ",
+      "offset": 12.0
+    },
+    {
+      "id": "Pacific/Fiji",
+      "name": "Fiji",
+      "city": "Suva",
+      "country": "FJ",
+      "offset": 12.0
+    },
+    {
+      "id": "Pacific/Tongatapu",
+      "name": "Tongatapu",
+      "city": "Nuku'alofa",
+      "country": "TO",
+      "offset": 13.0
+    },
+    {
+      "id": "Pacific/Apia",
+      "name": "Apia",
+      "city": "Apia",
+      "country": "WS",
+      "offset": 13.0
+    },
+    {
+      "id": "Pacific/Kiritimati",
+      "name": "Kiritimati",
+      "city": "Kiritimati",
+      "country": "KI",
+      "offset": 14.0
+    }
+  ]
+}
